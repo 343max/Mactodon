@@ -277,7 +277,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon-frameworks.sh\"\n";
+			shellScript = "export EXPANDED_CODE_SIGN_IDENTITY=-\nexport EXPANDED_CODE_SIGN_IDENTITY_NAME=-\n\n\"${SRCROOT}/Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
