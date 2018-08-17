@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		890553B037E04B6046F2C434 /* Pods_MactodonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFC16C8188156D2EDA484A6E /* Pods_MactodonTests.framework */; };
+		AFF1EFFF418F9F793C2A2C5E /* Pods_Mactodon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97F4E829C779078BD9C8F94 /* Pods_Mactodon.framework */; };
 		BB1747F2212769970015E3A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1747F1212769970015E3A8 /* AppDelegate.swift */; };
 		BB1747F4212769970015E3A8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1747F3212769970015E3A8 /* ViewController.swift */; };
 		BB1747F6212769990015E3A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB1747F5212769990015E3A8 /* Assets.xcassets */; };
@@ -25,6 +27,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		30AE5CBE9F8F80CFBBBB87EC /* Pods-Mactodon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mactodon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon.debug.xcconfig"; sourceTree = "<group>"; };
+		4D7167C4FE7089E037D1CCB0 /* Pods-Mactodon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mactodon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon.release.xcconfig"; sourceTree = "<group>"; };
+		803D02693F008DC4C454A224 /* Pods-MactodonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MactodonTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MactodonTests/Pods-MactodonTests.release.xcconfig"; sourceTree = "<group>"; };
+		A97F4E829C779078BD9C8F94 /* Pods_Mactodon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mactodon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFC16C8188156D2EDA484A6E /* Pods_MactodonTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MactodonTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB1747EE212769970015E3A8 /* Mactodon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mactodon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB1747F1212769970015E3A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB1747F3212769970015E3A8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,6 +42,7 @@
 		BB174800212769990015E3A8 /* MactodonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MactodonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB174804212769990015E3A8 /* MactodonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MactodonTests.swift; sourceTree = "<group>"; };
 		BB174806212769990015E3A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E4D0A8DD2D8407898418A770 /* Pods-MactodonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MactodonTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MactodonTests/Pods-MactodonTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFF1EFFF418F9F793C2A2C5E /* Pods_Mactodon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,18 +58,41 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				890553B037E04B6046F2C434 /* Pods_MactodonTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		30925EA09FC640B6BF8F8B1C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				30AE5CBE9F8F80CFBBBB87EC /* Pods-Mactodon.debug.xcconfig */,
+				4D7167C4FE7089E037D1CCB0 /* Pods-Mactodon.release.xcconfig */,
+				E4D0A8DD2D8407898418A770 /* Pods-MactodonTests.debug.xcconfig */,
+				803D02693F008DC4C454A224 /* Pods-MactodonTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		435E9F53E867D927540A727C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A97F4E829C779078BD9C8F94 /* Pods_Mactodon.framework */,
+				AFC16C8188156D2EDA484A6E /* Pods_MactodonTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BB1747E5212769970015E3A8 = {
 			isa = PBXGroup;
 			children = (
 				BB1747F0212769970015E3A8 /* Mactodon */,
 				BB174803212769990015E3A8 /* MactodonTests */,
 				BB1747EF212769970015E3A8 /* Products */,
+				30925EA09FC640B6BF8F8B1C /* Pods */,
+				435E9F53E867D927540A727C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,9 +134,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BB174809212769990015E3A8 /* Build configuration list for PBXNativeTarget "Mactodon" */;
 			buildPhases = (
+				17E160525B69FB7581FB54FF /* [CP] Check Pods Manifest.lock */,
 				BB1747EA212769970015E3A8 /* Sources */,
 				BB1747EB212769970015E3A8 /* Frameworks */,
 				BB1747EC212769970015E3A8 /* Resources */,
+				D080E6E201184FF7EE533699 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -119,6 +153,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BB17480C212769990015E3A8 /* Build configuration list for PBXNativeTarget "MactodonTests" */;
 			buildPhases = (
+				65F56B8AFE3AD28F92D4FF17 /* [CP] Check Pods Manifest.lock */,
 				BB1747FC212769990015E3A8 /* Sources */,
 				BB1747FD212769990015E3A8 /* Frameworks */,
 				BB1747FE212769990015E3A8 /* Resources */,
@@ -189,6 +224,63 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		17E160525B69FB7581FB54FF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mactodon-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		65F56B8AFE3AD28F92D4FF17 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MactodonTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D080E6E201184FF7EE533699 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/MastodonKit/MastodonKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MastodonKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BB1747EA212769970015E3A8 /* Sources */ = {
@@ -347,6 +439,7 @@
 		};
 		BB17480A212769990015E3A8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 30AE5CBE9F8F80CFBBBB87EC /* Pods-Mactodon.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Mactodon/Mactodon.entitlements;
@@ -366,6 +459,7 @@
 		};
 		BB17480B212769990015E3A8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D7167C4FE7089E037D1CCB0 /* Pods-Mactodon.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Mactodon/Mactodon.entitlements;
@@ -385,6 +479,7 @@
 		};
 		BB17480D212769990015E3A8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4D0A8DD2D8407898418A770 /* Pods-MactodonTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -406,6 +501,7 @@
 		};
 		BB17480E212769990015E3A8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 803D02693F008DC4C454A224 /* Pods-MactodonTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
