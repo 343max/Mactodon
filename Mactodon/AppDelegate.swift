@@ -1,4 +1,4 @@
-// Copyright 2004-present Facebook. All Rights Reserved.
+// Copyright Max von Webel. All Rights Reserved.
 
 import Cocoa
 
