@@ -14,6 +14,7 @@
 		BB1747F6212769990015E3A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB1747F5212769990015E3A8 /* Assets.xcassets */; };
 		BB1747F9212769990015E3A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB1747F7212769990015E3A8 /* Main.storyboard */; };
 		BB174805212769990015E3A8 /* MactodonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB174804212769990015E3A8 /* MactodonTests.swift */; };
+		BB17481021278B3F0015E3A8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB17480F21278B3F0015E3A8 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		BB174800212769990015E3A8 /* MactodonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MactodonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB174804212769990015E3A8 /* MactodonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MactodonTests.swift; sourceTree = "<group>"; };
 		BB174806212769990015E3A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB17480F21278B3F0015E3A8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E4D0A8DD2D8407898418A770 /* Pods-MactodonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MactodonTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MactodonTests/Pods-MactodonTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,6 +116,7 @@
 				BB1747F7212769990015E3A8 /* Main.storyboard */,
 				BB1747FA212769990015E3A8 /* Info.plist */,
 				BB1747FB212769990015E3A8 /* Mactodon.entitlements */,
+				BB17480F21278B3F0015E3A8 /* LoginViewController.swift */,
 			);
 			path = Mactodon;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB17481021278B3F0015E3A8 /* LoginViewController.swift in Sources */,
 				BB1747F4212769970015E3A8 /* ViewController.swift in Sources */,
 				BB1747F2212769970015E3A8 /* AppDelegate.swift in Sources */,
 			);
