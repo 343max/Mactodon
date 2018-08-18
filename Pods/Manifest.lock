@@ -2,15 +2,21 @@ PODS:
   - MastodonKit (1.0.10)
 
 DEPENDENCIES:
-  - MastodonKit (~> 1.0)
+  - MastodonKit (from `https://github.com/MastodonKit/MastodonKit.git`, branch `master`)
 
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - MastodonKit
+EXTERNAL SOURCES:
+  MastodonKit:
+    :branch: master
+    :git: https://github.com/MastodonKit/MastodonKit.git
+
+CHECKOUT OPTIONS:
+  MastodonKit:
+    :commit: cf918af98196ab8f4829d46dbc709b1247c80af7
+    :git: https://github.com/MastodonKit/MastodonKit.git
 
 SPEC CHECKSUMS:
-  MastodonKit: 573c2b32491108599aef4d99addb0e13a154cd6a
+  MastodonKit: ec5bf7be17a9045f0015bdf0bf456a15b1c69c9e
 
-PODFILE CHECKSUM: 3587bf983d90be19a085d6aef8136ab76bb1c2c5
+PODFILE CHECKSUM: 76b9a78d0e7e67a8c9dda27a0ca75b1367235710
 
 COCOAPODS: 1.5.3

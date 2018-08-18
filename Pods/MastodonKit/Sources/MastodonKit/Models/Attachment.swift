@@ -1,8 +1,16 @@
+//
+//  Attachment.swift
+//  MastodonKit
+//
+//  Created by Ornithologist Coder on 4/9/17.
+//  Copyright © 2017 MastodonKit. All rights reserved.
+//
+
 import Foundation
 
-public struct Attachment {
+public class Attachment: Codable {
     /// ID of the attachment.
-    public let id: Int
+    public let id: String
     /// Type of the attachment.
     public let type: AttachmentType
     /// URL of the locally hosted version of the image.
@@ -13,24 +21,16 @@ public struct Attachment {
     public let previewURL: String
     /// Shorter URL for the image, for insertion into text (only present on local images).
     public let textURL: String?
-}
+    /// A description of the image for the visually impaired.
+    public let description: String?
 
-extension Attachment {
-    init?(from dictionary: JSONDictionary) {
-        guard
-            let id = dictionary["id"] as? Int,
-            let typeString = dictionary["type"] as? String,
-            let url = dictionary["url"] as? String,
-            let previewURL = dictionary["preview_url"] as? String
-            else {
-                return nil
-        }
-
-        self.id = id
-        self.type = AttachmentType(string: typeString)
-        self.url = url
-        self.remoteURL = dictionary["remote_url"] as? String
-        self.previewURL = previewURL
-        self.textURL = dictionary["text_url"] as? String
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case type
+        case url
+        case remoteURL = "remote_url"
+        case previewURL = "preview_url"
+        case textURL = "text_url"
+        case description
     }
 }

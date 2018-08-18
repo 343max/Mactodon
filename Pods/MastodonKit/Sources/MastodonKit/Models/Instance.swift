@@ -1,6 +1,14 @@
+//
+//  Instance.swift
+//  MastodonKit
+//
+//  Created by Ornithologist Coder on 4/9/17.
+//  Copyright © 2017 MastodonKit. All rights reserved.
+//
+
 import Foundation
 
-public struct Instance {
+public class Instance: Codable {
     /// URI of the current instance.
     public let uri: String
     /// The instance's title.
@@ -11,23 +19,4 @@ public struct Instance {
     public let email: String
     /// The Mastodon version used by instance (as of version 1.3).
     public let version: String?
-}
-
-extension Instance {
-    init?(from dictionary: JSONDictionary) {
-        guard
-            let uri = dictionary["uri"] as? String,
-            let title = dictionary["title"] as? String,
-            let description = dictionary["description"] as? String,
-            let email = dictionary["email"] as? String
-            else {
-                return nil
-        }
-
-        self.uri = uri
-        self.title = title
-        self.description = description
-        self.email = email
-        self.version = dictionary["version"] as? String
-    }
 }

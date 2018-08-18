@@ -1,6 +1,14 @@
+//
+//  Visibility.swift
+//  MastodonKit
+//
+//  Created by Ornithologist Coder on 4/22/17.
+//  Copyright © 2017 MastodonKit. All rights reserved.
+//
+
 import Foundation
 
-public enum Visibility: String {
+public enum Visibility: String, Codable {
     /// The status message is public.
     /// - Visible on Profile: Anyone incl. anonymous viewers.
     /// - Visible on Public Timeline: Yes.
@@ -21,16 +29,4 @@ public enum Visibility: String {
     /// - Visible on Public Timeline: No.
     /// - Federates to other instances: Only remote @mentions.
     case direct
-}
-
-extension Visibility {
-    init(string: String) {
-        switch string {
-        case "public": self = .public
-        case "unlisted": self = .unlisted
-        case "private": self = .private
-        case "direct": self = .direct
-        default: self = .unlisted
-        }
-    }
 }

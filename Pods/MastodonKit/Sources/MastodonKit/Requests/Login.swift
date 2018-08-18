@@ -1,3 +1,11 @@
+//
+//  Login.swift
+//  MastodonKit
+//
+//  Created by Ornithologist Coder on 4/18/17.
+//  Copyright © 2017 MastodonKit. All rights reserved.
+//
+
 import Foundation
 
 public struct Login {
@@ -10,7 +18,7 @@ public struct Login {
     ///   - username: The user's username or e-mail address.
     ///   - password: The user's password.
     /// - Returns: Request for `LoginSettings`.
-    public static func silent(clientID: String, clientSecret: String, scopes: [AccessScope], username: String, password: String) -> LoginSettingsRequest {
+    public static func silent(clientID: String, clientSecret: String, scopes: [AccessScope], username: String, password: String) -> Request<LoginSettings> {
         let parameters = [
             Parameter(name: "client_id", value: clientID),
             Parameter(name: "client_secret", value: clientSecret),
@@ -20,7 +28,7 @@ public struct Login {
             Parameter(name: "password", value: password)
         ]
 
-        let method = HTTPMethod.post(Payload.parameters(parameters))
-        return LoginSettingsRequest(path: "/oauth/token", method: method, parse: LoginSettingsRequest.parser)
+        let method = HTTPMethod.post(.parameters(parameters))
+        return Request<LoginSettings>(path: "/oauth/token", method: method)
     }
 }

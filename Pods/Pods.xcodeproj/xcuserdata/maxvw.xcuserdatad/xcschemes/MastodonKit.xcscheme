@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A94B94D86C5E6D8AFB5803F86C5B6C35"
+               BlueprintIdentifier = "C3BFB1CBEE1C06D735F31D59BBF75CC2"
                BlueprintName = "MastodonKit"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "MastodonKit.framework">

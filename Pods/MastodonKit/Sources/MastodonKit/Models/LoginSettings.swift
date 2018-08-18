@@ -1,30 +1,33 @@
+//
+//  LoginSettings.swift
+//  MastodonKit
+//
+//  Created by Ornithologist Coder on 4/18/17.
+//  Copyright © 2017 MastodonKit. All rights reserved.
+//
+
 import Foundation
 
-public struct LoginSettings {
+public class LoginSettings: Codable {
     /// The user's access token.
     public let accessToken: String
     /// Access token type.
     public let accessTokenType: String
-    /// Access scopes.
-    public let scopes: [AccessScope]
     /// Date when the access token was retrieved.
     public let createdAt: TimeInterval
-}
+    /// Access scope.
+    private let scope: String
+    /// Access scopes.
+    public var scopes: [AccessScope] {
+        return scope
+            .components(separatedBy: .whitespaces)
+            .compactMap(toAccessScope)
+    }
 
-extension LoginSettings {
-    init?(from dictionary: JSONDictionary) {
-        guard
-            let accessToken = dictionary["access_token"] as? String,
-            let accessTokenType = dictionary["token_type"] as? String,
-            let accessScopeString = dictionary["scope"] as? String,
-            let createdAt = dictionary["created_at"] as? TimeInterval
-            else {
-                return nil
-        }
-
-        self.accessToken = accessToken
-        self.accessTokenType = accessTokenType
-        self.scopes = accessScopeString.components(separatedBy: .whitespaces).map(AccessScope.init)
-        self.createdAt = createdAt
+    private enum CodingKeys: String, CodingKey {
+        case accessToken = "access_token"
+        case accessTokenType = "token_type"
+        case scope
+        case createdAt = "created_at"
     }
 }
