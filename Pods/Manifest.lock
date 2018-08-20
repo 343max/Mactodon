@@ -1,13 +1,17 @@
 PODS:
   - MastodonKit (1.0.10)
+  - p2.OAuth2 (4.0.1)
 
 DEPENDENCIES:
   - MastodonKit (from `https://github.com/MastodonKit/MastodonKit.git`, branch `master`)
+  - p2.OAuth2 (from `../OAuth2`)
 
 EXTERNAL SOURCES:
   MastodonKit:
     :branch: master
     :git: https://github.com/MastodonKit/MastodonKit.git
+  p2.OAuth2:
+    :path: "../OAuth2"
 
 CHECKOUT OPTIONS:
   MastodonKit:
@@ -16,7 +20,8 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   MastodonKit: ec5bf7be17a9045f0015bdf0bf456a15b1c69c9e
+  p2.OAuth2: 9ce7756022de654a3fab4198f26fd23a4ce85df4
 
-PODFILE CHECKSUM: 76b9a78d0e7e67a8c9dda27a0ca75b1367235710
+PODFILE CHECKSUM: 536e95141cf728b473d73dc8a2f6e880384f43c1
 
 COCOAPODS: 1.5.3
