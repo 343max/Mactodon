@@ -3,6 +3,12 @@
 import Cocoa
 import MastodonKit
 
+extension NSStoryboard {
+    func instantiateLoginViewController() -> LoginViewController {
+        return instantiateController(withIdentifier: "LoginSheet") as! LoginViewController
+    }
+}
+
 class LoginViewController: NSViewController {
     @IBOutlet weak var instanceNameField: NSTextField!
     @IBOutlet weak var connectButton: NSButton!
