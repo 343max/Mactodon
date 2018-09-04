@@ -14,20 +14,28 @@ class LoginViewController: NSViewController {
         }
     }
     
+    let defaults = UserDefaults.standard
+    static let instanceKey = "DefaultInstance"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         instanceNameField.delegate = self
+        instanceNameField.stringValue = defaults.string(forKey: LoginViewController.instanceKey) ?? ""
+        connectButton.isEnabled = url != nil
     }
     
     @IBAction func cancel(_ sender: Any) {
-        dismiss(self)
+        dismiss(nil)
     }
     
     @IBAction func connect(_ sender: Any) {
         guard let url = self.url else {
             return
         }
+        
+        defaults.set(instanceNameField.stringValue, forKey: LoginViewController.instanceKey)
+        defaults.synchronize()
         
         let client = Client(baseURL: url.absoluteString)
         
@@ -40,6 +48,9 @@ class LoginViewController: NSViewController {
                 print("redirect uri: \(application.redirectURI)")
                 print("client id: \(application.clientID)")
                 print("client secret: \(application.clientSecret)")
+                DispatchQueue.main.async {
+                    self.dismiss(nil)
+                }
             case .failure(let error):
                 assert(false, error.localizedDescription)
             }
