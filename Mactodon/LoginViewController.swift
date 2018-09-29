@@ -2,21 +2,23 @@
 
 import Cocoa
 import MastodonKit
-import p2_OAuth2
 
 extension NSStoryboard {
-  func instantiateLoginViewController(context: NSWindow) -> LoginViewController {
-    let viewController = instantiateController(withIdentifier: "LoginSheet") as! LoginViewController
-    viewController.contextWindow = context
-    return viewController
+  func instantiateLoginViewController() -> LoginViewController {
+    return instantiateController(withIdentifier: "LoginSheet") as! LoginViewController
   }
+}
+
+protocol LoginViewControllerDelegate: NSObjectProtocol {
+  func registered(baseURL: URL, application: ClientApplication)
 }
 
 class LoginViewController: NSViewController {
   @IBOutlet weak var instanceNameField: NSTextField!
   @IBOutlet weak var connectButton: NSButton!
+  @IBOutlet weak var errorLabel: NSTextField!
   
-  weak var contextWindow: NSWindow!
+  weak var delegate: LoginViewControllerDelegate?
   
   var client: Client?
   var url: URL? {
@@ -28,14 +30,18 @@ class LoginViewController: NSViewController {
   let defaults = UserDefaults.standard
   static let instanceKey = "DefaultInstance"
   
-  var loader: OAuth2DataLoader?
-  
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    errorLabel.isHidden = true
     
     instanceNameField.delegate = self
     instanceNameField.stringValue = defaults.string(forKey: LoginViewController.instanceKey) ?? ""
     connectButton.isEnabled = url != nil
+  }
+  
+  override func viewDidAppear() {
+    assert(delegate != nil)
   }
   
   @IBAction func cancel(_ sender: Any) {
@@ -43,47 +49,26 @@ class LoginViewController: NSViewController {
   }
   
   @IBAction func connect(_ sender: Any) {
-    guard let url = self.url else {
+    guard let baseURL = self.url else {
       return
     }
     
-    defaults.set(instanceNameField.stringValue, forKey: LoginViewController.instanceKey)
+    self.errorLabel.isHidden = true
+    
+    defaults.set(baseURL.host, forKey: LoginViewController.instanceKey)
     defaults.synchronize()
     
-    Clients.withApplication(baseUrl: url.absoluteString) { (result) in
-      switch result {
-      case .failure(let error):
-        assert(false, error.localizedDescription)
-        
-      case .success(let application, _):
-        DispatchQueue.main.async {
+    Clients.withApplication(baseURL: baseURL) { (result) in
+      DispatchQueue.main.async {
+        switch result {
+        case .failure(let error):
+          self.errorLabel.stringValue = error.localizedDescription
+          self.errorLabel.isHidden = false
+          
+        case .success(let application, _):
+          self.delegate!.registered(baseURL: baseURL, application: application)
           self.dismiss(nil)
         }
-        
-        let oauth2 = OAuth2CodeGrant(settings: [
-          "client_id": application.clientID,
-          "client_secret": application.clientSecret,
-          "authorize_uri": "\(url.absoluteString)oauth/authorize",
-          "token_uri": "\(url.absoluteString)oauth/token",
-          "redirect_uris": [application.redirectURI],
-          "scope": [AccessScope.read, AccessScope.write, AccessScope.follow].map({ $0.rawValue }).joined(separator: " "),
-          ] as OAuth2JSON)
-        oauth2.authConfig.authorizeEmbedded = true
-        oauth2.authConfig.authorizeContext = self.contextWindow
-        
-        let loader = OAuth2DataLoader(oauth2: oauth2)
-        self.loader = loader
-        
-        loader.perform(request: URLRequest(url: url.appendingPathComponent("/api/v1/accounts/verify_credentials")), callback: { (response) in
-          print("response: \(response)")
-          print("accessToken: \(String(describing: oauth2.accessToken))")
-          
-          let client = Client(baseURL: url.absoluteString, accessToken: oauth2.accessToken)
-          
-          client.run(Accounts.currentUser(), completion: { (result) in
-            print("result: \(result)")
-          })
-        })
       }
     }
   }
@@ -95,6 +80,6 @@ extension LoginViewController: NSTextFieldDelegate {
       return
     }
     
-    connectButton.isEnabled = url != nil
+    connectButton.isEnabled = url != nil && instanceNameField.stringValue.count > 2
   }
 }
