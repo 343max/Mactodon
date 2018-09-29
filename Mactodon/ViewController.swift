@@ -16,7 +16,7 @@ class ViewController: NSViewController {
     }
     
     lazy var loginViewController: LoginViewController = {
-        return storyboard!.instantiateLoginViewController()
+      return storyboard!.instantiateLoginViewController(context: view.window!)
     }()
     
     func displayLogin() {

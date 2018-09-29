@@ -15,6 +15,7 @@
 		BB1747F9212769990015E3A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB1747F7212769990015E3A8 /* Main.storyboard */; };
 		BB174805212769990015E3A8 /* MactodonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB174804212769990015E3A8 /* MactodonTests.swift */; };
 		BB17481021278B3F0015E3A8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB17480F21278B3F0015E3A8 /* LoginViewController.swift */; };
+		BBCD39BA216008AF007675E3 /* Clients.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCD39B9216008AF007675E3 /* Clients.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		BB174804212769990015E3A8 /* MactodonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MactodonTests.swift; sourceTree = "<group>"; };
 		BB174806212769990015E3A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB17480F21278B3F0015E3A8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		BBCD39B9216008AF007675E3 /* Clients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clients.swift; sourceTree = "<group>"; };
 		E4D0A8DD2D8407898418A770 /* Pods-MactodonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MactodonTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MactodonTests/Pods-MactodonTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,6 +112,7 @@
 		BB1747F0212769970015E3A8 /* Mactodon */ = {
 			isa = PBXGroup;
 			children = (
+				BBCD39BB216008BC007675E3 /* Mastodon */,
 				BB1747F1212769970015E3A8 /* AppDelegate.swift */,
 				BB1747F3212769970015E3A8 /* ViewController.swift */,
 				BB1747F5212769990015E3A8 /* Assets.xcassets */,
@@ -128,6 +131,14 @@
 				BB174806212769990015E3A8 /* Info.plist */,
 			);
 			path = MactodonTests;
+			sourceTree = "<group>";
+		};
+		BBCD39BB216008BC007675E3 /* Mastodon */ = {
+			isa = PBXGroup;
+			children = (
+				BBCD39B9216008AF007675E3 /* Clients.swift */,
+			);
+			path = Mastodon;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB17481021278B3F0015E3A8 /* LoginViewController.swift in Sources */,
+				BBCD39BA216008AF007675E3 /* Clients.swift in Sources */,
 				BB1747F4212769970015E3A8 /* ViewController.swift in Sources */,
 				BB1747F2212769970015E3A8 /* AppDelegate.swift in Sources */,
 			);
