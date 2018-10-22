@@ -58,7 +58,7 @@ class LoginViewController: NSViewController {
     defaults.set(baseURL.host, forKey: LoginViewController.instanceKey)
     defaults.synchronize()
     
-    Clients.withApplication(baseURL: baseURL) { (result) in
+    Clients.withToken(baseURL: baseURL) { (result) in
       DispatchQueue.main.async {
         switch result {
         case .failure(let error):

@@ -18,7 +18,7 @@ class InstanceViewController: NSViewController {
   var currentUser: Account? {
     didSet {
       DispatchQueue.main.async {
-        self.view.window?.title = self.currentUser?.displayName ?? "Mactodon"
+        self.view.window?.title = self.currentUser?.username ?? "Mactodon"
       }
     }
   }
