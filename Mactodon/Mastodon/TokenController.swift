@@ -5,7 +5,7 @@ import MastodonKit
 
 protocol TokenControllerDelegate: AnyObject {
   func loadClientApplication(instance: String) -> ClientApplication?
-  func loadLoginSettings(username: String) -> LoginSettings?
+  func loadLoginSettings(username: String, instance: String) -> LoginSettings?
   func store(clientApplication: ClientApplication, forInstance: String)
   func store(loginSettings: LoginSettings, forUsername: String, instance: String)
   func authenticatedClient(client: Client)
@@ -55,7 +55,7 @@ class TokenController {
     }
     
     if let username = username, loginSettings == nil {
-      loginSettings = delegate.loadLoginSettings(username: username)
+      loginSettings = delegate.loadLoginSettings(username: username, instance: instance)
     }
   }
   

@@ -77,21 +77,19 @@ extension InstanceViewController: LoginViewControllerDelegate {
 
 extension InstanceViewController: TokenControllerDelegate {
   func loadClientApplication(instance: String) -> ClientApplication? {
-    // fixme!
-    return nil
+    return try! Keychain.getClientApplication(instance: instance)
   }
   
-  func loadLoginSettings(username: String) -> LoginSettings? {
-    // fixme!
-    return nil
+  func loadLoginSettings(username: String, instance: String) -> LoginSettings? {
+    return try! Keychain.getLoginSettings(forUser: username, instance: instance)
   }
   
-  func store(clientApplication: ClientApplication, forInstance: String) {
-    // fixme!
+  func store(clientApplication: ClientApplication, forInstance instance: String) {
+    try! Keychain.set(clientApplication: clientApplication, instance: instance)
   }
   
-  func store(loginSettings: LoginSettings, forUsername: String, instance: String) {
-    // fixme!
+  func store(loginSettings: LoginSettings, forUsername username: String, instance: String) {
+    try! Keychain.set(loginSettings: loginSettings, forUser: username, instance: instance)
   }
   
   func authenticatedClient(client: Client) {
