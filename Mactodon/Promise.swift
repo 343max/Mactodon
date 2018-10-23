@@ -33,9 +33,13 @@ class Promise<T> : UntypedPromise {
   var thenCalls: [ThenCall] = []
   var errorCalls: [ErrorCall] = []
   
+  let multiCall: Bool
   
+  convenience init(multiCall: Bool = false) {
+    self.init({ (_, _) in }, multiCall: multiCall)
+  }
   
-  convenience init(_ setup: @escaping (_ complete: @escaping CompletionCallback) throws -> Void) {
+  convenience init(_ setup: @escaping (_ complete: @escaping CompletionCallback) throws -> Void, multiCall: Bool = false) {
     let fullSetup = { (_ complete: @escaping CompletionCallback, _ promise: Promise) throws -> Void in
       try setup(complete)
     }
@@ -43,7 +47,8 @@ class Promise<T> : UntypedPromise {
     self.init(fullSetup)
   }
   
-  init(_ setup: (_ complete: @escaping CompletionCallback, _ promise: Promise) throws -> Void) {
+  init(_ setup: @escaping (_ complete: @escaping CompletionCallback, _ promise: Promise) throws -> Void, multiCall: Bool = false) {
+    self.multiCall = multiCall
     do {
       try setup({ (result) in
         self.result = result
@@ -66,7 +71,9 @@ class Promise<T> : UntypedPromise {
       thenCall(result)
     }
     
-    thenCalls = []
+    if !multiCall {
+      thenCalls = []
+    }
   }
   
   private func handleFails() {
@@ -78,7 +85,9 @@ class Promise<T> : UntypedPromise {
       errorCall(error)
     }
     
-    errorCalls = []
+    if !multiCall {
+      errorCalls = []
+    }
   }
   
   func `throw`(error: Error) {
@@ -88,7 +97,7 @@ class Promise<T> : UntypedPromise {
   }
   
   func fulfill(_ result: T) {
-    assert(!self.fulfilled, "promise already fulfilled")
+    assert(!self.fulfilled || self.multiCall, "promise already fulfilled")
     self.result = result
     self.handleThens()
   }
