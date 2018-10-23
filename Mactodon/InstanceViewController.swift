@@ -59,8 +59,13 @@ class InstanceViewController: NSViewController {
       return
     }
     
-    client.successfullRun(Accounts.currentUser()) { (user, _) in self.currentUser = user }
-    client.successfullRun(Timelines.home()) { (timeline, _) in self.homeTimeline = timeline }
+    client.run(Accounts.currentUser()).then {
+      self.currentUser = $0.model
+    }
+    
+    client.run(Timelines.home()).then {
+      self.homeTimeline = $0.model
+    }
   }
 }
 
@@ -103,8 +108,8 @@ extension InstanceViewController {
     let application = self.clientApplication!
     let request = Login.oauth(clientID: application.clientID, clientSecret: application.clientSecret, scopes: [.read, .write, .follow], redirectURI: Clients.redirectUri(instance: self.baseURL!), code: code)
     let client = Client(baseURL: baseURL!.absoluteString)
-    client.successfullRun(request) { (loginSettings, _) in
-      self.client = Client(baseURL: self.baseURL!.absoluteString, accessToken: loginSettings.accessToken)
+    client.run(request).then {
+      self.client = Client(baseURL: self.baseURL!.absoluteString, accessToken: $0.model.accessToken)
     }
   }
   
