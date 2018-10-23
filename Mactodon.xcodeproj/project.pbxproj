@@ -18,10 +18,10 @@
 		BB88F7FB217F93A900B2F662 /* ValuePromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F7FA217F93A900B2F662 /* ValuePromise.swift */; };
 		BB88F7FD217F93BD00B2F662 /* PromiseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F7FC217F93BD00B2F662 /* PromiseTests.swift */; };
 		BB88F7FF217F950800B2F662 /* ValuePromiseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F7FE217F950800B2F662 /* ValuePromiseTests.swift */; };
+		BB88F803217FA6E000B2F662 /* TokenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F802217FA6E000B2F662 /* TokenController.swift */; };
 		BB9C8DE9217E53E800669E31 /* ClientApplication+Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DE8217E53E800669E31 /* ClientApplication+Keychain.swift */; };
 		BB9C8DED217E6E7600669E31 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DEC217E6E7600669E31 /* Keychain.swift */; };
 		BB9C8DEF217E7B0000669E31 /* URLComponents+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */; };
-		BBCD39BA216008AF007675E3 /* Clients.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCD39B9216008AF007675E3 /* Clients.swift */; };
 		BBCD39BF21603528007675E3 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCD39BE21603528007675E3 /* Client.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,10 +55,10 @@
 		BB88F7FA217F93A900B2F662 /* ValuePromise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuePromise.swift; sourceTree = "<group>"; };
 		BB88F7FC217F93BD00B2F662 /* PromiseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseTests.swift; sourceTree = "<group>"; };
 		BB88F7FE217F950800B2F662 /* ValuePromiseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuePromiseTests.swift; sourceTree = "<group>"; };
+		BB88F802217FA6E000B2F662 /* TokenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenController.swift; sourceTree = "<group>"; };
 		BB9C8DE8217E53E800669E31 /* ClientApplication+Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClientApplication+Keychain.swift"; sourceTree = "<group>"; };
 		BB9C8DEC217E6E7600669E31 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+Helper.swift"; sourceTree = "<group>"; };
-		BBCD39B9216008AF007675E3 /* Clients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clients.swift; sourceTree = "<group>"; };
 		BBCD39BE21603528007675E3 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		E4D0A8DD2D8407898418A770 /* Pods-MactodonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MactodonTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MactodonTests/Pods-MactodonTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -164,8 +164,8 @@
 		BBCD39BB216008BC007675E3 /* Mastodon */ = {
 			isa = PBXGroup;
 			children = (
-				BBCD39B9216008AF007675E3 /* Clients.swift */,
 				BBCD39BE21603528007675E3 /* Client.swift */,
+				BB88F802217FA6E000B2F662 /* TokenController.swift */,
 			);
 			path = Mastodon;
 			sourceTree = "<group>";
@@ -332,11 +332,11 @@
 			files = (
 				BB9C8DEF217E7B0000669E31 /* URLComponents+Helper.swift in Sources */,
 				BB17481021278B3F0015E3A8 /* LoginViewController.swift in Sources */,
-				BBCD39BA216008AF007675E3 /* Clients.swift in Sources */,
 				BB9C8DE9217E53E800669E31 /* ClientApplication+Keychain.swift in Sources */,
 				BBCD39BF21603528007675E3 /* Client.swift in Sources */,
 				BB88F7FB217F93A900B2F662 /* ValuePromise.swift in Sources */,
 				BB88F7F8217ED8EE00B2F662 /* Promise.swift in Sources */,
+				BB88F803217FA6E000B2F662 /* TokenController.swift in Sources */,
 				BB9C8DED217E6E7600669E31 /* Keychain.swift in Sources */,
 				BB1747F4212769970015E3A8 /* InstanceViewController.swift in Sources */,
 				BB1747F2212769970015E3A8 /* AppDelegate.swift in Sources */,

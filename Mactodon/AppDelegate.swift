@@ -6,7 +6,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
   func application(_ application: NSApplication, open urls: [URL]) {
     urls.forEach { (url) in
-      InstanceViewController.handleAuthentication(url: url)
+      TokenController.handleCallback(url: url)
     }
   }
 }

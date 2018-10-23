@@ -10,7 +10,7 @@ extension NSStoryboard {
 }
 
 protocol LoginViewControllerDelegate: NSObjectProtocol {
-  func registered(baseURL: URL, application: ClientApplication)
+  func registered(baseURL: URL)
 }
 
 class LoginViewController: NSViewController {
@@ -58,19 +58,8 @@ class LoginViewController: NSViewController {
     defaults.set(baseURL.host, forKey: LoginViewController.instanceKey)
     defaults.synchronize()
     
-    Clients.withAppToken(baseURL: baseURL) { (result) in
-      DispatchQueue.main.async {
-        switch result {
-        case .failure(let error):
-          self.errorLabel.stringValue = error.localizedDescription
-          self.errorLabel.isHidden = false
-          
-        case .success(let application, _):
-          self.delegate!.registered(baseURL: baseURL, application: application)
-          self.dismiss(nil)
-        }
-      }
-    }
+    delegate!.registered(baseURL: baseURL)
+    dismiss(nil)
   }
 }
 

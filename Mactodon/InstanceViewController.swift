@@ -32,10 +32,9 @@ class InstanceViewController: NSViewController {
     }
   }
   
-  var baseURL: URL?
+  var tokenController: TokenController?
   
   override func viewDidLoad() {
-    baseURL = URL(string: UserDefaults.standard.string(forKey: InstanceViewController.baseURLKey) ?? "")
     tableView.dataSource = self
     tableView.delegate = self
   }
@@ -60,66 +59,51 @@ class InstanceViewController: NSViewController {
     }
     
     client.run(Accounts.currentUser()).then {
-      self.currentUser = $0.model
+      self.currentUser = $0
     }
     
     client.run(Timelines.home()).then {
-      self.homeTimeline = $0.model
+      self.homeTimeline = $0
     }
   }
 }
 
 extension InstanceViewController: LoginViewControllerDelegate {
-  func registered(baseURL: URL, application: ClientApplication) {
-    self.baseURL = baseURL
-    self.clientApplication = application
-    
-    let url = URLComponents(string: baseURL.absoluteString + "oauth/authorize",
-                            queryItems: ["scope": "read write follow",
-                                         "client_id": application.clientID,
-                                         "redirect_uri": Clients.redirectUri(instance: baseURL),
-                                         "response_type": "code"
-                                         ])!.url!
-    registerAuthenticationNotification()
-    NSWorkspace.shared.open(url)
+  func registered(baseURL: URL) {
+    tokenController = TokenController(delegate: self, scopes: [.follow, .read, .write], instance: baseURL.host!, protocolHandler: Bundle.main.bundleIdentifier!)
+    tokenController?.acquireAuthenticatedClient()
   }
 }
 
-extension InstanceViewController {
-  // user authentication
-  static let userAuthenticatedNotification = NSNotification.Name(rawValue: "userAuthenticatedNotification")
-
-  func registerAuthenticationNotification() {
-    NotificationCenter.default.addObserver(self, selector: #selector(userAuthenticated), name: InstanceViewController.userAuthenticatedNotification, object: nil)
+extension InstanceViewController: TokenControllerDelegate {
+  func loadClientApplication(instance: String) -> ClientApplication? {
+    // fixme!
+    return nil
   }
   
-  func unregisterAuthenticationNotification() {
-    NotificationCenter.default.removeObserver(self, name: InstanceViewController.userAuthenticatedNotification, object: nil)
+  func loadLoginSettings(username: String) -> LoginSettings? {
+    // fixme!
+    return nil
   }
   
-  @objc func userAuthenticated(notification: Foundation.Notification) {
-    if notification.object as! String != baseURL!.host! {
-      return
-    }
-    
-    unregisterAuthenticationNotification()
-    let code = notification.userInfo!["code"] as! String
-    
-    let application = self.clientApplication!
-    let request = Login.oauth(clientID: application.clientID, clientSecret: application.clientSecret, scopes: [.read, .write, .follow], redirectURI: Clients.redirectUri(instance: self.baseURL!), code: code)
-    let client = Client(baseURL: baseURL!.absoluteString)
-    client.run(request).then {
-      self.client = Client(baseURL: self.baseURL!.absoluteString, accessToken: $0.model.accessToken)
-    }
+  func store(clientApplication: ClientApplication, forInstance: String) {
+    // fixme!
   }
   
-  static func handleAuthentication(url: URL) {
-    let components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-    let queryItems = components.queryDict
-    let host = queryItems["host"]!!
-    let code = queryItems["code"]!!
-    
-    NotificationCenter.default.post(name: InstanceViewController.userAuthenticatedNotification, object: host, userInfo: ["code": code])
+  func store(loginSettings: LoginSettings, forUsername: String, instance: String) {
+    // fixme!
+  }
+  
+  func authenticatedClient(client: Client) {
+    self.client = client
+  }
+  
+  func clientName() -> String {
+    return "Mactodon"
+  }
+  
+  func open(url: URL) {
+    NSWorkspace.shared.open(url)
   }
 }
 
