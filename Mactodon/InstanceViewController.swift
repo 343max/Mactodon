@@ -40,7 +40,14 @@ class InstanceViewController: NSViewController {
   }
   
   override func viewDidAppear() {
-    displayLogin()
+    let settings = Settings.load()
+    guard let account = settings.accounts.first else {
+      displayLogin()
+      return
+    }
+    
+    tokenController = TokenController(delegate: self, scopes: [.follow, .read, .write], username: account.username, instance: account.instance, protocolHandler: Bundle.main.bundleIdentifier!)
+    tokenController?.acquireAuthenticatedClient()
   }
   
   lazy var loginViewController: LoginViewController = {
@@ -90,6 +97,10 @@ extension InstanceViewController: TokenControllerDelegate {
   
   func store(loginSettings: LoginSettings, forUsername username: String, instance: String) {
     try! Keychain.set(loginSettings: loginSettings, forUser: username, instance: instance)
+    
+    var settings = Settings.load()
+    settings.accounts = settings.accounts + [Settings.Account(username, instance)]
+    settings.save()
   }
   
   func authenticatedClient(client: Client) {

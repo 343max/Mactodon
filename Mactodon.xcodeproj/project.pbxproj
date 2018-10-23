@@ -19,6 +19,7 @@
 		BB88F7FD217F93BD00B2F662 /* PromiseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F7FC217F93BD00B2F662 /* PromiseTests.swift */; };
 		BB88F7FF217F950800B2F662 /* ValuePromiseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F7FE217F950800B2F662 /* ValuePromiseTests.swift */; };
 		BB88F803217FA6E000B2F662 /* TokenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F802217FA6E000B2F662 /* TokenController.swift */; };
+		BB88F805217FDFD800B2F662 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F804217FDFD800B2F662 /* Settings.swift */; };
 		BB9C8DE9217E53E800669E31 /* Keychain+MastodonKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DE8217E53E800669E31 /* Keychain+MastodonKit.swift */; };
 		BB9C8DED217E6E7600669E31 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DEC217E6E7600669E31 /* Keychain.swift */; };
 		BB9C8DEF217E7B0000669E31 /* URLComponents+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */; };
@@ -56,6 +57,7 @@
 		BB88F7FC217F93BD00B2F662 /* PromiseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseTests.swift; sourceTree = "<group>"; };
 		BB88F7FE217F950800B2F662 /* ValuePromiseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuePromiseTests.swift; sourceTree = "<group>"; };
 		BB88F802217FA6E000B2F662 /* TokenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenController.swift; sourceTree = "<group>"; };
+		BB88F804217FDFD800B2F662 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		BB9C8DE8217E53E800669E31 /* Keychain+MastodonKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keychain+MastodonKit.swift"; sourceTree = "<group>"; };
 		BB9C8DEC217E6E7600669E31 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+Helper.swift"; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				BB9C8DE8217E53E800669E31 /* Keychain+MastodonKit.swift */,
 				BB88F7F9217F913C00B2F662 /* Promise */,
 				BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */,
+				BB88F804217FDFD800B2F662 /* Settings.swift */,
 			);
 			path = Mactodon;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				BB88F803217FA6E000B2F662 /* TokenController.swift in Sources */,
 				BB9C8DED217E6E7600669E31 /* Keychain.swift in Sources */,
 				BB1747F4212769970015E3A8 /* InstanceViewController.swift in Sources */,
+				BB88F805217FDFD800B2F662 /* Settings.swift in Sources */,
 				BB1747F2212769970015E3A8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
