@@ -1,5 +1,5 @@
 PODS:
-  - MastodonKit (1.0.10)
+  - MastodonKit (2.0.0)
 
 DEPENDENCIES:
   - MastodonKit (from `https://github.com/MastodonKit/MastodonKit.git`, branch `master`)
@@ -11,11 +11,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   MastodonKit:
-    :commit: cf918af98196ab8f4829d46dbc709b1247c80af7
+    :commit: 6df5dba74344a3abe4b793c15ebf141a4d516e2d
     :git: https://github.com/MastodonKit/MastodonKit.git
 
 SPEC CHECKSUMS:
-  MastodonKit: ec5bf7be17a9045f0015bdf0bf456a15b1c69c9e
+  MastodonKit: 3bc591ea7e626dd160711f9a10cd50f192e46ed3
 
 PODFILE CHECKSUM: 76b9a78d0e7e67a8c9dda27a0ca75b1367235710
 
