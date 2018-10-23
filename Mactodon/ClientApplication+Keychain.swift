@@ -4,11 +4,11 @@ import Foundation
 import MastodonKit
 
 extension Keychain {
-  static func set(token: ClientApplication, url: URL) throws {
-    try set(service: "Mactodon", account: url.host!, value: token)
+  static func set(appToken: ClientApplication, url: URL) throws {
+    try set(service: "Mactodon", account: url.host!, value: appToken)
   }
   
-  static func getToken(url: URL) throws -> ClientApplication? {
+  static func getAppToken(url: URL) throws -> ClientApplication? {
     return try get(service: "Mactodon", account: url.host!, type: ClientApplication.self)
   }
 }

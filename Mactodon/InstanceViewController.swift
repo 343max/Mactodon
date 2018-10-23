@@ -2,7 +2,7 @@
 
 import Cocoa
 import MastodonKit
-import p2_OAuth2
+
 
 class InstanceViewController: NSViewController {
   static let baseURLKey = "BaseURL"
@@ -32,7 +32,6 @@ class InstanceViewController: NSViewController {
   }
   
   var baseURL: URL?
-  var loader: OAuth2DataLoader?
   
   override func viewDidLoad() {
     baseURL = URL(string: UserDefaults.standard.string(forKey: InstanceViewController.baseURLKey) ?? "")
@@ -67,25 +66,46 @@ class InstanceViewController: NSViewController {
 extension InstanceViewController: LoginViewControllerDelegate {
   func registered(baseURL: URL, application: ClientApplication) {
     self.baseURL = baseURL
-    
-    let oauth2 = OAuth2CodeGrant(baseURL: baseURL, application: application)
-    
-    if let accessToken = oauth2.accessToken {
-      client = Client(baseURL: baseURL.absoluteString, accessToken: accessToken)
-    } else {
-      oauth2.authConfig.authorizeEmbedded = true
-      oauth2.authConfig.authorizeContext = view.window
-      
-      let loader = OAuth2DataLoader(oauth2: oauth2)
-      self.loader = loader
-      
-      let url = baseURL.appendingPathComponent("/api/v1/accounts/verify_credentials")
-      
-      loader.perform(request: URLRequest(url: url), callback: { (response) in
-        assert(oauth2.accessToken != nil)
-        self.client = Client(baseURL: baseURL.absoluteString, accessToken: oauth2.accessToken!)
-      })
+    let url = URLComponents(string: baseURL.absoluteString + "oauth/authorize",
+                            queryItems: ["scope": "read write follow",
+                                         "client_id": application.clientID,
+                                         "redirect_uri": Clients.redirectURI + "?host=" + baseURL.host!,
+                                         "response_type": "code"
+                                         ])!.url!
+    registerAuthenticationNotification()
+    NSWorkspace.shared.open(url)
+  }
+}
+
+extension InstanceViewController {
+  // user authentication
+  static let userAuthenticatedNotification = NSNotification.Name(rawValue: "userAuthenticatedNotification")
+
+  func registerAuthenticationNotification() {
+    NotificationCenter.default.addObserver(self, selector: #selector(userAuthenticated), name: InstanceViewController.userAuthenticatedNotification, object: nil)
+  }
+  
+  func unregisterAuthenticationNotification() {
+    NotificationCenter.default.removeObserver(self, name: InstanceViewController.userAuthenticatedNotification, object: nil)
+  }
+  
+  @objc func userAuthenticated(notification: Foundation.Notification) {
+    if notification.object as! String != baseURL!.host! {
+      return
     }
+    
+    unregisterAuthenticationNotification()
+    let code = notification.userInfo!["code"] as! String
+    self.client = Client(baseURL: baseURL!.absoluteString, accessToken: code)
+  }
+  
+  static func handleAuthentication(url: URL) {
+    let components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+    let queryItems = components.queryDict
+    let host = queryItems["host"]!!
+    let code = queryItems["code"]!!
+    
+    NotificationCenter.default.post(name: InstanceViewController.userAuthenticatedNotification, object: host, userInfo: ["code": code])
   }
 }
 

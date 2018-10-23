@@ -4,17 +4,9 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-
-
-
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+  func application(_ application: NSApplication, open urls: [URL]) {
+    urls.forEach { (url) in
+      InstanceViewController.handleAuthentication(url: url)
     }
-
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
-
-
+  }
 }
-

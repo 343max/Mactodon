@@ -17,8 +17,8 @@
 		BB17481021278B3F0015E3A8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB17480F21278B3F0015E3A8 /* LoginViewController.swift */; };
 		BB9C8DE9217E53E800669E31 /* ClientApplication+Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DE8217E53E800669E31 /* ClientApplication+Keychain.swift */; };
 		BB9C8DED217E6E7600669E31 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DEC217E6E7600669E31 /* Keychain.swift */; };
+		BB9C8DEF217E7B0000669E31 /* URLComponents+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */; };
 		BBCD39BA216008AF007675E3 /* Clients.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCD39B9216008AF007675E3 /* Clients.swift */; };
-		BBCD39BD21601D18007675E3 /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCD39BC21601D18007675E3 /* Authorization.swift */; };
 		BBCD39BF21603528007675E3 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCD39BE21603528007675E3 /* Client.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,8 +51,8 @@
 		BB17480F21278B3F0015E3A8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BB9C8DE8217E53E800669E31 /* ClientApplication+Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClientApplication+Keychain.swift"; sourceTree = "<group>"; };
 		BB9C8DEC217E6E7600669E31 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+Helper.swift"; sourceTree = "<group>"; };
 		BBCD39B9216008AF007675E3 /* Clients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clients.swift; sourceTree = "<group>"; };
-		BBCD39BC21601D18007675E3 /* Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
 		BBCD39BE21603528007675E3 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		E4D0A8DD2D8407898418A770 /* Pods-MactodonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MactodonTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MactodonTests/Pods-MactodonTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,6 +130,7 @@
 				BB17480F21278B3F0015E3A8 /* LoginViewController.swift */,
 				BB9C8DEC217E6E7600669E31 /* Keychain.swift */,
 				BB9C8DE8217E53E800669E31 /* ClientApplication+Keychain.swift */,
+				BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */,
 			);
 			path = Mactodon;
 			sourceTree = "<group>";
@@ -147,7 +148,6 @@
 			isa = PBXGroup;
 			children = (
 				BBCD39B9216008AF007675E3 /* Clients.swift */,
-				BBCD39BC21601D18007675E3 /* Authorization.swift */,
 				BBCD39BE21603528007675E3 /* Client.swift */,
 			);
 			path = Mastodon;
@@ -296,16 +296,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MastodonKit/MastodonKit.framework",
-				"${BUILT_PRODUCTS_DIR}/p2.OAuth2/p2_OAuth2.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MastodonKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/p2_OAuth2.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export EXPANDED_CODE_SIGN_IDENTITY=-\nexport EXPANDED_CODE_SIGN_IDENTITY_NAME=-\n\n\"${SRCROOT}/Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -315,11 +313,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB9C8DEF217E7B0000669E31 /* URLComponents+Helper.swift in Sources */,
 				BB17481021278B3F0015E3A8 /* LoginViewController.swift in Sources */,
 				BBCD39BA216008AF007675E3 /* Clients.swift in Sources */,
 				BB9C8DE9217E53E800669E31 /* ClientApplication+Keychain.swift in Sources */,
 				BBCD39BF21603528007675E3 /* Client.swift in Sources */,
-				BBCD39BD21601D18007675E3 /* Authorization.swift in Sources */,
 				BB9C8DED217E6E7600669E31 /* Keychain.swift in Sources */,
 				BB1747F4212769970015E3A8 /* InstanceViewController.swift in Sources */,
 				BB1747F2212769970015E3A8 /* AppDelegate.swift in Sources */,
