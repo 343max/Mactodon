@@ -42,4 +42,17 @@ class ValuePromiseTests: XCTestCase {
     
     XCTAssertEqual(fireCount, 2)
   }
+  
+  func testNoThenAfterValueChanged() {
+    let promise = ValuePromise(initialValue: 0)
+    promise.value = 42
+    var wasCalled = false
+    promise.didSet.then {
+       wasCalled = true
+    }
+    XCTAssertFalse(wasCalled)
+    
+    promise.value = 23
+    XCTAssertTrue(wasCalled)
+  }
 }
