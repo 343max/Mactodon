@@ -9,6 +9,7 @@ class InstanceViewController: NSViewController {
 
   @IBOutlet weak var tableView: NSTableView!
   
+  var clientApplication: ClientApplication?
   var client: Client? {
     didSet {
       update()
@@ -66,10 +67,12 @@ class InstanceViewController: NSViewController {
 extension InstanceViewController: LoginViewControllerDelegate {
   func registered(baseURL: URL, application: ClientApplication) {
     self.baseURL = baseURL
+    self.clientApplication = application
+    
     let url = URLComponents(string: baseURL.absoluteString + "oauth/authorize",
                             queryItems: ["scope": "read write follow",
                                          "client_id": application.clientID,
-                                         "redirect_uri": Clients.redirectURI + "?host=" + baseURL.host!,
+                                         "redirect_uri": Clients.redirectUri(instance: baseURL),
                                          "response_type": "code"
                                          ])!.url!
     registerAuthenticationNotification()
@@ -96,7 +99,13 @@ extension InstanceViewController {
     
     unregisterAuthenticationNotification()
     let code = notification.userInfo!["code"] as! String
-    self.client = Client(baseURL: baseURL!.absoluteString, accessToken: code)
+    
+    let application = self.clientApplication!
+    let request = Login.oauth(clientID: application.clientID, clientSecret: application.clientSecret, scopes: [.read, .write, .follow], redirectURI: Clients.redirectUri(instance: self.baseURL!), code: code)
+    let client = Client(baseURL: baseURL!.absoluteString)
+    client.successfullRun(request) { (loginSettings, _) in
+      self.client = Client(baseURL: self.baseURL!.absoluteString, accessToken: loginSettings.accessToken)
+    }
   }
   
   static func handleAuthentication(url: URL) {
