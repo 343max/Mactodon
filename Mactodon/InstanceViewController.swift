@@ -1,5 +1,6 @@
 // Copyright Max von Webel. All Rights Reserved.
 
+import Atributika
 import Cocoa
 import MastodonKit
 
@@ -37,6 +38,7 @@ class InstanceViewController: NSViewController {
   override func viewDidLoad() {
     tableView.dataSource = self
     tableView.delegate = self
+    tableView.rowHeight = 100
   }
   
   override func viewDidAppear() {
@@ -48,6 +50,12 @@ class InstanceViewController: NSViewController {
     
     tokenController = TokenController(delegate: self, scopes: [.follow, .read, .write], username: account.username, instance: account.instance, protocolHandler: Bundle.main.bundleIdentifier!)
     tokenController?.acquireAuthenticatedClient()
+  }
+
+  override func viewDidLayout() {
+    super.viewDidLayout()
+
+    tableView.tableColumns.first?.width = tableView.bounds.width
   }
   
   lazy var loginViewController: LoginViewController = {
@@ -127,7 +135,9 @@ extension InstanceViewController: NSTableViewDelegate {
     let status = homeTimeline![row]
     let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("Status"), owner: nil) as! NSTableCellView
     
-    cell.textField?.stringValue = status.content
+    let all = Style.font(NSFont.systemFont(ofSize: NSFont.systemFontSize(for: .regular))).foregroundColor(NSColor.white)
+    let p = Style("p")
+    cell.textField?.attributedStringValue = status.content.style(tags: p).styleAll(all).attributedString
     
     return cell
   }

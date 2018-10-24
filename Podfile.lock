@@ -1,8 +1,14 @@
 PODS:
+  - Atributika (4.6.5)
   - MastodonKit (2.0.0)
 
 DEPENDENCIES:
+  - Atributika
   - MastodonKit (from `https://github.com/MastodonKit/MastodonKit.git`, branch `master`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Atributika
 
 EXTERNAL SOURCES:
   MastodonKit:
@@ -15,8 +21,9 @@ CHECKOUT OPTIONS:
     :git: https://github.com/MastodonKit/MastodonKit.git
 
 SPEC CHECKSUMS:
+  Atributika: f15e4c0003b34d5c6be92080f0ad6fecbe2c5c2f
   MastodonKit: 3bc591ea7e626dd160711f9a10cd50f192e46ed3
 
-PODFILE CHECKSUM: 76b9a78d0e7e67a8c9dda27a0ca75b1367235710
+PODFILE CHECKSUM: 373cd0f428fc4aea72928d62fe6a1456d678e59d
 
 COCOAPODS: 1.5.3

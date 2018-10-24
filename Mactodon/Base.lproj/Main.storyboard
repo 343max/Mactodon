@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -707,23 +706,23 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="InstanceViewController" customModule="Mactodon" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="311" height="538"/>
+                        <rect key="frame" x="0.0" y="0.0" width="421" height="538"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView autohidesScrollers="YES" horizontalLineScroll="51" horizontalPageScroll="10" verticalLineScroll="51" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="np7-Fd-hTp">
-                                <rect key="frame" x="0.0" y="0.0" width="311" height="538"/>
+                            <scrollView autohidesScrollers="YES" horizontalLineScroll="58" horizontalPageScroll="10" verticalLineScroll="58" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="np7-Fd-hTp">
+                                <rect key="frame" x="0.0" y="0.0" width="421" height="538"/>
                                 <clipView key="contentView" id="5Id-Qd-qdv">
-                                    <rect key="frame" x="1" y="1" width="309" height="536"/>
+                                    <rect key="frame" x="1" y="1" width="419" height="536"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="49" rowSizeStyle="automatic" viewBased="YES" id="IFF-QM-icg">
-                                            <rect key="frame" x="0.0" y="0.0" width="309" height="536"/>
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="56" rowSizeStyle="automatic" viewBased="YES" id="IFF-QM-icg">
+                                            <rect key="frame" x="0.0" y="0.0" width="419" height="536"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="305" minWidth="40" maxWidth="1000" id="jyi-AL-G0B">
+                                                <tableColumn width="416" minWidth="40" maxWidth="100000" id="jyi-AL-G0B">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -736,34 +735,34 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="Status" misplaced="YES" id="UjK-34-3hc">
-                                                            <rect key="frame" x="1" y="1" width="305" height="49"/>
+                                                        <tableCellView identifier="Status" id="UjK-34-3hc">
+                                                            <rect key="frame" x="1" y="1" width="416" height="56"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
+                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I9n-ze-d6w">
+                                                                    <rect key="frame" x="3" y="9" width="44" height="44"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="44" id="KIH-P4-cBc"/>
+                                                                        <constraint firstAttribute="height" constant="44" id="bS9-Hz-MmH"/>
+                                                                    </constraints>
+                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="zXS-5o-AOL"/>
+                                                                </imageView>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vm0-xe-Q6X">
-                                                                    <rect key="frame" x="51" y="3" width="253" height="17"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Jtl-H7-Vbd">
+                                                                    <rect key="frame" x="51" y="-15" width="364" height="68"/>
+                                                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" allowsEditingTextAttributes="YES" id="Jtl-H7-Vbd">
                                                                         <font key="font" metaFont="system"/>
+                                                                        <string key="title">Help me out, I don't understand. If it's a corner table, but they only give 3 dimensions - width, depth and height, does the refer to the whole area if it was rectangular, or to just one part, or what. I don't get it</string>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I9n-ze-d6w">
-                                                                    <rect key="frame" x="3" y="-24" width="44" height="44"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="44" id="2Rs-AM-OnR"/>
-                                                                        <constraint firstAttribute="height" constant="44" id="2eO-3z-kV1"/>
-                                                                    </constraints>
-                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="zXS-5o-AOL"/>
-                                                                </imageView>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="Vm0-xe-Q6X" firstAttribute="top" secondItem="UjK-34-3hc" secondAttribute="top" constant="3" id="0rm-WX-aH2"/>
-                                                                <constraint firstAttribute="bottom" secondItem="Vm0-xe-Q6X" secondAttribute="bottom" constant="3" id="2jv-5b-ohw"/>
-                                                                <constraint firstItem="Vm0-xe-Q6X" firstAttribute="leading" secondItem="I9n-ze-d6w" secondAttribute="trailing" constant="6" id="bXA-OS-ubz"/>
-                                                                <constraint firstItem="I9n-ze-d6w" firstAttribute="top" secondItem="UjK-34-3hc" secondAttribute="top" constant="3" id="dha-kM-6qz"/>
-                                                                <constraint firstAttribute="trailing" secondItem="Vm0-xe-Q6X" secondAttribute="trailing" constant="3" id="uCz-YA-ejw"/>
-                                                                <constraint firstItem="I9n-ze-d6w" firstAttribute="leading" secondItem="UjK-34-3hc" secondAttribute="leading" constant="3" id="uxF-vK-WJO"/>
+                                                                <constraint firstItem="Vm0-xe-Q6X" firstAttribute="leading" secondItem="I9n-ze-d6w" secondAttribute="trailing" constant="6" id="655-hI-2RB"/>
+                                                                <constraint firstItem="Vm0-xe-Q6X" firstAttribute="top" secondItem="UjK-34-3hc" secondAttribute="top" constant="3" id="HGO-cJ-8ff"/>
+                                                                <constraint firstItem="I9n-ze-d6w" firstAttribute="top" secondItem="UjK-34-3hc" secondAttribute="top" constant="3" id="XB7-oF-ozU"/>
+                                                                <constraint firstAttribute="trailing" secondItem="Vm0-xe-Q6X" secondAttribute="trailing" constant="3" id="XBY-n9-AFe"/>
+                                                                <constraint firstItem="I9n-ze-d6w" firstAttribute="leading" secondItem="UjK-34-3hc" secondAttribute="leading" constant="3" id="br7-GJ-qFa"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="imageView" destination="I9n-ze-d6w" id="cf8-PH-nBr"/>
@@ -799,7 +798,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="304.5" y="384"/>
+            <point key="canvasLocation" x="359.5" y="384"/>
         </scene>
         <!--Login-->
         <scene sceneID="O1u-P8-OFQ">
