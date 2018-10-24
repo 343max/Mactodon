@@ -8,56 +8,46 @@ import MastodonKit
 class InstanceViewController: NSViewController {
   static let baseURLKey = "BaseURL"
 
-  @IBOutlet weak var tableView: NSTableView!
-  
   var clientApplication: ClientApplication?
-  var client: Client? {
-    didSet {
-      update()
-    }
-  }
-  
-  var currentUser: Account? {
-    didSet {
-      DispatchQueue.main.async {
-        self.view.window?.title = self.currentUser?.username ?? "Mactodon"
-      }
-    }
-  }
-  
-  var homeTimeline: [Status]? {
-    didSet {
-      DispatchQueue.main.async {
-        self.tableView.reloadData()
-      }
-    }
-  }
-  
+  let client = ValuePromise<Client?>(initialValue: nil)
+  let currentUser = ValuePromise<Account?>(initialValue: nil)
   var tokenController: TokenController?
   
   override func viewDidLoad() {
-    tableView.dataSource = self
-    tableView.delegate = self
-    tableView.rowHeight = 100
+    super.viewDidLoad()
+    
+    client.didSet.then { [weak self] in
+      self?.update()
+    }
+    
+    currentUser.didSet.mainQueue.then { (currentUser) in
+      self.view.window?.title = currentUser?.username ?? "Mactodon"
+    }
+    
+    let feedViewController = FeedViewController(client: client)
+    feedViewController.view.autoresizingMask = [.width, .height]
+    feedViewController.view.frame = view.bounds
+    addChild(feedViewController)
+    view.addSubview(feedViewController.view)
   }
   
   override func viewDidAppear() {
+    super.viewDidAppear()
+    
     let settings = Settings.load()
     guard let account = settings.accounts.first else {
       displayLogin()
       return
     }
     
-    tokenController = TokenController(delegate: self, scopes: [.follow, .read, .write], username: account.username, instance: account.instance, protocolHandler: Bundle.main.bundleIdentifier!)
+    tokenController = TokenController(delegate: self,
+                                      scopes: [.follow, .read, .write],
+                                      username: account.username,
+                                      instance: account.instance,
+                                      protocolHandler: Bundle.main.bundleIdentifier!)
     tokenController?.acquireAuthenticatedClient()
   }
 
-  override func viewDidLayout() {
-    super.viewDidLayout()
-
-    tableView.tableColumns.first?.width = tableView.bounds.width
-  }
-  
   lazy var loginViewController: LoginViewController = {
     let vc = storyboard!.instantiateLoginViewController()
     vc.delegate = self
@@ -69,16 +59,12 @@ class InstanceViewController: NSViewController {
   }
   
   func update() {
-    guard let client = self.client else {
+    guard let client = self.client.value else {
       return
     }
     
     client.run(Accounts.currentUser()).then {
-      self.currentUser = $0
-    }
-    
-    client.run(Timelines.home()).then {
-      self.homeTimeline = $0
+      self.currentUser.value = $0
     }
   }
 }
@@ -86,7 +72,7 @@ class InstanceViewController: NSViewController {
 extension InstanceViewController: LoginViewControllerDelegate {
   func registered(baseURL: URL) {
     tokenController = TokenController(delegate: self, scopes: [.follow, .read, .write], instance: baseURL.host!, protocolHandler: Bundle.main.bundleIdentifier!)
-    tokenController?.acquireAuthenticatedClient()
+    tokenController!.acquireAuthenticatedClient()
   }
 }
 
@@ -112,7 +98,7 @@ extension InstanceViewController: TokenControllerDelegate {
   }
   
   func authenticatedClient(client: Client) {
-    self.client = client
+    self.client.value = client
   }
   
   func clientName() -> String {
@@ -121,24 +107,5 @@ extension InstanceViewController: TokenControllerDelegate {
   
   func open(url: URL) {
     NSWorkspace.shared.open(url)
-  }
-}
-
-extension InstanceViewController: NSTableViewDataSource {
-  func numberOfRows(in tableView: NSTableView) -> Int {
-    return homeTimeline?.count ?? 0
-  }
-}
-
-extension InstanceViewController: NSTableViewDelegate {
-  func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-    let status = homeTimeline![row]
-    let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("Status"), owner: nil) as! NSTableCellView
-    
-    let all = Style.font(NSFont.systemFont(ofSize: NSFont.systemFontSize(for: .regular))).foregroundColor(NSColor.white)
-    let p = Style("p")
-    cell.textField?.attributedStringValue = status.content.style(tags: p).styleAll(all).attributedString
-    
-    return cell
   }
 }
