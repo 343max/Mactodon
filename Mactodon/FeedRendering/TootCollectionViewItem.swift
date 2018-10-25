@@ -7,9 +7,9 @@ import Nuke
 class TootCollectionViewItem: NSCollectionViewItem {
   static let identifier = NSUserInterfaceItemIdentifier("TootCollectionViewItem")
   
-  var usernameField: NSTextField!
-  var tootField: NSTextField!
-  var avatarView: NSImageView!
+  private var usernameField: NSTextField!
+  private var tootField: NSTextField!
+  private var avatarView: NSImageView!
   var status: Status? {
     didSet {
       guard let status = status else {
@@ -24,7 +24,7 @@ class TootCollectionViewItem: NSCollectionViewItem {
     }
   }
   
-  class FlippedView: NSView {
+  private class FlippedView: NSView {
     override var isFlipped: Bool {
       get {
         return true
@@ -36,7 +36,7 @@ class TootCollectionViewItem: NSCollectionViewItem {
     view = FlippedView()
   }
   
-  func textField() -> NSTextField {
+  private func textField() -> NSTextField {
     let field = NSTextField(frame: .zero)
     field.isEditable = false
     field.isBordered = false
