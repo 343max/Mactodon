@@ -5,8 +5,8 @@ import MastodonKit
 import Nuke
 
 
-class TootItem: NSCollectionViewItem {
-  static let identifier = NSUserInterfaceItemIdentifier("TootView")
+class TootCollectionViewItem: NSCollectionViewItem {
+  static let identifier = NSUserInterfaceItemIdentifier("TootCollectionViewItem")
   
   var usernameField: NSTextField!
   var tootField: NSTextField!
@@ -22,7 +22,6 @@ class TootItem: NSCollectionViewItem {
       
       usernameField.set(html: "<displayName>\(status.account.displayName)</displayName> <username><at>@</at>\(status.account.username)</username>")
       tootField.set(html: status.content)
-      Nuke.loadImage(with: URL(string: status.account.avatar)!, into: avatarView!)
     }
   }
   
@@ -57,7 +56,21 @@ class TootItem: NSCollectionViewItem {
     view.addSubview(usernameField)
     
     avatarView = NSImageView(frame: .zero)
+    avatarView.wantsLayer = true
+    avatarView.layer!.cornerRadius = 6
+    avatarView.layer!.masksToBounds = true
+    
     view.addSubview(avatarView)
+  }
+  
+  override func viewWillAppear() {
+    super.viewWillAppear()
+    
+    guard let status = status else {
+      return
+    }
+    
+    Nuke.loadImage(with: URL(string: status.account.avatar)!, into: avatarView!)
   }
   
   override func viewDidLayout() {
@@ -95,10 +108,10 @@ class TootItem: NSCollectionViewItem {
 }
 
 class FeedViewController: NSViewController {
-  let client: ValuePromise<Client?>
-  var timeline = ValuePromise<[Status]>(initialValue: [])
-  var scrollView: NSScrollView!
-  var collectionView: NSCollectionView!
+  private let client: ValuePromise<Client?>
+  private var timeline = ValuePromise<[Status]>(initialValue: [])
+  private var scrollView: NSScrollView!
+  private var collectionView: NSCollectionView!
   
   class Layout: NSCollectionViewFlowLayout {
     override func shouldInvalidateLayout(forBoundsChange newBounds: NSRect) -> Bool {
@@ -121,7 +134,7 @@ class FeedViewController: NSViewController {
     collectionView.collectionViewLayout = layout
     collectionView.dataSource = self
     
-    collectionView.register(TootItem.self, forItemWithIdentifier: TootItem.identifier)
+    collectionView.register(TootCollectionViewItem.self, forItemWithIdentifier: TootCollectionViewItem.identifier)
     
     self.collectionView = collectionView
     
@@ -162,8 +175,8 @@ extension FeedViewController: NSCollectionViewDelegate {
 }
 
 extension FeedViewController: NSCollectionViewDataSource {
-  static var sizingTootView: TootItem = {
-    let item = TootItem(nibName: nil, bundle: nil)
+  static var sizingTootView: TootCollectionViewItem = {
+    let item = TootCollectionViewItem(nibName: nil, bundle: nil)
     let _ = item.view
     return item
   }()
@@ -173,7 +186,7 @@ extension FeedViewController: NSCollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    let item = collectionView.makeItem(withIdentifier: TootItem.identifier, for: indexPath) as! TootItem
+    let item = collectionView.makeItem(withIdentifier: TootCollectionViewItem.identifier, for: indexPath) as! TootCollectionViewItem
     item.status = timeline.value[indexPath.item]
     return item
   }
