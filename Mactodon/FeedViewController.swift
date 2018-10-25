@@ -9,6 +9,20 @@ class TootView: NSCollectionViewItem {
   
   var usernameField: NSTextField!
   var tootField: NSTextField!
+  var avatarView: NSImageView!
+  var status: Status? {
+    didSet {
+      guard let status = status else {
+        usernameField.attributedStringValue = NSAttributedString(string: "")
+        tootField.attributedStringValue = NSAttributedString(string: "")
+        avatarView.image = nil
+        return
+      }
+      
+      usernameField.set(html: "<b>\(status.account.displayName)</b> \(status.account.username)")
+      tootField.set(html: status.content)
+    }
+  }
   
   class View: NSView {
     override var isFlipped: Bool {
@@ -27,6 +41,7 @@ class TootView: NSCollectionViewItem {
   func textField() -> NSTextField {
     let field = NSTextField(frame: .zero)
     field.isEditable = false
+    field.backgroundColor = NSColor.blue
     return field
   }
   
@@ -35,19 +50,41 @@ class TootView: NSCollectionViewItem {
     
     tootField = textField()
     view.addSubview(tootField)
+    
+    usernameField = textField()
+    usernameField.cell?.lineBreakMode = .byTruncatingTail
+    view.addSubview(usernameField)
+    
+    avatarView = NSImageView(frame: .zero)
+    view.addSubview(avatarView)
   }
   
   override func viewDidLayout() {
     super.viewDidLayout()
     
-    layout()
+    layout(width: collectionView!.bounds.width)
   }
   
-  @discardableResult func layout() -> NSSize {
-    let width = collectionView!.bounds.width
-    let textWidth = width
-    tootField.frame = NSRect(origin: .zero, size: tootField.sizeThatFits(NSSize(width: textWidth, height: 0)))
-    return tootField.frame.size
+  @discardableResult func layout(width: CGFloat) -> NSSize {
+    let inset = NSEdgeInsets(top: 5, left: 5, bottom: 5, right: 15)
+    let imageSideLenght: CGFloat = 48
+    let imageSpace: CGFloat = 10
+    let textFieldSpace: CGFloat = 5
+    
+    let imageFrame = NSRect(x: inset.left, y: inset.top, width: imageSideLenght, height: imageSideLenght)
+    avatarView.frame = imageFrame
+    
+    let textLeft = imageFrame.maxX + imageSpace
+    let textWidth = width - textLeft - inset.right
+    
+    let textfieldSize = NSSize(width: textWidth, height: 0)
+    let usernameFrame = NSRect(origin: CGPoint(x: textLeft, y: inset.top), size: usernameField.sizeThatFits(textfieldSize))
+    usernameField.frame = usernameFrame
+    
+    let tootFrame = NSRect(origin: CGPoint(x: textLeft, y: usernameFrame.maxY + textFieldSpace), size: tootField.sizeThatFits(textfieldSize))
+    tootField.frame = tootFrame
+    
+    return CGSize(width: width, height: max(tootFrame.maxY, imageFrame.maxY) + inset.bottom)
   }
 }
 
@@ -59,6 +96,10 @@ class FeedViewController: NSViewController {
   
   class Layout: NSCollectionViewFlowLayout {
     override func shouldInvalidateLayout(forBoundsChange newBounds: NSRect) -> Bool {
+      if (newBounds.width == collectionViewContentSize.width) {
+        return false
+      }
+      
       invalidateLayout()
       return true
     }
@@ -99,7 +140,6 @@ class FeedViewController: NSViewController {
     }
     
     timeline.didSet.mainQueue.then { [weak self] in
-
       self?.collectionView.reloadData()
     }
   }
@@ -116,20 +156,27 @@ extension FeedViewController: NSCollectionViewDelegate {
 }
 
 extension FeedViewController: NSCollectionViewDataSource {
+  static var sizingTootView: TootView = {
+    let item = TootView(nibName: nil, bundle: nil)
+    let _ = item.view
+    return item
+  }()
+  
   func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
     return timeline.value.count
   }
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
     let item = collectionView.makeItem(withIdentifier: TootView.identifier, for: indexPath) as! TootView
-    let status = timeline.value[indexPath.item]
-    item.tootField.set(html: status.content)
+    item.status = timeline.value[indexPath.item]
     return item
   }
 }
 
 extension FeedViewController: NSCollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
-    return NSSize(width: collectionView.bounds.width, height: 100)
+    let item = FeedViewController.sizingTootView
+    item.status = timeline.value[indexPath.item]
+    return item.layout(width: collectionView.bounds.width)
   }
 }
