@@ -5,7 +5,7 @@ import MastodonKit
 import Nuke
 
 
-class TootView: NSCollectionViewItem {
+class TootItem: NSCollectionViewItem {
   static let identifier = NSUserInterfaceItemIdentifier("TootView")
   
   var usernameField: NSTextField!
@@ -121,7 +121,7 @@ class FeedViewController: NSViewController {
     collectionView.collectionViewLayout = layout
     collectionView.dataSource = self
     
-    collectionView.register(TootView.self, forItemWithIdentifier: TootView.identifier)
+    collectionView.register(TootItem.self, forItemWithIdentifier: TootItem.identifier)
     
     self.collectionView = collectionView
     
@@ -162,8 +162,8 @@ extension FeedViewController: NSCollectionViewDelegate {
 }
 
 extension FeedViewController: NSCollectionViewDataSource {
-  static var sizingTootView: TootView = {
-    let item = TootView(nibName: nil, bundle: nil)
+  static var sizingTootView: TootItem = {
+    let item = TootItem(nibName: nil, bundle: nil)
     let _ = item.view
     return item
   }()
@@ -173,7 +173,7 @@ extension FeedViewController: NSCollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    let item = collectionView.makeItem(withIdentifier: TootView.identifier, for: indexPath) as! TootView
+    let item = collectionView.makeItem(withIdentifier: TootItem.identifier, for: indexPath) as! TootItem
     item.status = timeline.value[indexPath.item]
     return item
   }

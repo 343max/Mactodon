@@ -142,7 +142,7 @@
 				BB1747FA212769990015E3A8 /* Info.plist */,
 				BB1747FB212769990015E3A8 /* Mactodon.entitlements */,
 				BB17480F21278B3F0015E3A8 /* LoginViewController.swift */,
-				BB88F8792181166600B2F662 /* FeedViewController.swift */,
+				BB88F88021824E4D00B2F662 /* FeedRendering */,
 				BB9C8DEC217E6E7600669E31 /* Keychain.swift */,
 				BB9C8DE8217E53E800669E31 /* Keychain+MastodonKit.swift */,
 				BB88F7F9217F913C00B2F662 /* Promise */,
@@ -171,6 +171,14 @@
 				BB88F87B2181265200B2F662 /* Promise+Helpers.swift */,
 			);
 			name = Promise;
+			sourceTree = "<group>";
+		};
+		BB88F88021824E4D00B2F662 /* FeedRendering */ = {
+			isa = PBXGroup;
+			children = (
+				BB88F8792181166600B2F662 /* FeedViewController.swift */,
+			);
+			path = FeedRendering;
 			sourceTree = "<group>";
 		};
 		BBCD39BB216008BC007675E3 /* Mastodon */ = {
