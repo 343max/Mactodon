@@ -19,7 +19,8 @@ class TootCollectionViewItem: NSCollectionViewItem {
         return
       }
       
-      usernameField.set(html: "<displayName>\(status.account.displayName)</displayName> <username><at>@</at>\(status.account.username)</username>")
+      usernameField.set(html: "<displayName>\(status.account.displayName)</displayName> <username><a href=\"\(status.account.url)\"><at>@</at>\(status.account.username)</a></username>")
+      print(status.content)
       tootField.set(html: status.content)
     }
   }
@@ -41,6 +42,8 @@ class TootCollectionViewItem: NSCollectionViewItem {
     field.isEditable = false
     field.isBordered = false
     field.backgroundColor = NSColor.clear
+    field.isSelectable = true
+    field.allowsEditingTextAttributes = true
     return field
   }
   
