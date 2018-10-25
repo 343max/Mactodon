@@ -19,7 +19,7 @@ class TootView: NSCollectionViewItem {
         return
       }
       
-      usernameField.set(html: "<b>\(status.account.displayName)</b> \(status.account.username)")
+      usernameField.set(html: "<displayName>\(status.account.displayName)</displayName> <username><at>@</at>\(status.account.username)</username>")
       tootField.set(html: status.content)
     }
   }
@@ -34,14 +34,12 @@ class TootView: NSCollectionViewItem {
   
   override func loadView() {
     view = View()
-    view.wantsLayer = true
-    view.layer?.backgroundColor = NSColor.orange.cgColor
   }
   
   func textField() -> NSTextField {
     let field = NSTextField(frame: .zero)
     field.isEditable = false
-    field.backgroundColor = NSColor.blue
+    field.isBordered = false
     return field
   }
   
@@ -66,10 +64,10 @@ class TootView: NSCollectionViewItem {
   }
   
   @discardableResult func layout(width: CGFloat) -> NSSize {
-    let inset = NSEdgeInsets(top: 5, left: 5, bottom: 5, right: 15)
+    let inset = NSEdgeInsets(top: 10, left: 5, bottom: 15, right: 15)
     let imageSideLenght: CGFloat = 48
     let imageSpace: CGFloat = 10
-    let textFieldSpace: CGFloat = 5
+    let textFieldSpace: CGFloat = 3
     
     let imageFrame = NSRect(x: inset.left, y: inset.top, width: imageSideLenght, height: imageSideLenght)
     avatarView.frame = imageFrame
