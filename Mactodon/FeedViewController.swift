@@ -40,6 +40,7 @@ class TootView: NSCollectionViewItem {
     let field = NSTextField(frame: .zero)
     field.isEditable = false
     field.isBordered = false
+    field.backgroundColor = NSColor.clear
     return field
   }
   
