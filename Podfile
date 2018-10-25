@@ -5,6 +5,7 @@ target 'Mactodon' do
 
   pod 'MastodonKit', :git => 'https://github.com/MastodonKit/MastodonKit.git', :branch => 'master'
   pod 'Atributika'
+  pod 'Nuke'
 
   target 'MactodonTests' do
     inherit! :search_paths

@@ -1,14 +1,17 @@
 PODS:
   - Atributika (4.6.5)
   - MastodonKit (2.0.0)
+  - Nuke (7.5)
 
 DEPENDENCIES:
   - Atributika
   - MastodonKit (from `https://github.com/MastodonKit/MastodonKit.git`, branch `master`)
+  - Nuke
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Atributika
+    - Nuke
 
 EXTERNAL SOURCES:
   MastodonKit:
@@ -23,7 +26,8 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Atributika: f15e4c0003b34d5c6be92080f0ad6fecbe2c5c2f
   MastodonKit: 3bc591ea7e626dd160711f9a10cd50f192e46ed3
+  Nuke: 799c0430f87b11c4dacfa80b13e1c4f0a1464b90
 
-PODFILE CHECKSUM: 373cd0f428fc4aea72928d62fe6a1456d678e59d
+PODFILE CHECKSUM: d38577b07ca92d3f19081767c23bc34dbae58ba0
 
 COCOAPODS: 1.5.3
