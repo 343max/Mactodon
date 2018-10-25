@@ -2,6 +2,7 @@
 
 import Cocoa
 import MastodonKit
+import Nuke
 
 
 class TootView: NSCollectionViewItem {
@@ -21,6 +22,7 @@ class TootView: NSCollectionViewItem {
       
       usernameField.set(html: "<displayName>\(status.account.displayName)</displayName> <username><at>@</at>\(status.account.username)</username>")
       tootField.set(html: status.content)
+      Nuke.loadImage(with: URL(string: status.account.avatar)!, into: avatarView!)
     }
   }
   
@@ -62,6 +64,11 @@ class TootView: NSCollectionViewItem {
     super.viewDidLayout()
     
     layout(width: collectionView!.bounds.width)
+  }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    status = nil
   }
   
   @discardableResult func layout(width: CGFloat) -> NSSize {
