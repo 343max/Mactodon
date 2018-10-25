@@ -24,7 +24,7 @@ class TootView: NSCollectionViewItem {
     }
   }
   
-  class View: NSView {
+  class FlippedView: NSView {
     override var isFlipped: Bool {
       get {
         return true
@@ -33,7 +33,7 @@ class TootView: NSCollectionViewItem {
   }
   
   override func loadView() {
-    view = View()
+    view = FlippedView()
   }
   
   func textField() -> NSTextField {
