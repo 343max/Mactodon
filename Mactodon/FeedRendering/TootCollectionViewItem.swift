@@ -70,6 +70,7 @@ class TootCollectionViewItem: NSCollectionViewItem {
     }
     
     Nuke.loadImage(with: URL(string: status.account.avatar + "&username=\(status.account.username)")!, into: avatarView)
+    avatarView.clickURL = URL(string: status.account.url)
   }
   
   func didEndDisplaying() {

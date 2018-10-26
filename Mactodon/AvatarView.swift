@@ -3,6 +3,8 @@
 import Cocoa
 
 class AvatarView: NSImageView {
+  var clickURL: URL?
+  
   enum Sizes {
     case regular
     case small
@@ -30,5 +32,19 @@ class AvatarView: NSImageView {
   override func layout() {
     super.layout()
     layer?.cornerRadius = min(bounds.height, bounds.width) / 2.0
+  }
+  
+  override func mouseDown(with event: NSEvent) {
+    if clickURL != nil {
+      alphaValue = 0.6
+    }
+  }
+  
+  override func mouseUp(with event: NSEvent) {
+    alphaValue = 1.0
+    
+    if let clickURL = clickURL {
+      NSWorkspace.shared.open(clickURL)
+    }
   }
 }
