@@ -140,22 +140,22 @@
 		BB1747F0212769970015E3A8 /* Mactodon */ = {
 			isa = PBXGroup;
 			children = (
-				BBCD39BB216008BC007675E3 /* Mastodon */,
-				BB1747F1212769970015E3A8 /* AppDelegate.swift */,
-				BB1747F3212769970015E3A8 /* InstanceViewController.swift */,
-				BB1747F5212769990015E3A8 /* Assets.xcassets */,
-				BB1747F7212769990015E3A8 /* Main.storyboard */,
-				BB1747FA212769990015E3A8 /* Info.plist */,
 				BB1747FB212769990015E3A8 /* Mactodon.entitlements */,
-				BB17480F21278B3F0015E3A8 /* LoginViewController.swift */,
-				BB88F88021824E4D00B2F662 /* FeedRendering */,
+				BB1747FA212769990015E3A8 /* Info.plist */,
+				BB1747F1212769970015E3A8 /* AppDelegate.swift */,
+				BBC6C9262183840C004A9F2E /* AvatarView.swift */,
+				BB1747F3212769970015E3A8 /* InstanceViewController.swift */,
 				BB9C8DEC217E6E7600669E31 /* Keychain.swift */,
 				BB9C8DE8217E53E800669E31 /* Keychain+MastodonKit.swift */,
-				BB88F7F9217F913C00B2F662 /* Promise */,
-				BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */,
-				BB88F804217FDFD800B2F662 /* Settings.swift */,
+				BB17480F21278B3F0015E3A8 /* LoginViewController.swift */,
 				BB88F87D21812FF200B2F662 /* NSTextField+HTML.swift */,
-				BBC6C9262183840C004A9F2E /* AvatarView.swift */,
+				BB88F804217FDFD800B2F662 /* Settings.swift */,
+				BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */,
+				BB1747F5212769990015E3A8 /* Assets.xcassets */,
+				BB88F88021824E4D00B2F662 /* FeedRendering */,
+				BB1747F7212769990015E3A8 /* Main.storyboard */,
+				BBCD39BB216008BC007675E3 /* Mastodon */,
+				BB88F7F9217F913C00B2F662 /* Promise */,
 			);
 			path = Mactodon;
 			sourceTree = "<group>";
