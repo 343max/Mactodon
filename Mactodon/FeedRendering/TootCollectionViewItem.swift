@@ -9,7 +9,7 @@ class TootCollectionViewItem: NSCollectionViewItem {
   
   private var usernameField: NSTextField!
   private var tootField: NSTextField!
-  private var avatarView: NSImageView!
+  private var avatarView: AvatarView!
   var status: Status? {
     didSet {
       guard let status = status else {
@@ -60,11 +60,7 @@ class TootCollectionViewItem: NSCollectionViewItem {
     usernameField.cell?.lineBreakMode = .byTruncatingTail
     view.addSubview(usernameField)
     
-    avatarView = NSImageView(frame: .zero)
-    avatarView.wantsLayer = true
-    avatarView.layer!.cornerRadius = 6
-    avatarView.layer!.masksToBounds = true
-    
+    avatarView = AvatarView(frame: .zero)
     view.addSubview(avatarView)
   }
   
@@ -93,21 +89,21 @@ class TootCollectionViewItem: NSCollectionViewItem {
   
   @discardableResult func layout(width: CGFloat) -> NSSize {
     let inset = NSEdgeInsets(top: 10, left: 5, bottom: 15, right: 15)
-    let imageSideLenght: CGFloat = 48
-    let imageSpace: CGFloat = 10
+    let avatarSize = AvatarView.size(.regular)
+    let avatarSpace: CGFloat = 10
     let textFieldSpace: CGFloat = 3
     
-    let imageFrame = NSRect(x: inset.left, y: inset.top, width: imageSideLenght, height: imageSideLenght)
+    let imageFrame = CGRect(origin: CGPoint(x: inset.left, y: inset.top), size: avatarSize)
     avatarView.frame = imageFrame
     
-    let textLeft = imageFrame.maxX + imageSpace
+    let textLeft = imageFrame.maxX + avatarSpace
     let textWidth = width - textLeft - inset.right
     
-    let textfieldSize = NSSize(width: textWidth, height: 0)
-    let usernameFrame = NSRect(origin: CGPoint(x: textLeft, y: inset.top), size: usernameField.sizeThatFits(textfieldSize))
+    let textfieldSize = CGSize(width: textWidth, height: 0)
+    let usernameFrame = CGRect(origin: CGPoint(x: textLeft, y: inset.top), size: usernameField.sizeThatFits(textfieldSize))
     usernameField.frame = usernameFrame
     
-    let tootFrame = NSRect(origin: CGPoint(x: textLeft, y: usernameFrame.maxY + textFieldSpace), size: tootField.sizeThatFits(textfieldSize))
+    let tootFrame = CGRect(origin: CGPoint(x: textLeft, y: usernameFrame.maxY + textFieldSpace), size: tootField.sizeThatFits(textfieldSize))
     tootField.frame = tootFrame
     
     return CGSize(width: width, height: max(tootFrame.maxY, imageFrame.maxY) + inset.bottom)

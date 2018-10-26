@@ -1,0 +1,34 @@
+// Copyright Max von Webel. All Rights Reserved.
+
+import Cocoa
+
+class AvatarView: NSImageView {
+  enum Sizes {
+    case regular
+    case small
+  }
+
+  static func size(_ size: Sizes) -> CGSize {
+    switch size {
+    case .regular:
+      return CGSize(width: 48, height: 48)
+    case .small:
+      return CGSize(width: 24, height: 24)
+    }
+  }
+  
+  override init(frame frameRect: NSRect) {
+    super.init(frame: frameRect)
+    self.wantsLayer = true
+    self.layer!.masksToBounds = true
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func layout() {
+    super.layout()
+    layer?.cornerRadius = min(bounds.height, bounds.width) / 2.0
+  }
+}

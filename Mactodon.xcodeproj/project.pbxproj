@@ -28,6 +28,7 @@
 		BB9C8DE9217E53E800669E31 /* Keychain+MastodonKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DE8217E53E800669E31 /* Keychain+MastodonKit.swift */; };
 		BB9C8DED217E6E7600669E31 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DEC217E6E7600669E31 /* Keychain.swift */; };
 		BB9C8DEF217E7B0000669E31 /* URLComponents+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */; };
+		BBC6C9272183840C004A9F2E /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC6C9262183840C004A9F2E /* AvatarView.swift */; };
 		BBCD39BF21603528007675E3 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCD39BE21603528007675E3 /* Client.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 		BB9C8DE8217E53E800669E31 /* Keychain+MastodonKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keychain+MastodonKit.swift"; sourceTree = "<group>"; };
 		BB9C8DEC217E6E7600669E31 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+Helper.swift"; sourceTree = "<group>"; };
+		BBC6C9262183840C004A9F2E /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		BBCD39BE21603528007675E3 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		E4D0A8DD2D8407898418A770 /* Pods-MactodonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MactodonTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MactodonTests/Pods-MactodonTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -153,6 +155,7 @@
 				BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */,
 				BB88F804217FDFD800B2F662 /* Settings.swift */,
 				BB88F87D21812FF200B2F662 /* NSTextField+HTML.swift */,
+				BBC6C9262183840C004A9F2E /* AvatarView.swift */,
 			);
 			path = Mactodon;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				BB88F884218287F300B2F662 /* FeedProvider.swift in Sources */,
 				BB88F805217FDFD800B2F662 /* Settings.swift in Sources */,
 				BB88F87A2181166600B2F662 /* FeedViewController.swift in Sources */,
+				BBC6C9272183840C004A9F2E /* AvatarView.swift in Sources */,
 				BB1747F2212769970015E3A8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
