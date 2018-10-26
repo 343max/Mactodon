@@ -24,7 +24,7 @@ class InstanceViewController: NSViewController {
       self.view.window?.title = currentUser?.username ?? "Mactodon"
     }
     
-    let feedViewController = FeedViewController(client: client)
+    let feedViewController = FeedViewController(feedProvider: TimelineFeedProvider(client: client))
     feedViewController.view.autoresizingMask = [.width, .height]
     feedViewController.view.frame = view.bounds
     addChild(feedViewController)

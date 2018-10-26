@@ -5,7 +5,7 @@ import MastodonKit
 
 extension Client {
   struct Response<Model> {
-    let model: Model
+    let value: Model
     let pagination: Pagination?
   }
 
@@ -15,8 +15,8 @@ extension Client {
         switch result {
         case .failure(let error):
           promise.throw(error: error)
-        case .success(let model, let pagination):
-          completion(Response(model: model, pagination: pagination))
+        case .success(let value, let pagination):
+          completion(Response(value: value, pagination: pagination))
         }
       })
     })

@@ -4,8 +4,8 @@ import Cocoa
 import MastodonKit
 
 class FeedViewController: NSViewController {
-  private let client: ValuePromise<Client?>
-  private var timeline = ValuePromise<[Status]>(initialValue: [])
+  private let feedProvider: FeedProvider
+  private var timeline: [Status] = []
   private var scrollView: NSScrollView!
   private var collectionView: NSCollectionView!
   
@@ -40,29 +40,35 @@ class FeedViewController: NSViewController {
     self.view = scrollView
   }
   
-  init(client: ValuePromise<Client?>) {
-    self.client = client
+  init(feedProvider: FeedProvider) {
+    self.feedProvider = feedProvider
     super.init(nibName: nil, bundle: nil)
+    self.feedProvider.delegate = self
   }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
-  override func viewDidLoad() {
-    client.didSet.mainQueue.then { [weak self] in
-      self?.reload()
-    }
-    
-    timeline.didSet.mainQueue.then { [weak self] in
-      self?.collectionView.reloadData()
-    }
+}
+
+extension FeedViewController: FeedProviderDelegate {
+  func set(feedItems: [Status]) {
+    timeline = feedItems
+    collectionView.reloadData()
   }
   
-  func reload() {
-    client.value?.run(Timelines.home()).then { [weak self] (timeline) in
-      self?.timeline.value = timeline
-    }
+  func prepend(feedItems items: [Status]) {
+    timeline = items + timeline
+    collectionView.reloadData()
+  }
+  
+  func append(feedItems items: [Status]) {
+    timeline += items
+    collectionView.reloadData()
+  }
+  
+  func feedProviderReady() {
+    feedProvider.reload()
   }
 }
 
@@ -78,12 +84,12 @@ extension FeedViewController: NSCollectionViewDataSource {
   }()
   
   func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-    return timeline.value.count
+    return timeline.count
   }
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
     let item = collectionView.makeItem(withIdentifier: TootCollectionViewItem.identifier, for: indexPath) as! TootCollectionViewItem
-    item.status = timeline.value[indexPath.item]
+    item.status = timeline[indexPath.item]
     return item
   }
 }
@@ -91,7 +97,7 @@ extension FeedViewController: NSCollectionViewDataSource {
 extension FeedViewController: NSCollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
     let item = FeedViewController.sizingTootView
-    item.status = timeline.value[indexPath.item]
+    item.status = timeline[indexPath.item]
     return item.layout(width: collectionView.bounds.width)
   }
 }
