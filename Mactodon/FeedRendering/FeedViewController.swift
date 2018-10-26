@@ -138,7 +138,7 @@ extension FeedViewController: NSCollectionViewDataSource {
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
     let item = collectionView.makeItem(withIdentifier: TootItem.identifier, for: indexPath) as! TootItem
-    item.status = timeline[indexPath.item]
+    item.model = TootItemModel(status: timeline[indexPath.item])
     return item
   }
 }
@@ -146,7 +146,7 @@ extension FeedViewController: NSCollectionViewDataSource {
 extension FeedViewController: NSCollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
     let item = FeedViewController.sizingTootView
-    item.status = timeline[indexPath.item]
+    item.model = TootItemModel(status: timeline[indexPath.item])
     return item.layout(width: collectionView.bounds.width)
   }
 }

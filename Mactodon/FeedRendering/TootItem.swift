@@ -4,27 +4,38 @@ import Cocoa
 import MastodonKit
 import Nuke
 
+struct TootItemModel {
+  let status: Status
+  let creator: Account
+  
+  init(status: Status) {
+    self.status = status
+    self.creator = status.account
+  }
+}
+
 class TootItem: NSCollectionViewItem {
   static let identifier = NSUserInterfaceItemIdentifier("TootCollectionViewItem")
   
   private var usernameField: NSTextField!
   private var tootField: NSTextField!
   private var avatarView: AvatarView!
-  var status: Status? {
+  var model: TootItemModel? {
     didSet {
-      guard let status = status else {
+      guard let model = model else {
         usernameField.attributedStringValue = NSAttributedString(string: "")
         tootField.attributedStringValue = NSAttributedString(string: "")
         avatarView.image = nil
         return
       }
       
+      let creator = model.creator
       let usernameHtml =
-        (status.account.displayName != "" ? "<displayName>\(status.account.displayName)</displayName> " : "") +
-        "<username><a href=\"\(status.account.url)\"><at>@</at>\(status.account.username)</a></username>"
+        (creator.displayName != "" ? "<displayName>\(creator.displayName)</displayName> " : "") +
+        "<username><a href=\"\(creator.url)\"><at>@</at>\(creator.username)</a></username>"
       
       usernameField.set(html: usernameHtml)
-      tootField.set(html: status.content)
+      tootField.set(html: model.status.content)
     }
   }
   
@@ -65,12 +76,12 @@ class TootItem: NSCollectionViewItem {
   }
   
   func willDisplay() {
-    guard let status = status else {
+    guard let model = model else {
       return
     }
     
-    Nuke.loadImage(with: URL(string: status.account.avatar + "&username=\(status.account.username)")!, into: avatarView)
-    avatarView.clickURL = URL(string: status.account.url)
+    Nuke.loadImage(with: URL(string: model.creator.avatar + "&username=\(model.creator.username)")!, into: avatarView)
+    avatarView.clickURL = URL(string: model.creator.url)
   }
   
   func didEndDisplaying() {
@@ -85,7 +96,7 @@ class TootItem: NSCollectionViewItem {
   
   override func prepareForReuse() {
     super.prepareForReuse()
-    status = nil
+    model = nil
   }
   
   @discardableResult func layout(width: CGFloat) -> NSSize {
