@@ -353,6 +353,9 @@
                                                 <action selector="runToolbarCustomizationPalette:" target="Ady-hI-5gd" id="pQI-g3-MTW"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="e2y-Vb-Jgt"/>
+                                        <menuItem title="Home Timeline" keyEquivalent="1" id="9q2-OO-CDm"/>
+                                        <menuItem title="Notifications" keyEquivalent="2" id="YVI-Ar-S1l"/>
                                         <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
                                         <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
