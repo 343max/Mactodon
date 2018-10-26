@@ -19,7 +19,11 @@ class TootCollectionViewItem: NSCollectionViewItem {
         return
       }
       
-      usernameField.set(html: "<displayName>\(status.account.displayName)</displayName> <username><a href=\"\(status.account.url)\"><at>@</at>\(status.account.username)</a></username>")
+      let usernameHtml =
+        (status.account.displayName != "" ? "<displayName>\(status.account.displayName)</displayName> " : "") +
+        "<username><a href=\"\(status.account.url)\"><at>@</at>\(status.account.username)</a></username>"
+      
+      usernameField.set(html: usernameHtml)
       tootField.set(html: status.content)
     }
   }
