@@ -32,7 +32,7 @@ class FeedViewController: NSViewController {
     collectionView.collectionViewLayout = layout
     collectionView.dataSource = self
     
-    collectionView.register(TootCollectionViewItem.self, forItemWithIdentifier: TootCollectionViewItem.identifier)
+    collectionView.register(TootItem.self, forItemWithIdentifier: TootItem.identifier)
     
     self.collectionView = collectionView
     
@@ -109,7 +109,7 @@ extension FeedViewController: FeedProviderDelegate {
 
 extension FeedViewController: NSCollectionViewDelegate {
   func collectionView(_ collectionView: NSCollectionView, willDisplay item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
-    guard let item = item as? TootCollectionViewItem else {
+    guard let item = item as? TootItem else {
       return
     }
     
@@ -117,7 +117,7 @@ extension FeedViewController: NSCollectionViewDelegate {
   }
   
   func collectionView(_ collectionView: NSCollectionView, didEndDisplaying item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
-    guard let item = item as? TootCollectionViewItem else {
+    guard let item = item as? TootItem else {
       return
     }
     
@@ -126,8 +126,8 @@ extension FeedViewController: NSCollectionViewDelegate {
 }
 
 extension FeedViewController: NSCollectionViewDataSource {
-  static var sizingTootView: TootCollectionViewItem = {
-    let item = TootCollectionViewItem(nibName: nil, bundle: nil)
+  static var sizingTootView: TootItem = {
+    let item = TootItem(nibName: nil, bundle: nil)
     let _ = item.view
     return item
   }()
@@ -137,7 +137,7 @@ extension FeedViewController: NSCollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    let item = collectionView.makeItem(withIdentifier: TootCollectionViewItem.identifier, for: indexPath) as! TootCollectionViewItem
+    let item = collectionView.makeItem(withIdentifier: TootItem.identifier, for: indexPath) as! TootItem
     item.status = timeline[indexPath.item]
     return item
   }

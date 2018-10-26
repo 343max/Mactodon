@@ -4,7 +4,7 @@ import Cocoa
 import MastodonKit
 import Nuke
 
-class TootCollectionViewItem: NSCollectionViewItem {
+class TootItem: NSCollectionViewItem {
   static let identifier = NSUserInterfaceItemIdentifier("TootCollectionViewItem")
   
   private var usernameField: NSTextField!

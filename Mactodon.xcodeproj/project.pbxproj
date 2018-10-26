@@ -23,7 +23,7 @@
 		BB88F87A2181166600B2F662 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F8792181166600B2F662 /* FeedViewController.swift */; };
 		BB88F87C2181265200B2F662 /* Promise+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F87B2181265200B2F662 /* Promise+Helpers.swift */; };
 		BB88F87E21812FF200B2F662 /* NSTextField+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F87D21812FF200B2F662 /* NSTextField+HTML.swift */; };
-		BB88F882218253CB00B2F662 /* TootCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F881218253CB00B2F662 /* TootCollectionViewItem.swift */; };
+		BB88F882218253CB00B2F662 /* TootItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F881218253CB00B2F662 /* TootItem.swift */; };
 		BB88F884218287F300B2F662 /* FeedProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F883218287F300B2F662 /* FeedProvider.swift */; };
 		BB9C8DE9217E53E800669E31 /* Keychain+MastodonKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DE8217E53E800669E31 /* Keychain+MastodonKit.swift */; };
 		BB9C8DED217E6E7600669E31 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DEC217E6E7600669E31 /* Keychain.swift */; };
@@ -67,7 +67,7 @@
 		BB88F8792181166600B2F662 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		BB88F87B2181265200B2F662 /* Promise+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Promise+Helpers.swift"; sourceTree = "<group>"; };
 		BB88F87D21812FF200B2F662 /* NSTextField+HTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+HTML.swift"; sourceTree = "<group>"; };
-		BB88F881218253CB00B2F662 /* TootCollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TootCollectionViewItem.swift; sourceTree = "<group>"; };
+		BB88F881218253CB00B2F662 /* TootItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TootItem.swift; sourceTree = "<group>"; };
 		BB88F883218287F300B2F662 /* FeedProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedProvider.swift; sourceTree = "<group>"; };
 		BB9C8DE8217E53E800669E31 /* Keychain+MastodonKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keychain+MastodonKit.swift"; sourceTree = "<group>"; };
 		BB9C8DEC217E6E7600669E31 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 			children = (
 				BB88F883218287F300B2F662 /* FeedProvider.swift */,
 				BB88F8792181166600B2F662 /* FeedViewController.swift */,
-				BB88F881218253CB00B2F662 /* TootCollectionViewItem.swift */,
+				BB88F881218253CB00B2F662 /* TootItem.swift */,
 			);
 			path = FeedRendering;
 			sourceTree = "<group>";
@@ -374,7 +374,7 @@
 				BB9C8DED217E6E7600669E31 /* Keychain.swift in Sources */,
 				BB88F87E21812FF200B2F662 /* NSTextField+HTML.swift in Sources */,
 				BB1747F4212769970015E3A8 /* InstanceViewController.swift in Sources */,
-				BB88F882218253CB00B2F662 /* TootCollectionViewItem.swift in Sources */,
+				BB88F882218253CB00B2F662 /* TootItem.swift in Sources */,
 				BB88F884218287F300B2F662 /* FeedProvider.swift in Sources */,
 				BB88F805217FDFD800B2F662 /* Settings.swift in Sources */,
 				BB88F87A2181166600B2F662 /* FeedViewController.swift in Sources */,
