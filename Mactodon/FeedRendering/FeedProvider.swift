@@ -12,6 +12,8 @@ protocol FeedProviderDelegate: AnyObject {
 
 protocol FeedProvider: AnyObject {
   var delegate: FeedProviderDelegate? { get set }
+  var isLoading: Bool { get }
+  var ready: Bool { get }
   func reload()
   func loadMore()
 }
@@ -24,8 +26,24 @@ class TimelineFeedProvider: FeedProvider {
       }
     }
   }
-  let client: ValuePromise<Client?>
+
+  var isLoading: Bool {
+    get {
+      return _isLoading
+    }
+  }
   
+  var ready: Bool {
+    get {
+      return client.value != nil
+    }
+  }
+
+  private let client: ValuePromise<Client?>
+  private var _isLoading = false
+  private var nextPage: RequestRange?
+  private var previousPage: RequestRange?
+
   init(client: ValuePromise<Client?>) {
     self.client = client
     self.client.didSet.then {
@@ -34,12 +52,41 @@ class TimelineFeedProvider: FeedProvider {
   }
   
   func reload() {
-    client.value?.runPaginated(Timelines.home()).then { [weak self] (result) in
-      self?.delegate?.set(feedItems: result.value)
+    if (isLoading) {
+      return
+    }
+    
+    _isLoading = true
+    client.value?.runPaginated(Timelines.home()).mainQueue.then { [weak self] (result) in
+      guard let self = self else {
+        return
+      }
+      
+      self._isLoading = false
+      self.delegate?.set(feedItems: result.value)
+      self.previousPage = result.pagination?.previous
+      self.nextPage = result.pagination?.next
+      
+    }.fail { [weak self] (_) in
+        self?._isLoading = false
     }
   }
   
   func loadMore() {
-    //
+    guard let nextPage = nextPage else {
+      return
+    }
+    _isLoading = true
+    client.value?.runPaginated(Timelines.home(range: nextPage)).mainQueue.then { [weak self] (result) in
+      guard let self = self else {
+        return
+      }
+
+      self._isLoading = false
+      self.delegate?.append(feedItems: result.value)
+      self.nextPage = result.pagination?.next
+    }.fail({ [weak self] (_) in
+      self?._isLoading = false
+    })
   }
 }

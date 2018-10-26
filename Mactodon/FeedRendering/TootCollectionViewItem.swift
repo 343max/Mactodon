@@ -20,7 +20,6 @@ class TootCollectionViewItem: NSCollectionViewItem {
       }
       
       usernameField.set(html: "<displayName>\(status.account.displayName)</displayName> <username><a href=\"\(status.account.url)\"><at>@</at>\(status.account.username)</a></username>")
-      print(status.content)
       tootField.set(html: status.content)
     }
   }
@@ -65,14 +64,16 @@ class TootCollectionViewItem: NSCollectionViewItem {
     view.addSubview(avatarView)
   }
   
-  override func viewWillAppear() {
-    super.viewWillAppear()
-    
+  func willDisplay() {
     guard let status = status else {
       return
     }
     
-    Nuke.loadImage(with: URL(string: status.account.avatar)!, into: avatarView!)
+    Nuke.loadImage(with: URL(string: status.account.avatar + "&username=\(status.account.username)")!, into: avatarView)
+  }
+  
+  func didEndDisplaying() {
+    Nuke.cancelRequest(for: avatarView)
   }
   
   override func viewDidLayout() {
