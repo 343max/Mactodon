@@ -15,7 +15,7 @@ class AvatarView: NSImageView {
     case .regular:
       return CGSize(width: 48, height: 48)
     case .small:
-      return CGSize(width: 24, height: 24)
+      return CGSize(width: 20, height: 20)
     }
   }
   

@@ -5,27 +5,63 @@ import MastodonKit
 import Nuke
 
 struct TootItemModel {
+  let kind: Kind
   let status: Status
   let creator: Account
   
+  enum Kind {
+    case post
+    case boost(booster: Account)
+  }
+  
   init(status: Status) {
-    self.status = status
-    self.creator = status.account
+    if let reblog = status.reblog {
+      self.status = reblog
+      self.creator = reblog.account
+      self.kind = .boost(booster: status.account)
+    } else {
+      self.status = status
+      self.creator = status.account
+      self.kind = .post
+    }
+  }
+}
+
+extension TootItemModel {
+  struct Action {
+    let actor: Account
+    let descriptionHtml: String
+  }
+  
+  var action: Action? {
+    get {
+      switch self.kind {
+      case .post:
+        return nil
+      case .boost(let booster):
+        let html = "\(booster.displayName != "" ? booster.displayName : booster.username) boosted"
+        return Action(actor: booster, descriptionHtml: html)
+      }
+    }
   }
 }
 
 class TootItem: NSCollectionViewItem {
   static let identifier = NSUserInterfaceItemIdentifier("TootCollectionViewItem")
   
-  private var usernameField: NSTextField!
   private var tootField: NSTextField!
-  private var avatarView: AvatarView!
+  private var creatorName: NSTextField!
+  private var creatorAvatar: AvatarView!
+  
+  private var actionDescription: NSTextField!
+  private var actorAvatar: AvatarView!
+  
   var model: TootItemModel? {
     didSet {
       guard let model = model else {
-        usernameField.attributedStringValue = NSAttributedString(string: "")
+        creatorName.attributedStringValue = NSAttributedString(string: "")
         tootField.attributedStringValue = NSAttributedString(string: "")
-        avatarView.image = nil
+        creatorAvatar.image = nil
         return
       }
       
@@ -34,8 +70,10 @@ class TootItem: NSCollectionViewItem {
         (creator.displayName != "" ? "<displayName>\(creator.displayName)</displayName> " : "") +
         "<username><a href=\"\(creator.url)\"><at>@</at>\(creator.username)</a></username>"
       
-      usernameField.set(html: usernameHtml)
+      creatorName.set(html: usernameHtml)
       tootField.set(html: model.status.content)
+      
+      actionDescription.set(html: model.action?.descriptionHtml ?? "")
     }
   }
   
@@ -67,12 +105,18 @@ class TootItem: NSCollectionViewItem {
     tootField = textField()
     view.addSubview(tootField)
     
-    usernameField = textField()
-    usernameField.cell?.lineBreakMode = .byTruncatingTail
-    view.addSubview(usernameField)
+    creatorName = textField()
+    creatorName.cell?.lineBreakMode = .byTruncatingTail
+    view.addSubview(creatorName)
     
-    avatarView = AvatarView(frame: .zero)
-    view.addSubview(avatarView)
+    creatorAvatar = AvatarView(frame: .zero)
+    view.addSubview(creatorAvatar)
+    
+    actionDescription = textField()
+    view.addSubview(actionDescription)
+    
+    actorAvatar = AvatarView(frame: .zero)
+    view.addSubview(actorAvatar)
   }
   
   func willDisplay() {
@@ -80,12 +124,17 @@ class TootItem: NSCollectionViewItem {
       return
     }
     
-    Nuke.loadImage(with: URL(string: model.creator.avatar + "&username=\(model.creator.username)")!, into: avatarView)
-    avatarView.clickURL = URL(string: model.creator.url)
+    Nuke.loadImage(with: URL(string: model.creator.avatar)!, into: creatorAvatar)
+    creatorAvatar.clickURL = URL(string: model.creator.url)
+    
+    if let actor = model.action?.actor {
+      Nuke.loadImage(with: URL(string: actor.avatar)!, into: actorAvatar)
+      actorAvatar.clickURL = URL(string: actor.url)
+    }
   }
   
   func didEndDisplaying() {
-    Nuke.cancelRequest(for: avatarView)
+    Nuke.cancelRequest(for: creatorAvatar)
   }
   
   override func viewDidLayout() {
@@ -100,24 +149,43 @@ class TootItem: NSCollectionViewItem {
   }
   
   @discardableResult func layout(width: CGFloat) -> NSSize {
-    let inset = NSEdgeInsets(top: 10, left: 5, bottom: 15, right: 15)
+    let margin = NSEdgeInsets(top: 10, left: 5, bottom: 15, right: 15)
     let avatarSize = AvatarView.size(.regular)
     let avatarSpace: CGFloat = 10
     let textFieldSpace: CGFloat = 3
+
+    let textLeft = margin.left + avatarSize.width + avatarSpace
+    let textWidth = width - textLeft - margin.right
+
+    let bodyYOffset: CGFloat
+    if model?.action == nil {
+      actorAvatar.isHidden = true
+      actionDescription.isHidden = true
+      bodyYOffset = margin.top
+    } else {
+      actorAvatar.isHidden = false
+      actionDescription.isHidden = false
+      
+      let actorFrame = CGRect(origin: CGPoint(x: textLeft, y: margin.top), size: AvatarView.size(.small))
+      actorAvatar.frame = actorFrame
+      
+      let descriptionLeft: CGFloat = actorFrame.maxX + textFieldSpace
+      let descriptionSize = actionDescription.sizeThatFits(CGSize(width: width - descriptionLeft - margin.right, height: 0))
+      let descriptionFrame = CGRect(origin: CGPoint(x: descriptionLeft, y: margin.top), size: descriptionSize)
+      actionDescription.frame = descriptionFrame
+      bodyYOffset = max(actorFrame.maxY, descriptionFrame.maxY) + 3
+    }
     
-    let imageFrame = CGRect(origin: CGPoint(x: inset.left, y: inset.top), size: avatarSize)
-    avatarView.frame = imageFrame
-    
-    let textLeft = imageFrame.maxX + avatarSpace
-    let textWidth = width - textLeft - inset.right
-    
+    let imageFrame = CGRect(origin: CGPoint(x: margin.left, y: bodyYOffset), size: avatarSize)
+    creatorAvatar.frame = imageFrame
+
     let textfieldSize = CGSize(width: textWidth, height: 0)
-    let usernameFrame = CGRect(origin: CGPoint(x: textLeft, y: inset.top), size: usernameField.sizeThatFits(textfieldSize))
-    usernameField.frame = usernameFrame
+    let usernameFrame = CGRect(origin: CGPoint(x: textLeft, y: bodyYOffset), size: creatorName.sizeThatFits(textfieldSize))
+    creatorName.frame = usernameFrame
     
     let tootFrame = CGRect(origin: CGPoint(x: textLeft, y: usernameFrame.maxY + textFieldSpace), size: tootField.sizeThatFits(textfieldSize))
     tootField.frame = tootFrame
     
-    return CGSize(width: width, height: max(tootFrame.maxY, imageFrame.maxY) + inset.bottom)
+    return CGSize(width: width, height: max(tootFrame.maxY, imageFrame.maxY) + margin.bottom)
   }
 }
