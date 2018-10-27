@@ -23,6 +23,7 @@ class AvatarView: NSImageView {
     super.init(frame: frameRect)
     self.wantsLayer = true
     self.layer!.masksToBounds = true
+    self.layer!.backgroundColor = NSColor.textColor.withAlphaComponent(0.1).cgColor
   }
   
   required init?(coder: NSCoder) {
