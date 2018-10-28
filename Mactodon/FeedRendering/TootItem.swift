@@ -49,7 +49,7 @@ extension TootItemModel {
 class TootItem: NSCollectionViewItem {
   static let identifier = NSUserInterfaceItemIdentifier("TootCollectionViewItem")
   
-  private var tootField: NSTextView!
+  private var tootTextView: NSTextView!
   private var creatorName: NSTextView!
   private var creatorAvatar: AvatarView!
   
@@ -60,7 +60,7 @@ class TootItem: NSCollectionViewItem {
     didSet {
       guard let model = model else {
         creatorName.attributedString = NSAttributedString(string: "")
-        tootField.attributedString = NSAttributedString(string: "")
+        tootTextView.attributedString = NSAttributedString(string: "")
         creatorAvatar.image = nil
         return
       }
@@ -71,7 +71,7 @@ class TootItem: NSCollectionViewItem {
         "<username><a href=\"\(creator.url)\"><at>@</at>\(creator.username)</a></username>"
       
       creatorName.set(html: usernameHtml)
-      tootField.set(html: model.status.content)
+      tootTextView.set(html: model.status.content)
       
       actionDescription.set(html: model.action?.descriptionHtml ?? "")
     }
@@ -89,29 +89,27 @@ class TootItem: NSCollectionViewItem {
     view = FlippedView()
   }
   
-  private func textField() -> NSTextView {
-    let field = NSTextView(frame: .zero)
-    field.isEditable = false
-    field.backgroundColor = NSColor.clear
-    field.isSelectable = true
-    field.textContainer!.heightTracksTextView = true
-    field.textContainer!.widthTracksTextView = true
-    return field
+  private func textView() -> NSTextView {
+    let textView = NSTextView(frame: .zero)
+    textView.isEditable = false
+    textView.backgroundColor = NSColor.clear
+    textView.isSelectable = true
+    return textView
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    tootField = textField()
-    view.addSubview(tootField)
+    tootTextView = textView()
+    view.addSubview(tootTextView)
     
-    creatorName = textField()
+    creatorName = textView()
     view.addSubview(creatorName)
     
     creatorAvatar = AvatarView(frame: .zero)
     view.addSubview(creatorAvatar)
     
-    actionDescription = textField()
+    actionDescription = textView()
     view.addSubview(actionDescription)
     
     actorAvatar = AvatarView(frame: .zero)
@@ -151,7 +149,7 @@ class TootItem: NSCollectionViewItem {
     let margin = NSEdgeInsets(top: 10, left: 5, bottom: 15, right: 15)
     let avatarSize = AvatarView.size(.regular)
     let avatarSpace: CGFloat = 10
-    let textFieldSpace: CGFloat = 3
+    let textViewSpace: CGFloat = 3
 
     let textLeft = margin.left + avatarSize.width + avatarSpace
     let textWidth = width - textLeft - margin.right
@@ -168,7 +166,7 @@ class TootItem: NSCollectionViewItem {
       let actorFrame = CGRect(origin: CGPoint(x: textLeft, y: margin.top), size: AvatarView.size(.small))
       actorAvatar.frame = actorFrame
       
-      let descriptionLeft: CGFloat = actorFrame.maxX + textFieldSpace
+      let descriptionLeft: CGFloat = actorFrame.maxX + textViewSpace
       let descriptionFrame = CGRect(origin: CGPoint(x: descriptionLeft, y: margin.top), size: actionDescription.sizeFor(width: width - descriptionLeft - margin.right))
       actionDescription.frame = descriptionFrame
       bodyYOffset = max(actorFrame.maxY, descriptionFrame.maxY) + 3
@@ -180,8 +178,8 @@ class TootItem: NSCollectionViewItem {
     let usernameFrame = CGRect(origin: CGPoint(x: textLeft, y: bodyYOffset), size: creatorName.sizeFor(width: textWidth))
     creatorName.frame = usernameFrame
     
-    let tootFrame = CGRect(origin: CGPoint(x: textLeft, y: usernameFrame.maxY + textFieldSpace), size: tootField.sizeFor(width: textWidth))
-    tootField.frame = tootFrame
+    let tootFrame = CGRect(origin: CGPoint(x: textLeft, y: usernameFrame.maxY + textViewSpace), size: tootTextView.sizeFor(width: textWidth))
+    tootTextView.frame = tootFrame
     
     return CGSize(width: width, height: max(tootFrame.maxY, imageFrame.maxY) + margin.bottom)
   }
