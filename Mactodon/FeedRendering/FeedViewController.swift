@@ -6,7 +6,7 @@ import Nuke
 
 class FeedViewController: NSViewController {
   private let feedProvider: FeedProvider
-  private var timeline: [Status] = []
+  private var timeline: [TootItemModel] = []
   private var scrollView: NSScrollView!
   private var collectionView: NSCollectionView!
   private lazy var preheater = ImagePreheater()
@@ -87,12 +87,16 @@ class FeedViewController: NSViewController {
 
 extension FeedViewController: FeedProviderDelegate {
   func set(feedItems: [Status]) {
-    timeline = feedItems
+    timeline = feedItems.map({ (status) in
+      return TootItemModel(status: status)
+    })
     collectionView.reloadData()
   }
   
   func prepend(feedItems items: [Status]) {
-    timeline = items + timeline
+    timeline = items.map({ (status) in
+      return TootItemModel(status: status)
+    }) + timeline
     collectionView.reloadData()
   }
   
@@ -101,7 +105,9 @@ extension FeedViewController: FeedProviderDelegate {
       return IndexPath(item: item, section: 0)
     })
     
-    timeline += items
+    timeline += items.map({ (status) in
+      return TootItemModel(status: status)
+    })
     
     collectionView.insertItems(at: indexPaths)
   }
@@ -142,7 +148,7 @@ extension FeedViewController: NSCollectionViewDataSource {
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
     let item = collectionView.makeItem(withIdentifier: TootItem.identifier, for: indexPath) as! TootItem
-    item.model = TootItemModel(status: timeline[indexPath.item])
+    item.model = timeline[indexPath.item]
     return item
   }
 }
@@ -150,7 +156,7 @@ extension FeedViewController: NSCollectionViewDataSource {
 extension FeedViewController: NSCollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
     let item = FeedViewController.sizingTootView
-    item.model = TootItemModel(status: timeline[indexPath.item])
+    item.model = timeline[indexPath.item]
     return item.layout(width: collectionView.bounds.width)
   }
 }
