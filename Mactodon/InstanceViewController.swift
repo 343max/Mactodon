@@ -12,6 +12,7 @@ class InstanceViewController: NSViewController {
   let client = ValuePromise<Client?>(initialValue: nil)
   let currentUser = ValuePromise<Account?>(initialValue: nil)
   var tokenController: TokenController?
+  var feedViewController: FeedViewController!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -29,6 +30,7 @@ class InstanceViewController: NSViewController {
     feedViewController.view.frame = view.bounds
     addChild(feedViewController)
     view.addSubview(feedViewController.view)
+    self.feedViewController = feedViewController
   }
   
   override func viewDidAppear() {
@@ -66,6 +68,10 @@ class InstanceViewController: NSViewController {
     client.run(Accounts.currentUser()).then {
       self.currentUser.value = $0
     }
+  }
+  
+  @IBAction func refreshFeed(_ sender: AnyObject) {
+    feedViewController.refresh()
   }
 }
 

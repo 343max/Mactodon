@@ -79,6 +79,10 @@ class FeedViewController: NSViewController {
     }
     preheater.startPreheating(with: imageURLs)
   }
+  
+  func refresh() {
+    feedProvider.reload()
+  }
 }
 
 extension FeedViewController: FeedProviderDelegate {
