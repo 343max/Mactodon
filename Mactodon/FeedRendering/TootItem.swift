@@ -47,7 +47,7 @@ extension TootItemModel {
 }
 
 class TootItem: NSCollectionViewItem, FeedViewCell {
-  static let identifier = NSUserInterfaceItemIdentifier("TootCollectionViewItem")
+  static let identifier = NSUserInterfaceItemIdentifier("TootItem")
   
   private var tootTextView: NSTextView!
   private var creatorName: NSTextView!

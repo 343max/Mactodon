@@ -9,6 +9,7 @@ class FeedViewController: NSViewController {
   private var timeline: [TootItemModel] = []
   private var scrollView: NSScrollView!
   private var collectionView: NSCollectionView!
+  private var pullToRefreshCell: PullToRefreshCell?
   private lazy var preheater = ImagePreheater()
   
   class Layout: NSCollectionViewFlowLayout {
@@ -32,6 +33,7 @@ class FeedViewController: NSViewController {
     collectionView.collectionViewLayout = layout
     collectionView.dataSource = self
     
+    collectionView.register(PullToRefreshCell.self, forItemWithIdentifier: PullToRefreshCell.identifier)
     collectionView.register(TootItem.self, forItemWithIdentifier: TootItem.identifier)
     
     self.collectionView = collectionView
@@ -42,6 +44,10 @@ class FeedViewController: NSViewController {
     NotificationCenter.default.addObserver(self, selector: #selector(boundsDidChange(notification:)), name:NSView.boundsDidChangeNotification, object: scrollView.contentView)
     self.scrollView = scrollView
     self.view = scrollView
+    
+    // Pull to refresh cell needs to be able to draw out of bounds
+    collectionView.wantsLayer = true
+    collectionView.layer!.masksToBounds = false
   }
   
   init(feedProvider: FeedProvider) {
@@ -90,6 +96,7 @@ extension FeedViewController: FeedProviderDelegate {
     timeline = feedItems.map({ (status) in
       return TootItemModel(status: status)
     })
+    self.pullToRefreshCell?.refreshing = false
     collectionView.reloadData()
   }
   
@@ -97,6 +104,7 @@ extension FeedViewController: FeedProviderDelegate {
     timeline = items.map({ (status) in
       return TootItemModel(status: status)
     }) + timeline
+    self.pullToRefreshCell?.refreshing = false
     collectionView.reloadData()
   }
   
@@ -109,6 +117,7 @@ extension FeedViewController: FeedProviderDelegate {
       return TootItemModel(status: status)
     })
     
+    self.pullToRefreshCell?.refreshing = false
     collectionView.insertItems(at: indexPaths)
   }
   
@@ -117,13 +126,25 @@ extension FeedViewController: FeedProviderDelegate {
   }
 }
 
+extension FeedViewController: PullToRefreshCellDelegate {
+  func startRefresh() {
+    feedProvider.reload()
+  }
+}
+
 extension FeedViewController {
   enum CellContent {
+    case pullToRefresh
     case toot(model: TootItemModel)
   }
   
   func contentFor(indexPath: IndexPath) -> CellContent {
-    return .toot(model: timeline[indexPath.item])
+    switch indexPath.item {
+    case 0:
+      return .pullToRefresh
+    default:
+      return .toot(model: timeline[indexPath.item - 1])
+    }
   }
 }
 
@@ -152,6 +173,11 @@ extension FeedViewController: NSCollectionViewDataSource {
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
     switch contentFor(indexPath: indexPath) {
+    case .pullToRefresh:
+      let view = collectionView.makeItem(withIdentifier: PullToRefreshCell.identifier, for: indexPath) as! PullToRefreshCell
+      view.delegate = self
+      self.pullToRefreshCell = view
+      return view
     case .toot(let model):
       let view = collectionView.makeItem(withIdentifier: TootItem.identifier, for: indexPath) as! TootItem
       view.model = model
@@ -162,9 +188,12 @@ extension FeedViewController: NSCollectionViewDataSource {
 
 extension FeedViewController: NSCollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+    let width = collectionView.bounds.width
     switch contentFor(indexPath: indexPath) {
+    case .pullToRefresh:
+      return PullToRefreshCell.size(width: width, isReloading: feedProvider.isLoading)
     case .toot(let model):
-      return TootItem.size(width: collectionView.bounds.width, toot: model)
+      return TootItem.size(width: width, toot: model)
     }
   }
 }
