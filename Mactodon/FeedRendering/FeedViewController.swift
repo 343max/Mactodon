@@ -117,9 +117,19 @@ extension FeedViewController: FeedProviderDelegate {
   }
 }
 
+extension FeedViewController {
+  enum CellContent {
+    case toot(model: TootItemModel)
+  }
+  
+  func contentFor(indexPath: IndexPath) -> CellContent {
+    return .toot(model: timeline[indexPath.item])
+  }
+}
+
 extension FeedViewController: NSCollectionViewDelegate {
   func collectionView(_ collectionView: NSCollectionView, willDisplay item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
-    guard let item = item as? TootItem else {
+    guard let item = item as? FeedViewCell else {
       return
     }
     
@@ -127,7 +137,7 @@ extension FeedViewController: NSCollectionViewDelegate {
   }
   
   func collectionView(_ collectionView: NSCollectionView, didEndDisplaying item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
-    guard let item = item as? TootItem else {
+    guard let item = item as? FeedViewCell else {
       return
     }
     
@@ -136,27 +146,25 @@ extension FeedViewController: NSCollectionViewDelegate {
 }
 
 extension FeedViewController: NSCollectionViewDataSource {
-  static var sizingTootView: TootItem = {
-    let item = TootItem(nibName: nil, bundle: nil)
-    let _ = item.view
-    return item
-  }()
-  
   func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
     return timeline.count
   }
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    let item = collectionView.makeItem(withIdentifier: TootItem.identifier, for: indexPath) as! TootItem
-    item.model = timeline[indexPath.item]
-    return item
+    switch contentFor(indexPath: indexPath) {
+    case .toot(let model):
+      let view = collectionView.makeItem(withIdentifier: TootItem.identifier, for: indexPath) as! TootItem
+      view.model = model
+      return view
+    }
   }
 }
 
 extension FeedViewController: NSCollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
-    let item = FeedViewController.sizingTootView
-    item.model = timeline[indexPath.item]
-    return item.layout(width: collectionView.bounds.width)
+    switch contentFor(indexPath: indexPath) {
+    case .toot(let model):
+      return TootItem.size(width: collectionView.bounds.width, toot: model)
+    }
   }
 }

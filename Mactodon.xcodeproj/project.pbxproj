@@ -30,6 +30,7 @@
 		BB9C8DEF217E7B0000669E31 /* URLComponents+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */; };
 		BBC6C9272183840C004A9F2E /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC6C9262183840C004A9F2E /* AvatarView.swift */; };
 		BBCD39BF21603528007675E3 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCD39BE21603528007675E3 /* Client.swift */; };
+		BBE007192187BEED00A5BE75 /* FeedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE007182187BEED00A5BE75 /* FeedViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+Helper.swift"; sourceTree = "<group>"; };
 		BBC6C9262183840C004A9F2E /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		BBCD39BE21603528007675E3 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		BBE007182187BEED00A5BE75 /* FeedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewCell.swift; sourceTree = "<group>"; };
 		E4D0A8DD2D8407898418A770 /* Pods-MactodonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MactodonTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MactodonTests/Pods-MactodonTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -186,6 +188,7 @@
 				BB88F883218287F300B2F662 /* FeedProvider.swift */,
 				BB88F8792181166600B2F662 /* FeedViewController.swift */,
 				BB88F881218253CB00B2F662 /* TootItem.swift */,
+				BBE007182187BEED00A5BE75 /* FeedViewCell.swift */,
 			);
 			path = FeedRendering;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				BB88F882218253CB00B2F662 /* TootItem.swift in Sources */,
 				BB88F884218287F300B2F662 /* FeedProvider.swift in Sources */,
 				BB88F805217FDFD800B2F662 /* Settings.swift in Sources */,
+				BBE007192187BEED00A5BE75 /* FeedViewCell.swift in Sources */,
 				BB88F87A2181166600B2F662 /* FeedViewController.swift in Sources */,
 				BBC6C9272183840C004A9F2E /* AvatarView.swift in Sources */,
 				BB1747F2212769970015E3A8 /* AppDelegate.swift in Sources */,

@@ -46,7 +46,7 @@ extension TootItemModel {
   }
 }
 
-class TootItem: NSCollectionViewItem {
+class TootItem: NSCollectionViewItem, FeedViewCell {
   static let identifier = NSUserInterfaceItemIdentifier("TootCollectionViewItem")
   
   private var tootTextView: NSTextView!
@@ -182,5 +182,19 @@ class TootItem: NSCollectionViewItem {
     tootTextView.frame = tootFrame
     
     return CGSize(width: width, height: max(tootFrame.maxY, imageFrame.maxY) + margin.bottom)
+  }
+}
+
+extension TootItem {
+  private static var sizingTootItem: TootItem = {
+    let item = TootItem(nibName: nil, bundle: nil)
+    let _ = item.view
+    return item
+  }()
+
+  static func size(width: CGFloat, toot: TootItemModel) -> CGSize {
+    let item = sizingTootItem
+    item.model = toot
+    return item.layout(width: width)
   }
 }
