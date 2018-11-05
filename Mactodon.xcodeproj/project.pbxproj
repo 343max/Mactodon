@@ -25,6 +25,7 @@
 		BB88F87E21812FF200B2F662 /* NSTextView+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F87D21812FF200B2F662 /* NSTextView+HTML.swift */; };
 		BB88F882218253CB00B2F662 /* TootItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F881218253CB00B2F662 /* TootItem.swift */; };
 		BB88F884218287F300B2F662 /* FeedProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F883218287F300B2F662 /* FeedProvider.swift */; };
+		BB8F87782190EAE700CDEAC6 /* MultiFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8F87762190EAE700CDEAC6 /* MultiFeedViewController.swift */; };
 		BB9C8DE9217E53E800669E31 /* Keychain+MastodonKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DE8217E53E800669E31 /* Keychain+MastodonKit.swift */; };
 		BB9C8DED217E6E7600669E31 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DEC217E6E7600669E31 /* Keychain.swift */; };
 		BB9C8DEF217E7B0000669E31 /* URLComponents+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */; };
@@ -71,6 +72,7 @@
 		BB88F87D21812FF200B2F662 /* NSTextView+HTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+HTML.swift"; sourceTree = "<group>"; };
 		BB88F881218253CB00B2F662 /* TootItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TootItem.swift; sourceTree = "<group>"; };
 		BB88F883218287F300B2F662 /* FeedProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedProvider.swift; sourceTree = "<group>"; };
+		BB8F87762190EAE700CDEAC6 /* MultiFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiFeedViewController.swift; sourceTree = "<group>"; };
 		BB9C8DE8217E53E800669E31 /* Keychain+MastodonKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keychain+MastodonKit.swift"; sourceTree = "<group>"; };
 		BB9C8DEC217E6E7600669E31 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+Helper.swift"; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				BB1747F1212769970015E3A8 /* AppDelegate.swift */,
 				BBC6C9262183840C004A9F2E /* AvatarView.swift */,
 				BB1747F3212769970015E3A8 /* InstanceViewController.swift */,
+				BB8F87762190EAE700CDEAC6 /* MultiFeedViewController.swift */,
 				BB9C8DEC217E6E7600669E31 /* Keychain.swift */,
 				BB9C8DE8217E53E800669E31 /* Keychain+MastodonKit.swift */,
 				BB17480F21278B3F0015E3A8 /* LoginViewController.swift */,
@@ -375,6 +378,7 @@
 				BBCD39BF21603528007675E3 /* Client.swift in Sources */,
 				BB88F7FB217F93A900B2F662 /* ValuePromise.swift in Sources */,
 				BB88F7F8217ED8EE00B2F662 /* Promise.swift in Sources */,
+				BB8F87782190EAE700CDEAC6 /* MultiFeedViewController.swift in Sources */,
 				BB88F87C2181265200B2F662 /* Promise+Helpers.swift in Sources */,
 				BB88F803217FA6E000B2F662 /* TokenController.swift in Sources */,
 				BB9C8DED217E6E7600669E31 /* Keychain.swift in Sources */,

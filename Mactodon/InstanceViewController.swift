@@ -12,7 +12,7 @@ class InstanceViewController: NSViewController {
   let client = ValuePromise<Client?>(initialValue: nil)
   let currentUser = ValuePromise<Account?>(initialValue: nil)
   var tokenController: TokenController?
-  var feedViewController: FeedViewController!
+  var multiFeedViewController: MultiFeedViewController!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -25,12 +25,12 @@ class InstanceViewController: NSViewController {
       self.view.window?.title = currentUser?.username ?? "Mactodon"
     }
     
-    let feedViewController = FeedViewController(feedProvider: TimelineFeedProvider(client: client))
-    feedViewController.view.autoresizingMask = [.width, .height]
-    feedViewController.view.frame = view.bounds
-    addChild(feedViewController)
-    view.addSubview(feedViewController.view)
-    self.feedViewController = feedViewController
+    let multiFeedViewController = MultiFeedViewController(client: client)
+    multiFeedViewController.view.autoresizingMask = [.width, .height]
+    multiFeedViewController.view.frame = view.bounds
+    addChild(multiFeedViewController)
+    view.addSubview(multiFeedViewController.view)
+    self.multiFeedViewController = multiFeedViewController
   }
   
   override func viewDidAppear() {
@@ -71,7 +71,7 @@ class InstanceViewController: NSViewController {
   }
   
   @IBAction func refreshFeed(_ sender: AnyObject) {
-    feedViewController.refresh()
+    multiFeedViewController.refresh()
   }
 }
 
