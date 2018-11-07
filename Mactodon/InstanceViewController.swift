@@ -73,6 +73,18 @@ class InstanceViewController: NSViewController {
   @IBAction func refreshFeed(_ sender: AnyObject) {
     multiFeedViewController.refresh()
   }
+  
+  @IBAction func switchToUserTimeline(_ sender: AnyObject) {
+    //
+  }
+  
+  @IBAction func switchToLocalTimeline(_ sender: AnyObject) {
+    //
+  }
+  
+  @IBAction func switchToFededratedTimeline(_ sender: AnyObject) {
+    //
+  }
 }
 
 extension InstanceViewController: LoginViewControllerDelegate {

@@ -4,8 +4,20 @@ import Cocoa
 import MastodonKit
 
 class MultiFeedViewController: NSViewController {
+  enum Feed: Int {
+    case UserTimeline
+//    case LocalTimeline
+//    case FederatedTimeline
+  }
+  
   let client: ValuePromise<Client?>
-  var feedViewController: FeedViewController!
+  
+  var feedViewControllers: [Feed: FeedViewController] = [:]
+  var selectedFeed = Feed.UserTimeline {
+    didSet {
+      updateSelectedFeedViewController()
+    }
+  }
   
   init(client: ValuePromise<Client?>) {
     self.client = client
@@ -23,15 +35,46 @@ class MultiFeedViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let feedViewController = FeedViewController(feedProvider: TimelineFeedProvider(client: client))
-    feedViewController.view.autoresizingMask = [.width, .height]
-    feedViewController.view.frame = view.bounds
-    addChild(feedViewController)
-    view.addSubview(feedViewController.view)
-    self.feedViewController = feedViewController
+    updateSelectedFeedViewController()
+  }
+  
+  func updateSelectedFeedViewController() {
+    children.forEach { (vc) in
+      vc.removeFromParent()
+      vc.view.removeFromSuperview()
+    }
+    
+    let selectedVC = selectedFeedViewController
+    selectedVC.view.autoresizingMask = [.width, .height]
+    selectedVC.view.frame = view.bounds
+    addChild(selectedVC)
+    view.addSubview(selectedVC.view)
+  }
+  
+  func createViewController(feed: Feed) -> FeedViewController {
+    switch feed {
+    case .UserTimeline:
+      return FeedViewController(feedProvider: TimelineFeedProvider(client: client))
+    }
+  }
+  
+  func cachedViewController(feed: Feed) -> FeedViewController {
+    if let viewController = feedViewControllers[selectedFeed] {
+      return viewController
+    } else {
+      let viewController = self.createViewController(feed: selectedFeed)
+      feedViewControllers[selectedFeed] = viewController
+      return viewController
+    }
+  }
+  
+  var selectedFeedViewController: FeedViewController {
+    get {
+      return cachedViewController(feed: selectedFeed)
+    }
   }
   
   func refresh() {
-    feedViewController.refresh()
+    selectedFeedViewController.refresh()
   }
 }

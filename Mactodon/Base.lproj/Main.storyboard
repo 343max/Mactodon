@@ -378,6 +378,22 @@
                                                 <action selector="refreshFeed:" target="Ady-hI-5gd" id="4X5-Cb-4BW"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="nDP-sc-gHP"/>
+                                        <menuItem title="User Timeline" keyEquivalent="1" id="Vhs-gZ-KSA">
+                                            <connections>
+                                                <action selector="switchToUserTimeline:" target="Ady-hI-5gd" id="goP-Bs-ncq"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Local Timeline" keyEquivalent="2" id="YoR-Lp-QXp">
+                                            <connections>
+                                                <action selector="switchToLocalTimeline:" target="Ady-hI-5gd" id="gJe-c7-mXp"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Federated Timeline" keyEquivalent="3" id="cMm-dB-3rx">
+                                            <connections>
+                                                <action selector="switchToFededratedTimeline:" target="Ady-hI-5gd" id="tLr-Kh-j9E"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
