@@ -75,15 +75,15 @@ class InstanceViewController: NSViewController {
   }
   
   @IBAction func switchToUserTimeline(_ sender: AnyObject) {
-    //
+    multiFeedViewController.selectedFeed = .UserTimeline
   }
   
   @IBAction func switchToLocalTimeline(_ sender: AnyObject) {
-    //
+    multiFeedViewController.selectedFeed = .LocalTimeline
   }
   
   @IBAction func switchToFededratedTimeline(_ sender: AnyObject) {
-    //
+    multiFeedViewController.selectedFeed = .FederatedTimeline
   }
 }
 

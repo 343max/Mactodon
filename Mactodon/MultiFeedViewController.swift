@@ -6,8 +6,8 @@ import MastodonKit
 class MultiFeedViewController: NSViewController {
   enum Feed: Int {
     case UserTimeline
-//    case LocalTimeline
-//    case FederatedTimeline
+    case LocalTimeline
+    case FederatedTimeline
   }
   
   let client: ValuePromise<Client?>
@@ -54,7 +54,11 @@ class MultiFeedViewController: NSViewController {
   func createViewController(feed: Feed) -> FeedViewController {
     switch feed {
     case .UserTimeline:
-      return FeedViewController(feedProvider: TimelineFeedProvider(client: client))
+      return FeedViewController(feedProvider: TimelineFeedProvider.user(client: client))
+    case .LocalTimeline:
+      return FeedViewController(feedProvider: TimelineFeedProvider.local(client: client))
+    case .FederatedTimeline:
+      return FeedViewController(feedProvider: TimelineFeedProvider.federated(client: client))
     }
   }
   

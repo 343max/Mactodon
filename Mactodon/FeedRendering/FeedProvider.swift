@@ -19,6 +19,7 @@ protocol FeedProvider: AnyObject {
 }
 
 class TimelineFeedProvider: FeedProvider {
+  typealias TimelineRequest = (_ range: RequestRange) -> Request<[Status]>
   weak var delegate: FeedProviderDelegate? {
     didSet {
       if client.value != nil {
@@ -40,15 +41,37 @@ class TimelineFeedProvider: FeedProvider {
   }
 
   private let client: ValuePromise<Client?>
+  private let request: TimelineRequest
   private var _isLoading = false
   private var nextPage: RequestRange?
   private var previousPage: RequestRange?
 
-  init(client: ValuePromise<Client?>) {
+  public init(client: ValuePromise<Client?>, request: @escaping TimelineRequest) {
     self.client = client
+    self.request = request
     self.client.didSet.then {
       self.delegate?.feedProviderReady()
     }
+  }
+  
+  
+  
+  static func user(client: ValuePromise<Client?>) -> TimelineFeedProvider {
+    return TimelineFeedProvider(client: client, request: { (range) -> Request<[Status]> in
+      return Timelines.home(range: range)
+    })
+  }
+  
+  static func local(client: ValuePromise<Client?>) -> TimelineFeedProvider {
+    return TimelineFeedProvider(client: client, request: { (range) -> Request<[Status]> in
+      return Timelines.public(local: true, range: range)
+    })
+  }
+  
+  static func federated(client: ValuePromise<Client?>) -> TimelineFeedProvider {
+    return TimelineFeedProvider(client: client, request: { (range) -> Request<[Status]> in
+      return Timelines.public(local: false, range: range)
+    })
   }
   
   func reload() {
@@ -57,7 +80,7 @@ class TimelineFeedProvider: FeedProvider {
     }
     
     _isLoading = true
-    client.value?.runPaginated(Timelines.home()).mainQueue.then { [weak self] (result) in
+    client.value?.runPaginated(request(.default)).mainQueue.then { [weak self] (result) in
       guard let self = self else {
         return
       }
@@ -77,7 +100,7 @@ class TimelineFeedProvider: FeedProvider {
       return
     }
     _isLoading = true
-    client.value?.runPaginated(Timelines.home(range: nextPage)).mainQueue.then { [weak self] (result) in
+    client.value?.runPaginated(request(nextPage)).mainQueue.then { [weak self] (result) in
       guard let self = self else {
         return
       }
