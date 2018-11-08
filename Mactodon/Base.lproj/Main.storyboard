@@ -394,6 +394,11 @@
                                                 <action selector="switchToFededratedTimeline:" target="Ady-hI-5gd" id="tLr-Kh-j9E"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Notifications" keyEquivalent="4" id="Yw8-VX-pFI">
+                                            <connections>
+                                                <action selector="switchToNotifcations:" target="Ady-hI-5gd" id="6uh-P5-LsT"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>

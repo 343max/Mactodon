@@ -85,6 +85,10 @@ class InstanceViewController: NSViewController {
   @IBAction func switchToFededratedTimeline(_ sender: AnyObject) {
     multiFeedViewController.selectedFeed = .FederatedTimeline
   }
+  
+  @IBAction func switchToNotifcations(_ sender: AnyObject) {
+    
+  }
 }
 
 extension InstanceViewController: LoginViewControllerDelegate {
