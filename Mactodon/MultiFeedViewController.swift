@@ -54,11 +54,11 @@ class MultiFeedViewController: NSViewController {
   func createViewController(feed: Feed) -> FeedViewController {
     switch feed {
     case .UserTimeline:
-      return FeedViewController(feedProvider: TimelineFeedProvider.user(client: client))
+      return FeedViewController(feedProvider: FeedProvider<Status>.user(client: client))
     case .LocalTimeline:
-      return FeedViewController(feedProvider: TimelineFeedProvider.local(client: client))
+      return FeedViewController(feedProvider: FeedProvider<Status>.local(client: client))
     case .FederatedTimeline:
-      return FeedViewController(feedProvider: TimelineFeedProvider.federated(client: client))
+      return FeedViewController(feedProvider: FeedProvider<Status>.federated(client: client))
     }
   }
   

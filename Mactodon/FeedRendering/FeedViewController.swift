@@ -5,8 +5,7 @@ import MastodonKit
 import Nuke
 
 class FeedViewController: NSViewController {
-  private let feedProvider: FeedProvider
-  private var timeline: [TootItemModel] = []
+  private let feedProvider: FeedProvider<Status>
   private var scrollView: NSScrollView!
   private var collectionView: NSCollectionView!
   private var pullToRefreshCell: PullToRefreshCell?
@@ -50,7 +49,7 @@ class FeedViewController: NSViewController {
     collectionView.layer!.masksToBounds = false
   }
   
-  init(feedProvider: FeedProvider) {
+  init(feedProvider: FeedProvider<Status>) {
     self.feedProvider = feedProvider
     super.init(nibName: nil, bundle: nil)
     self.feedProvider.delegate = self
@@ -92,29 +91,21 @@ class FeedViewController: NSViewController {
 }
 
 extension FeedViewController: FeedProviderDelegate {
-  func set(feedItems: [Status]) {
-    timeline = feedItems.map({ (status) in
-      return TootItemModel(status: status)
-    })
+  func didSet(itemCount: Int) {
     self.pullToRefreshCell?.refreshing = false
     collectionView.reloadData()
   }
   
-  func prepend(feedItems items: [Status]) {
-    timeline = items.map({ (status) in
-      return TootItemModel(status: status)
-    }) + timeline
+  func didPrepend(itemCount: Int) {
     self.pullToRefreshCell?.refreshing = false
     collectionView.reloadData()
   }
   
-  func append(feedItems items: [Status]) {
-    let indexPaths = Set((timeline.count...(timeline.count + items.count)).map { (item) -> IndexPath in
+  func didAppend(itemCount: Int) {
+    let end = feedProvider.items.count
+    let start = end - itemCount
+    let indexPaths = Set((start..<end).map { (item) -> IndexPath in
       return IndexPath(item: item, section: 0)
-    })
-    
-    timeline += items.map({ (status) in
-      return TootItemModel(status: status)
     })
     
     self.pullToRefreshCell?.refreshing = false
@@ -143,7 +134,7 @@ extension FeedViewController {
     case 0:
       return .pullToRefresh
     default:
-      return .toot(model: timeline[indexPath.item - 1])
+      return .toot(model: TootItemModel(status: feedProvider.items[indexPath.item - 1]))
     }
   }
 }
@@ -168,7 +159,7 @@ extension FeedViewController: NSCollectionViewDelegate {
 
 extension FeedViewController: NSCollectionViewDataSource {
   func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-    return timeline.count
+    return feedProvider.items.count
   }
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {

@@ -5,21 +5,16 @@ import MastodonKit
 
 protocol FeedProviderDelegate: AnyObject {
   func feedProviderReady()
-  func set(feedItems: [Status])
-  func prepend(feedItems: [Status])
-  func append(feedItems: [Status])
+  func didSet(itemCount: Int)
+  func didPrepend(itemCount: Int)
+  func didAppend(itemCount: Int)
 }
 
-protocol FeedProvider: AnyObject {
-  var delegate: FeedProviderDelegate? { get set }
-  var isLoading: Bool { get }
-  var ready: Bool { get }
-  func reload()
-  func loadMore()
-}
-
-class TimelineFeedProvider: FeedProvider {
-  typealias TimelineRequest = (_ range: RequestRange) -> Request<[Status]>
+class FeedProvider<T: Codable> {
+  typealias TimelineRequest = (_ range: RequestRange) -> Request<[T]>
+  
+  var items: [T] = []
+  
   weak var delegate: FeedProviderDelegate? {
     didSet {
       if client.value != nil {
@@ -54,22 +49,20 @@ class TimelineFeedProvider: FeedProvider {
     }
   }
   
-  
-  
-  static func user(client: ValuePromise<Client?>) -> TimelineFeedProvider {
-    return TimelineFeedProvider(client: client, request: { (range) -> Request<[Status]> in
+  static func user(client: ValuePromise<Client?>) -> FeedProvider<Status> {
+    return FeedProvider<Status>(client: client, request: { (range) -> Request<[Status]> in
       return Timelines.home(range: range)
     })
   }
   
-  static func local(client: ValuePromise<Client?>) -> TimelineFeedProvider {
-    return TimelineFeedProvider(client: client, request: { (range) -> Request<[Status]> in
+  static func local(client: ValuePromise<Client?>) -> FeedProvider<Status> {
+    return FeedProvider<Status>(client: client, request: { (range) -> Request<[Status]> in
       return Timelines.public(local: true, range: range)
     })
   }
   
-  static func federated(client: ValuePromise<Client?>) -> TimelineFeedProvider {
-    return TimelineFeedProvider(client: client, request: { (range) -> Request<[Status]> in
+  static func federated(client: ValuePromise<Client?>) -> FeedProvider<Status> {
+    return FeedProvider<Status>(client: client, request: { (range) -> Request<[Status]> in
       return Timelines.public(local: false, range: range)
     })
   }
@@ -86,7 +79,8 @@ class TimelineFeedProvider: FeedProvider {
       }
       
       self._isLoading = false
-      self.delegate?.set(feedItems: result.value)
+      self.items = result.value
+      self.delegate?.didSet(itemCount: result.value.count)
       self.previousPage = result.pagination?.previous
       self.nextPage = result.pagination?.next
       
@@ -106,7 +100,8 @@ class TimelineFeedProvider: FeedProvider {
       }
 
       self._isLoading = false
-      self.delegate?.append(feedItems: result.value)
+      self.items += result.value
+      self.delegate?.didSet(itemCount: result.value.count)
       self.nextPage = result.pagination?.next
     }.fail({ [weak self] (_) in
       self?._isLoading = false
