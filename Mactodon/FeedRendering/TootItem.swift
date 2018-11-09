@@ -12,8 +12,12 @@ struct TootItemModel {
   enum Kind {
     case post
     case boost(booster: Account)
+    case mention(account: Account)
+    case favourite(account: Account)
   }
-  
+}
+
+extension TootItemModel {
   init(status: Status) {
     if let reblog = status.reblog {
       self.status = reblog
@@ -23,6 +27,31 @@ struct TootItemModel {
       self.status = status
       self.creator = status.account
       self.kind = .post
+    }
+  }
+}
+
+extension TootItemModel {
+  init?(notification: MastodonKit.Notification) {
+    switch notification.type {
+    case .follow:
+      return nil
+    case .mention:
+      self.kind = .mention(account: notification.account)
+    case .reblog:
+      self.kind = .boost(booster: notification.account)
+    case .favourite:
+      self.kind = .favourite(account: notification.account)
+    }
+    self.status = notification.status!
+    self.creator = self.status.account
+  }
+}
+
+extension Account {
+  var someDisplayName: String {
+    get {
+      return displayName != "" ? displayName : username
     }
   }
 }
@@ -39,8 +68,14 @@ extension TootItemModel {
       case .post:
         return nil
       case .boost(let booster):
-        let html = "\(booster.displayName != "" ? booster.displayName : booster.username) boosted"
+        let html = "\(booster.someDisplayName) boosted"
         return Action(actor: booster, descriptionHtml: html)
+      case .favourite(let account):
+        let html = "\(account.someDisplayName) favourited"
+        return Action(actor: account, descriptionHtml: html)
+      case .mention(let account):
+        let html = "\(account.someDisplayName) mentioned you"
+        return Action(actor: account, descriptionHtml: html)
       }
     }
   }

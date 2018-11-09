@@ -8,6 +8,7 @@ class MultiFeedViewController: NSViewController {
     case UserTimeline
     case LocalTimeline
     case FederatedTimeline
+    case Notifications
   }
   
   let client: ValuePromise<Client?>
@@ -59,6 +60,9 @@ class MultiFeedViewController: NSViewController {
       return FeedViewController(feedProvider: FeedProvider<Status>.local(client: client))
     case .FederatedTimeline:
       return FeedViewController(feedProvider: FeedProvider<Status>.federated(client: client))
+    case .Notifications:
+      let cellProvider = FeedViewNotificationCellProvider(feedProvider: FeedProvider<MastodonKit.Notification>.notifications(client: client))
+      return FeedViewController(cellProvider: cellProvider)
     }
   }
   

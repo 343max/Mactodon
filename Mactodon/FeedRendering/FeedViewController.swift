@@ -15,22 +15,22 @@ protocol FeedViewCellProvider {
 class FeedViewStatusCellProvider: FeedViewCellProvider {
   var feedProvider: TypelessFeedProvider {
     get {
-      return _feedProvider
+      return statusFeedProvider
     }
   }
   
-  private let _feedProvider: FeedProvider<Status>
+  private let statusFeedProvider: FeedProvider<Status>
   weak var delegate: FeedProviderDelegate? {
     get {
-      return _feedProvider.delegate
+      return statusFeedProvider.delegate
     }
     set {
-      _feedProvider.delegate = delegate
+      statusFeedProvider.delegate = delegate
     }
   }
   
   init(feedProvider: FeedProvider<Status>) {
-    self._feedProvider = feedProvider
+    self.statusFeedProvider = feedProvider
   }
 
   func prepare(collectionView: NSCollectionView) {
@@ -39,18 +39,64 @@ class FeedViewStatusCellProvider: FeedViewCellProvider {
   
   var itemCount: Int {
     get {
-      return _feedProvider.items.count
+      return statusFeedProvider.items.count
     }
   }
   
   func item(collectionView: NSCollectionView, indexPath: IndexPath, index: Int) -> NSCollectionViewItem {
     let view = collectionView.makeItem(withIdentifier: TootItem.identifier, for: indexPath) as! TootItem
-    view.model = TootItemModel(status: _feedProvider.items[index])
+    view.model = TootItemModel(status: statusFeedProvider.items[index])
     return view
   }
   
   func itemSize(collectionView: NSCollectionView, indexPath: IndexPath, index: Int) -> CGSize {
-    return TootItem.size(width: collectionView.bounds.width, toot: TootItemModel(status: _feedProvider.items[index]))
+    return TootItem.size(width: collectionView.bounds.width, toot: TootItemModel(status: statusFeedProvider.items[index]))
+  }
+}
+
+class FeedViewNotificationCellProvider: FeedViewCellProvider {
+  typealias Notification = MastodonKit.Notification
+  private let notificationFeedProvider: FeedProvider<Notification>
+  var feedProvider: TypelessFeedProvider {
+    get {
+      return notificationFeedProvider
+    }
+  }
+  
+  init(feedProvider: FeedProvider<Notification>) {
+    self.notificationFeedProvider = feedProvider
+  }
+  
+  func prepare(collectionView: NSCollectionView) {
+    collectionView.register(TootItem.self, forItemWithIdentifier: TootItem.identifier)
+    collectionView.register(FollowingItem.self, forItemWithIdentifier: FollowingItem.identifier)
+  }
+  
+  var itemCount: Int {
+    get {
+      return notificationFeedProvider.items.count
+    }
+  }
+  
+  func item(collectionView: NSCollectionView, indexPath: IndexPath, index: Int) -> NSCollectionViewItem {
+    let notification = notificationFeedProvider.items[index]
+    if let model = TootItemModel(notification: notification) {
+      let view = collectionView.makeItem(withIdentifier: TootItem.identifier, for: indexPath) as! TootItem
+      view.model = model
+      return view
+    } else {
+      let view = collectionView.makeItem(withIdentifier: FollowingItem.identifier, for: indexPath)
+      return view
+    }
+  }
+  
+  func itemSize(collectionView: NSCollectionView, indexPath: IndexPath, index: Int) -> CGSize {
+    let notification = notificationFeedProvider.items[index]
+    if let model = TootItemModel(notification: notification) {
+      return TootItem.size(width: collectionView.bounds.width, toot: model)
+    } else {
+      return FollowingItem.size(width: collectionView.bounds.width)
+    }
   }
 }
 

@@ -87,7 +87,7 @@ class InstanceViewController: NSViewController {
   }
   
   @IBAction func switchToNotifcations(_ sender: AnyObject) {
-    
+    multiFeedViewController.selectedFeed = .Notifications
   }
 }
 

@@ -75,6 +75,12 @@ class FeedProvider<T: Codable>: TypelessFeedProvider {
     })
   }
   
+  static func notifications(client: ValuePromise<Client?>) -> FeedProvider<MastodonKit.Notification> {
+    return FeedProvider<MastodonKit.Notification>(client: client, request: { (range) -> Request<[MastodonKit.Notification]> in
+      return Notifications.all(range: range)
+    })
+  }
+  
   func reload() {
     if (isLoading) {
       return
