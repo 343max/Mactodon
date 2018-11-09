@@ -10,7 +10,15 @@ protocol FeedProviderDelegate: AnyObject {
   func didAppend(itemCount: Int)
 }
 
-class FeedProvider<T: Codable> {
+protocol TypelessFeedProvider: AnyObject {
+  var delegate: FeedProviderDelegate? { get set }
+  var isLoading: Bool { get }
+  var ready: Bool { get }
+  func reload()
+  func loadMore()
+}
+
+class FeedProvider<T: Codable>: TypelessFeedProvider {
   typealias TimelineRequest = (_ range: RequestRange) -> Request<[T]>
   
   var items: [T] = []

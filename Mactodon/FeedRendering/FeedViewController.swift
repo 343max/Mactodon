@@ -4,8 +4,59 @@ import Cocoa
 import MastodonKit
 import Nuke
 
+protocol FeedViewCellProvider {
+  var feedProvider: TypelessFeedProvider { get }
+  func prepare(collectionView: NSCollectionView)
+  var itemCount: Int { get }
+  func item(collectionView: NSCollectionView, indexPath: IndexPath, index: Int) -> NSCollectionViewItem
+  func itemSize(collectionView: NSCollectionView, indexPath: IndexPath, index: Int) -> CGSize
+}
+
+class FeedViewStatusCellProvider: FeedViewCellProvider {
+  var feedProvider: TypelessFeedProvider {
+    get {
+      return _feedProvider
+    }
+  }
+  
+  private let _feedProvider: FeedProvider<Status>
+  weak var delegate: FeedProviderDelegate? {
+    get {
+      return _feedProvider.delegate
+    }
+    set {
+      _feedProvider.delegate = delegate
+    }
+  }
+  
+  init(feedProvider: FeedProvider<Status>) {
+    self._feedProvider = feedProvider
+  }
+
+  func prepare(collectionView: NSCollectionView) {
+    collectionView.register(TootItem.self, forItemWithIdentifier: TootItem.identifier)
+  }
+  
+  var itemCount: Int {
+    get {
+      return _feedProvider.items.count
+    }
+  }
+  
+  func item(collectionView: NSCollectionView, indexPath: IndexPath, index: Int) -> NSCollectionViewItem {
+    let view = collectionView.makeItem(withIdentifier: TootItem.identifier, for: indexPath) as! TootItem
+    view.model = TootItemModel(status: _feedProvider.items[index])
+    return view
+  }
+  
+  func itemSize(collectionView: NSCollectionView, indexPath: IndexPath, index: Int) -> CGSize {
+    return TootItem.size(width: collectionView.bounds.width, toot: TootItemModel(status: _feedProvider.items[index]))
+  }
+}
+
 class FeedViewController: NSViewController {
-  private let feedProvider: FeedProvider<Status>
+  typealias T = Status
+  private let cellProvider: FeedViewCellProvider
   private var scrollView: NSScrollView!
   private var collectionView: NSCollectionView!
   private var pullToRefreshCell: PullToRefreshCell?
@@ -33,7 +84,7 @@ class FeedViewController: NSViewController {
     collectionView.dataSource = self
     
     collectionView.register(PullToRefreshCell.self, forItemWithIdentifier: PullToRefreshCell.identifier)
-    collectionView.register(TootItem.self, forItemWithIdentifier: TootItem.identifier)
+    cellProvider.prepare(collectionView: collectionView)
     
     self.collectionView = collectionView
     
@@ -49,10 +100,15 @@ class FeedViewController: NSViewController {
     collectionView.layer!.masksToBounds = false
   }
   
-  init(feedProvider: FeedProvider<Status>) {
-    self.feedProvider = feedProvider
+  init(cellProvider: FeedViewCellProvider) {
+    self.cellProvider = cellProvider
     super.init(nibName: nil, bundle: nil)
-    self.feedProvider.delegate = self
+    self.cellProvider.feedProvider.delegate = self
+  }
+  
+  convenience init(feedProvider: FeedProvider<Status>) {
+    let cellProvider = FeedViewStatusCellProvider(feedProvider: feedProvider)
+    self.init(cellProvider: cellProvider)
   }
   
   required init?(coder: NSCoder) {
@@ -64,7 +120,7 @@ class FeedViewController: NSViewController {
   }
   
   @objc func boundsDidChange(notification: Foundation.Notification) {
-    if !feedProvider.ready || feedProvider.isLoading {
+    if !cellProvider.feedProvider.ready || cellProvider.feedProvider.isLoading {
       return
     }
     
@@ -74,7 +130,7 @@ class FeedViewController: NSViewController {
     
     let remainingPages = (documentView.frame.height - scrollView.documentVisibleRect.maxY) / scrollView.bounds.height
     if remainingPages < 2.5 {
-      feedProvider.loadMore()
+      cellProvider.feedProvider.loadMore()
     }
   }
   
@@ -86,7 +142,7 @@ class FeedViewController: NSViewController {
   }
   
   func refresh() {
-    feedProvider.reload()
+    cellProvider.feedProvider.reload()
   }
 }
 
@@ -102,7 +158,7 @@ extension FeedViewController: FeedProviderDelegate {
   }
   
   func didAppend(itemCount: Int) {
-    let end = feedProvider.items.count
+    let end = cellProvider.itemCount
     let start = end - itemCount
     let indexPaths = Set((start..<end).map { (item) -> IndexPath in
       return IndexPath(item: item, section: 0)
@@ -113,20 +169,20 @@ extension FeedViewController: FeedProviderDelegate {
   }
   
   func feedProviderReady() {
-    feedProvider.reload()
+    cellProvider.feedProvider.reload()
   }
 }
 
 extension FeedViewController: PullToRefreshCellDelegate {
   func startRefresh() {
-    feedProvider.reload()
+    cellProvider.feedProvider.reload()
   }
 }
 
 extension FeedViewController {
   enum CellContent {
     case pullToRefresh
-    case toot(model: TootItemModel)
+    case feedItem(index: Int)
   }
   
   func contentFor(indexPath: IndexPath) -> CellContent {
@@ -134,7 +190,7 @@ extension FeedViewController {
     case 0:
       return .pullToRefresh
     default:
-      return .toot(model: TootItemModel(status: feedProvider.items[indexPath.item - 1]))
+      return .feedItem(index: indexPath.item - 1)
     }
   }
 }
@@ -159,7 +215,7 @@ extension FeedViewController: NSCollectionViewDelegate {
 
 extension FeedViewController: NSCollectionViewDataSource {
   func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-    return feedProvider.items.count
+    return cellProvider.itemCount
   }
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
@@ -169,22 +225,20 @@ extension FeedViewController: NSCollectionViewDataSource {
       view.delegate = self
       self.pullToRefreshCell = view
       return view
-    case .toot(let model):
-      let view = collectionView.makeItem(withIdentifier: TootItem.identifier, for: indexPath) as! TootItem
-      view.model = model
-      return view
+    case .feedItem(let index):
+      return cellProvider.item(collectionView: collectionView, indexPath: indexPath, index: index)
     }
   }
 }
 
 extension FeedViewController: NSCollectionViewDelegateFlowLayout {
-  func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+  func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     let width = collectionView.bounds.width
     switch contentFor(indexPath: indexPath) {
     case .pullToRefresh:
-      return PullToRefreshCell.size(width: width, isReloading: feedProvider.isLoading)
-    case .toot(let model):
-      return TootItem.size(width: width, toot: model)
+      return PullToRefreshCell.size(width: width, isReloading: cellProvider.feedProvider.isLoading)
+    case .feedItem(let index):
+      return cellProvider.itemSize(collectionView: collectionView, indexPath: indexPath, index: index)
     }
   }
 }
