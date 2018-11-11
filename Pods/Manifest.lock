@@ -1,7 +1,7 @@
 PODS:
-  - Atributika (4.6.5)
+  - Atributika (4.6.7)
   - MastodonKit (2.0.0)
-  - Nuke (7.5)
+  - Nuke (7.5.1)
 
 DEPENDENCIES:
   - Atributika
@@ -24,9 +24,9 @@ CHECKOUT OPTIONS:
     :git: https://github.com/MastodonKit/MastodonKit.git
 
 SPEC CHECKSUMS:
-  Atributika: f15e4c0003b34d5c6be92080f0ad6fecbe2c5c2f
+  Atributika: 01164ef4e8a0103c879f7499a7de8902385d8bf9
   MastodonKit: 3bc591ea7e626dd160711f9a10cd50f192e46ed3
-  Nuke: 799c0430f87b11c4dacfa80b13e1c4f0a1464b90
+  Nuke: 3814db501e55f17951451839c726ffd91641e9a5
 
 PODFILE CHECKSUM: d38577b07ca92d3f19081767c23bc34dbae58ba0
 
