@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50E74BED2198BEDB00CD0559 /* LayoutHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */; };
 		890553B037E04B6046F2C434 /* Pods_MactodonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFC16C8188156D2EDA484A6E /* Pods_MactodonTests.framework */; };
 		AFF1EFFF418F9F793C2A2C5E /* Pods_Mactodon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97F4E829C779078BD9C8F94 /* Pods_Mactodon.framework */; };
 		BB1747F2212769970015E3A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1747F1212769970015E3A8 /* AppDelegate.swift */; };
@@ -14,6 +15,9 @@
 		BB1747F6212769990015E3A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB1747F5212769990015E3A8 /* Assets.xcassets */; };
 		BB1747F9212769990015E3A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB1747F7212769990015E3A8 /* Main.storyboard */; };
 		BB17481021278B3F0015E3A8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB17480F21278B3F0015E3A8 /* LoginViewController.swift */; };
+		BB71838321962F850006AE5A /* FollowingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB71838221962F850006AE5A /* FollowingItem.swift */; };
+		BB71838521965D520006AE5A /* NSTextView+Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB71838421965D510006AE5A /* NSTextView+Label.swift */; };
+		BB718387219661AB0006AE5A /* FlippedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB718386219661AA0006AE5A /* FlippedView.swift */; };
 		BB88F7F8217ED8EE00B2F662 /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F7F7217ED8EE00B2F662 /* Promise.swift */; };
 		BB88F7FB217F93A900B2F662 /* ValuePromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F7FA217F93A900B2F662 /* ValuePromise.swift */; };
 		BB88F7FD217F93BD00B2F662 /* PromiseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB88F7FC217F93BD00B2F662 /* PromiseTests.swift */; };
@@ -48,6 +52,7 @@
 /* Begin PBXFileReference section */
 		30AE5CBE9F8F80CFBBBB87EC /* Pods-Mactodon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mactodon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon.debug.xcconfig"; sourceTree = "<group>"; };
 		4D7167C4FE7089E037D1CCB0 /* Pods-Mactodon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mactodon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon.release.xcconfig"; sourceTree = "<group>"; };
+		50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutHelpers.swift; sourceTree = "<group>"; };
 		803D02693F008DC4C454A224 /* Pods-MactodonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MactodonTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MactodonTests/Pods-MactodonTests.release.xcconfig"; sourceTree = "<group>"; };
 		A97F4E829C779078BD9C8F94 /* Pods_Mactodon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mactodon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFC16C8188156D2EDA484A6E /* Pods_MactodonTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MactodonTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +66,9 @@
 		BB174800212769990015E3A8 /* MactodonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MactodonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB174806212769990015E3A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB17480F21278B3F0015E3A8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		BB71838221962F850006AE5A /* FollowingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingItem.swift; sourceTree = "<group>"; };
+		BB71838421965D510006AE5A /* NSTextView+Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+Label.swift"; sourceTree = "<group>"; };
+		BB718386219661AA0006AE5A /* FlippedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlippedView.swift; sourceTree = "<group>"; };
 		BB88F7F7217ED8EE00B2F662 /* Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
 		BB88F7FA217F93A900B2F662 /* ValuePromise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuePromise.swift; sourceTree = "<group>"; };
 		BB88F7FC217F93BD00B2F662 /* PromiseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseTests.swift; sourceTree = "<group>"; };
@@ -132,7 +140,9 @@
 				30925EA09FC640B6BF8F8B1C /* Pods */,
 				435E9F53E867D927540A727C /* Frameworks */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		BB1747EF212769970015E3A8 /* Products */ = {
 			isa = PBXGroup;
@@ -163,6 +173,7 @@
 				BB88F88021824E4D00B2F662 /* FeedRendering */,
 				BBCD39BB216008BC007675E3 /* Mastodon */,
 				BB88F7F9217F913C00B2F662 /* Promise */,
+				50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */,
 			);
 			path = Mactodon;
 			sourceTree = "<group>";
@@ -195,6 +206,9 @@
 				BBE007182187BEED00A5BE75 /* FeedViewCell.swift */,
 				BB88F881218253CB00B2F662 /* TootItem.swift */,
 				BBE007442188015400A5BE75 /* PullToRefreshCell.swift */,
+				BB71838221962F850006AE5A /* FollowingItem.swift */,
+				BB71838421965D510006AE5A /* NSTextView+Label.swift */,
+				BB718386219661AA0006AE5A /* FlippedView.swift */,
 			);
 			path = FeedRendering;
 			sourceTree = "<group>";
@@ -373,23 +387,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB9C8DEF217E7B0000669E31 /* URLComponents+Helper.swift in Sources */,
+				BB71838321962F850006AE5A /* FollowingItem.swift in Sources */,
 				BB17481021278B3F0015E3A8 /* LoginViewController.swift in Sources */,
 				BB9C8DE9217E53E800669E31 /* Keychain+MastodonKit.swift in Sources */,
 				BBCD39BF21603528007675E3 /* Client.swift in Sources */,
 				BB88F7FB217F93A900B2F662 /* ValuePromise.swift in Sources */,
 				BB88F7F8217ED8EE00B2F662 /* Promise.swift in Sources */,
+				50E74BED2198BEDB00CD0559 /* LayoutHelpers.swift in Sources */,
 				BB8F87782190EAE700CDEAC6 /* MultiFeedViewController.swift in Sources */,
 				BB88F87C2181265200B2F662 /* Promise+Helpers.swift in Sources */,
 				BB88F803217FA6E000B2F662 /* TokenController.swift in Sources */,
 				BB9C8DED217E6E7600669E31 /* Keychain.swift in Sources */,
 				BB88F87E21812FF200B2F662 /* NSTextView+HTML.swift in Sources */,
 				BB1747F4212769970015E3A8 /* InstanceViewController.swift in Sources */,
+				BB71838521965D520006AE5A /* NSTextView+Label.swift in Sources */,
 				BBE007452188015400A5BE75 /* PullToRefreshCell.swift in Sources */,
 				BB88F882218253CB00B2F662 /* TootItem.swift in Sources */,
 				BB88F884218287F300B2F662 /* FeedProvider.swift in Sources */,
 				BB88F805217FDFD800B2F662 /* Settings.swift in Sources */,
 				BBE007192187BEED00A5BE75 /* FeedViewCell.swift in Sources */,
 				BB88F87A2181166600B2F662 /* FeedViewController.swift in Sources */,
+				BB718387219661AB0006AE5A /* FlippedView.swift in Sources */,
 				BBC6C9272183840C004A9F2E /* AvatarView.swift in Sources */,
 				BB1747F2212769970015E3A8 /* AppDelegate.swift in Sources */,
 			);

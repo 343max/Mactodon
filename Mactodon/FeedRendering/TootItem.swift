@@ -73,9 +73,8 @@ extension TootItemModel {
       case .favourite(let account):
         let html = "\(account.someDisplayName) favourited"
         return Action(actor: account, descriptionHtml: html)
-      case .mention(let account):
-        let html = "\(account.someDisplayName) mentioned you"
-        return Action(actor: account, descriptionHtml: html)
+      case .mention(_):
+        return nil
       }
     }
   }
@@ -112,39 +111,26 @@ class TootItem: NSCollectionViewItem, FeedViewCell {
     }
   }
   
-  private class FlippedView: NSView {
-    override var isFlipped: Bool {
-      get {
-        return true
-      }
-    }
-  }
-  
   override func loadView() {
     view = FlippedView()
-  }
-  
-  private func textView() -> NSTextView {
-    let textView = NSTextView(frame: .zero)
-    textView.isEditable = false
-    textView.backgroundColor = NSColor.clear
-    textView.isSelectable = true
-    return textView
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    tootTextView = textView()
+    tootTextView = NSTextView(frame: .zero)
+    tootTextView.prepareAsLabel()
     view.addSubview(tootTextView)
     
-    creatorName = textView()
+    creatorName = NSTextView(frame: .zero)
+    creatorName.prepareAsLabel()
     view.addSubview(creatorName)
     
     creatorAvatar = AvatarView(frame: .zero)
     view.addSubview(creatorAvatar)
     
-    actionDescription = textView()
+    actionDescription = NSTextView(frame: .zero)
+    actionDescription.prepareAsLabel()
     view.addSubview(actionDescription)
     
     actorAvatar = AvatarView(frame: .zero)
@@ -181,39 +167,18 @@ class TootItem: NSCollectionViewItem, FeedViewCell {
   }
   
   @discardableResult func layout(width: CGFloat) -> NSSize {
-    let margin = NSEdgeInsets(top: 10, left: 5, bottom: 15, right: 15)
+    let margin = CellLayout.margin
     let avatarSize = AvatarView.size(.regular)
-    let avatarSpace: CGFloat = 10
-    let textViewSpace: CGFloat = 3
 
-    let textLeft = margin.left + avatarSize.width + avatarSpace
-    let textWidth = width - textLeft - margin.right
-
-    let bodyYOffset: CGFloat
-    if model?.action == nil {
-      actorAvatar.isHidden = true
-      actionDescription.isHidden = true
-      bodyYOffset = margin.top
-    } else {
-      actorAvatar.isHidden = false
-      actionDescription.isHidden = false
-      
-      let actorFrame = CGRect(origin: CGPoint(x: textLeft, y: margin.top), size: AvatarView.size(.small))
-      actorAvatar.frame = actorFrame
-      
-      let descriptionLeft: CGFloat = actorFrame.maxX + textViewSpace
-      let descriptionFrame = CGRect(origin: CGPoint(x: descriptionLeft, y: margin.top), size: actionDescription.sizeFor(width: width - descriptionLeft - margin.right))
-      actionDescription.frame = descriptionFrame
-      bodyYOffset = max(actorFrame.maxY, descriptionFrame.maxY) + 3
-    }
+    let textColumn = CellLayout.layoutActorRow(hasActorRow: model?.action != nil, width: width, avatar: actorAvatar, description: actionDescription)
     
-    let imageFrame = CGRect(origin: CGPoint(x: margin.left, y: bodyYOffset), size: avatarSize)
+    let imageFrame = CGRect(origin: CGPoint(x: margin.left, y: textColumn.minY), size: avatarSize)
     creatorAvatar.frame = imageFrame
 
-    let usernameFrame = CGRect(origin: CGPoint(x: textLeft, y: bodyYOffset), size: creatorName.sizeFor(width: textWidth))
+    let usernameFrame = CGRect(origin: textColumn.origin, size: creatorName.sizeFor(width: textColumn.width))
     creatorName.frame = usernameFrame
     
-    let tootFrame = CGRect(origin: CGPoint(x: textLeft, y: usernameFrame.maxY + textViewSpace), size: tootTextView.sizeFor(width: textWidth))
+    let tootFrame = CGRect(origin: CGPoint(x: textColumn.minX, y: usernameFrame.maxY + CellLayout.textViewYOffset), size: tootTextView.sizeFor(width: textColumn.width))
     tootTextView.frame = tootFrame
     
     return CGSize(width: width, height: max(tootFrame.maxY, imageFrame.maxY) + margin.bottom)

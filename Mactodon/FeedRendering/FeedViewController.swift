@@ -85,7 +85,8 @@ class FeedViewNotificationCellProvider: FeedViewCellProvider {
       view.model = model
       return view
     } else {
-      let view = collectionView.makeItem(withIdentifier: FollowingItem.identifier, for: indexPath)
+      let view = collectionView.makeItem(withIdentifier: FollowingItem.identifier, for: indexPath) as! FollowingItem
+      view.account = notification.account
       return view
     }
   }
