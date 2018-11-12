@@ -4,6 +4,9 @@ import Foundation
 import MastodonKit
 import Starscream
 
+// only needed for the timer, should go away
+import Cocoa
+
 protocol StreamingClientDelegate: AnyObject {
   func connected(streamingClient: StreamingClient)
   func disconnected(streamingClient: StreamingClient, error: Error?)
@@ -17,7 +20,18 @@ class StreamingClient {
   let socket: WebSocket
   weak var delegate: StreamingClientDelegate?
   
-  init(url: URL, accessToken: String?) {
+  let statusSignal = Promise<Status>(multiCall: true)
+  let notificationSignal = Promise<MastodonKit.Notification>(multiCall: true)
+  let deletedSignal = Promise<String>(multiCall: true)
+  
+  enum Timeline: String {
+    case User = "user"
+    case Local = "public:local"
+    case Federated = "public"
+  }
+  
+  init(instance: String, timeline: Timeline, accessToken: String?) {
+    let url = URL(string: "wss://\(instance)/api/v1/streaming/?stream=\(timeline.rawValue)")!
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
     if let accessToken = accessToken {
@@ -57,10 +71,13 @@ extension StreamingClient: WebSocketDelegate {
     let event = try! JSONDecoder().decode(Event.self, from: data)
     switch event {
     case .Update(let status):
+      statusSignal.fulfill(status)
       delegate?.received(status: status, streamingClient: self)
     case .Notification(let notification):
+      notificationSignal.fulfill(notification)
       delegate?.received(notification: notification, streamingClient: self)
     case .Delete(let statusID):
+      deletedSignal.fulfill(statusID)
       delegate?.deleted(statusID: statusID, streamingClient: self)
     case .FiltersChanged:
       delegate?.filtersChanged(streamingClient: self)

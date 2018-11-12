@@ -49,52 +49,46 @@ class FeedProvider<T: Codable>: TypelessFeedProvider {
   private var _isLoading = false
   private var nextPage: RequestRange?
   private var previousPage: RequestRange?
-  var sc: StreamingClient?
 
-  public init(client: ValuePromise<Client?>, request: @escaping TimelineRequest, streamingEndpoint: String? = nil) {
+  public init(client: ValuePromise<Client?>, request: @escaping TimelineRequest, newItemSignal: Promise<T>? = nil) {
     self.client = client
     self.request = request
     self.client.didSet.then {
       self.delegate?.feedProviderReady()
     }
     
-    if let streamingEndpoint = streamingEndpoint {
-      self.client.didSet.then { [weak self] (client) in
-        guard let client = client else {
-          return
-        }
-        
-        let url = URL(string: "https://chaos.social/" + streamingEndpoint)!
-        let streamingClient = StreamingClient(url: url, accessToken: client.accessToken)
-        streamingClient.connect()
-        self?.streamingClient.value = streamingClient
-        self?.sc = streamingClient
+    newItemSignal?.then { [weak self] (item) in
+      guard let self = self else {
+        return
       }
+      
+      self.items = [item] + self.items
+      self.delegate?.didPrepend(itemCount: 1)
     }
   }
   
-  static func user(client: ValuePromise<Client?>) -> FeedProvider<Status> {
+  static func user(client: ValuePromise<Client?>, newStatusSignal: Promise<Status>? = nil) -> FeedProvider<Status> {
     return FeedProvider<Status>(client: client, request: { (range) -> Request<[Status]> in
       return Timelines.home(range: range)
-    }, streamingEndpoint: "api/v1/streaming/?stream=user")
+    }, newItemSignal: newStatusSignal)
   }
   
-  static func local(client: ValuePromise<Client?>) -> FeedProvider<Status> {
+  static func local(client: ValuePromise<Client?>, newStatusSignal: Promise<Status>? = nil) -> FeedProvider<Status> {
     return FeedProvider<Status>(client: client, request: { (range) -> Request<[Status]> in
       return Timelines.public(local: true, range: range)
-    }, streamingEndpoint: "api/v1/streaming/public/local")
+    }, newItemSignal: newStatusSignal)
   }
   
-  static func federated(client: ValuePromise<Client?>) -> FeedProvider<Status> {
+  static func federated(client: ValuePromise<Client?>, newStatusSignal: Promise<Status>? = nil) -> FeedProvider<Status> {
     return FeedProvider<Status>(client: client, request: { (range) -> Request<[Status]> in
       return Timelines.public(local: false, range: range)
-    }, streamingEndpoint: "api/v1/streaming/public")
+    }, newItemSignal: newStatusSignal)
   }
   
-  static func notifications(client: ValuePromise<Client?>) -> FeedProvider<MastodonKit.Notification> {
+  static func notifications(client: ValuePromise<Client?>, newNotificationSignal: Promise<MastodonKit.Notification>? = nil) -> FeedProvider<MastodonKit.Notification> {
     return FeedProvider<MastodonKit.Notification>(client: client, request: { (range) -> Request<[MastodonKit.Notification]> in
       return Notifications.all(range: range)
-    }, streamingEndpoint: "api/v1/streaming/user")
+    }, newItemSignal: newNotificationSignal)
   }
   
   func reload() {

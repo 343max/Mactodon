@@ -12,6 +12,7 @@ class MultiFeedViewController: NSViewController {
   }
   
   let client: ValuePromise<Client?>
+  let streamingController: ValuePromise<StreamingController?>
   
   var feedViewControllers: [Feed: FeedViewController] = [:]
   var selectedFeed = Feed.UserTimeline {
@@ -20,8 +21,9 @@ class MultiFeedViewController: NSViewController {
     }
   }
   
-  init(client: ValuePromise<Client?>) {
+  init(client: ValuePromise<Client?>, streamingController: ValuePromise<StreamingController?>) {
     self.client = client
+    self.streamingController = streamingController
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -55,7 +57,15 @@ class MultiFeedViewController: NSViewController {
   func createViewController(feed: Feed) -> FeedViewController {
     switch feed {
     case .UserTimeline:
-      return FeedViewController(feedProvider: FeedProvider<Status>.user(client: client))
+      let signal = Promise<Status>(multiCall: true)
+      streamingController.didSet.then { (streamingController) in
+        streamingController?.userStream.then { (userStream) in
+          userStream.statusSignal.then { (status) in
+            signal.fulfill(status)
+          }
+        }
+      }
+      return FeedViewController(feedProvider: FeedProvider<Status>.user(client: client, newStatusSignal: signal))
     case .LocalTimeline:
       return FeedViewController(feedProvider: FeedProvider<Status>.local(client: client))
     case .FederatedTimeline:

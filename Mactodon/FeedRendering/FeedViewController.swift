@@ -200,8 +200,10 @@ extension FeedViewController: FeedProviderDelegate {
   }
   
   func didPrepend(itemCount: Int) {
-    self.pullToRefreshCell?.refreshing = false
-    collectionView.reloadData()
+    let indexPaths = Set((0..<itemCount).map({ (item) -> IndexPath in
+      return IndexPath(item: itemCount, section: 0)
+    }))
+    collectionView.insertItems(at: indexPaths)
   }
   
   func didAppend(itemCount: Int) {

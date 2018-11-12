@@ -11,6 +11,7 @@ class InstanceViewController: NSViewController {
   var clientApplication: ClientApplication?
   let client = ValuePromise<Client?>(initialValue: nil)
   let currentUser = ValuePromise<Account?>(initialValue: nil)
+  let streamingController = ValuePromise<StreamingController?>(initialValue: nil)
   var tokenController: TokenController?
   var multiFeedViewController: MultiFeedViewController!
   
@@ -21,11 +22,19 @@ class InstanceViewController: NSViewController {
       self?.update()
     }
     
-    currentUser.didSet.mainQueue.then { (currentUser) in
-      self.view.window?.title = currentUser?.username ?? "Mactodon"
+    client.didSet.then { [weak self] (client) in
+      if let client = client {
+        self?.streamingController.value = StreamingController(client: client)
+      } else {
+        self?.streamingController.value = nil
+      }
     }
     
-    let multiFeedViewController = MultiFeedViewController(client: client)
+    currentUser.didSet.mainQueue.then { [weak self] (currentUser) in
+      self?.view.window?.title = currentUser?.username ?? "Mactodon"
+    }
+    
+    let multiFeedViewController = MultiFeedViewController(client: client, streamingController: streamingController)
     multiFeedViewController.view.autoresizingMask = [.width, .height]
     multiFeedViewController.view.frame = view.bounds
     addChild(multiFeedViewController)
