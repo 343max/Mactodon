@@ -135,6 +135,14 @@ class TootItem: NSCollectionViewItem, FeedViewCell {
     
     actorAvatar = AvatarView(frame: .zero)
     view.addSubview(actorAvatar)
+    
+    let doubleClickGR = NSClickGestureRecognizer(target: self, action: #selector(didDoubleClick(_:)))
+    doubleClickGR.numberOfClicksRequired = 2
+    view.addGestureRecognizer(doubleClickGR)
+  }
+  
+  @objc func didDoubleClick(_ gestureRecognizer: NSClickGestureRecognizer) {
+    NSWorkspace.shared.open(model!.status.url!)
   }
   
   func willDisplay() {
