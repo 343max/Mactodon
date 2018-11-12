@@ -44,41 +44,57 @@ class FeedProvider<T: Codable>: TypelessFeedProvider {
   }
 
   private let client: ValuePromise<Client?>
+  private let streamingClient: ValuePromise<StreamingClient?> = ValuePromise(initialValue: nil)
   private let request: TimelineRequest
   private var _isLoading = false
   private var nextPage: RequestRange?
   private var previousPage: RequestRange?
+  var sc: StreamingClient?
 
-  public init(client: ValuePromise<Client?>, request: @escaping TimelineRequest) {
+  public init(client: ValuePromise<Client?>, request: @escaping TimelineRequest, streamingEndpoint: String? = nil) {
     self.client = client
     self.request = request
     self.client.didSet.then {
       self.delegate?.feedProviderReady()
+    }
+    
+    if let streamingEndpoint = streamingEndpoint {
+      self.client.didSet.then { [weak self] (client) in
+        guard let client = client else {
+          return
+        }
+        
+        let url = URL(string: "https://chaos.social/" + streamingEndpoint)!
+        let streamingClient = StreamingClient(url: url, accessToken: client.accessToken)
+        streamingClient.connect()
+        self?.streamingClient.value = streamingClient
+        self?.sc = streamingClient
+      }
     }
   }
   
   static func user(client: ValuePromise<Client?>) -> FeedProvider<Status> {
     return FeedProvider<Status>(client: client, request: { (range) -> Request<[Status]> in
       return Timelines.home(range: range)
-    })
+    }, streamingEndpoint: "api/v1/streaming/?stream=user")
   }
   
   static func local(client: ValuePromise<Client?>) -> FeedProvider<Status> {
     return FeedProvider<Status>(client: client, request: { (range) -> Request<[Status]> in
       return Timelines.public(local: true, range: range)
-    })
+    }, streamingEndpoint: "api/v1/streaming/public/local")
   }
   
   static func federated(client: ValuePromise<Client?>) -> FeedProvider<Status> {
     return FeedProvider<Status>(client: client, request: { (range) -> Request<[Status]> in
       return Timelines.public(local: false, range: range)
-    })
+    }, streamingEndpoint: "api/v1/streaming/public")
   }
   
   static func notifications(client: ValuePromise<Client?>) -> FeedProvider<MastodonKit.Notification> {
     return FeedProvider<MastodonKit.Notification>(client: client, request: { (range) -> Request<[MastodonKit.Notification]> in
       return Notifications.all(range: range)
-    })
+    }, streamingEndpoint: "api/v1/streaming/user")
   }
   
   func reload() {

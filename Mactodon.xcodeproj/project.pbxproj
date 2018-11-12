@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5087654A21990A2C00156A73 /* StreamingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087654921990A2C00156A73 /* StreamingClient.swift */; };
 		50E74BED2198BEDB00CD0559 /* LayoutHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */; };
 		890553B037E04B6046F2C434 /* Pods_MactodonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFC16C8188156D2EDA484A6E /* Pods_MactodonTests.framework */; };
 		AFF1EFFF418F9F793C2A2C5E /* Pods_Mactodon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97F4E829C779078BD9C8F94 /* Pods_Mactodon.framework */; };
@@ -52,6 +53,7 @@
 /* Begin PBXFileReference section */
 		30AE5CBE9F8F80CFBBBB87EC /* Pods-Mactodon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mactodon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon.debug.xcconfig"; sourceTree = "<group>"; };
 		4D7167C4FE7089E037D1CCB0 /* Pods-Mactodon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mactodon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon.release.xcconfig"; sourceTree = "<group>"; };
+		5087654921990A2C00156A73 /* StreamingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingClient.swift; sourceTree = "<group>"; };
 		50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutHelpers.swift; sourceTree = "<group>"; };
 		803D02693F008DC4C454A224 /* Pods-MactodonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MactodonTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MactodonTests/Pods-MactodonTests.release.xcconfig"; sourceTree = "<group>"; };
 		A97F4E829C779078BD9C8F94 /* Pods_Mactodon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mactodon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,6 +220,7 @@
 			children = (
 				BBCD39BE21603528007675E3 /* Client.swift */,
 				BB88F802217FA6E000B2F662 /* TokenController.swift */,
+				5087654921990A2C00156A73 /* StreamingClient.swift */,
 			);
 			path = Mastodon;
 			sourceTree = "<group>";
@@ -367,12 +370,14 @@
 				"${BUILT_PRODUCTS_DIR}/Atributika/Atributika.framework",
 				"${BUILT_PRODUCTS_DIR}/MastodonKit/MastodonKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Nuke/Nuke.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Atributika.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MastodonKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nuke.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -388,6 +393,7 @@
 			files = (
 				BB9C8DEF217E7B0000669E31 /* URLComponents+Helper.swift in Sources */,
 				BB71838321962F850006AE5A /* FollowingItem.swift in Sources */,
+				5087654A21990A2C00156A73 /* StreamingClient.swift in Sources */,
 				BB17481021278B3F0015E3A8 /* LoginViewController.swift in Sources */,
 				BB9C8DE9217E53E800669E31 /* Keychain+MastodonKit.swift in Sources */,
 				BBCD39BF21603528007675E3 /* Client.swift in Sources */,
