@@ -137,11 +137,9 @@ extension StreamingClient {
       let rawEvent = try RawEvent(from: decoder)
       switch rawEvent.event {
       case .Update:
-        print("\(rawEvent.payload!)")
         let status = try Status.decode(data: rawEvent.payloadData!)
         self = .Update(status: status)
       case .Notification:
-        print("\(rawEvent.payload!)")
         let notification = try MastodonKit.Notification.decode(data: rawEvent.payloadData!)
         self = .Notification(notification: notification)
       case .Delete:

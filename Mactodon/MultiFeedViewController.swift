@@ -54,21 +54,29 @@ class MultiFeedViewController: NSViewController {
     view.addSubview(selectedVC.view)
   }
   
+  func createSignal<T: Codable>(_ callback: @escaping (_ streamingController: StreamingController) -> (Promise<T>)) -> Promise<T> {
+    return Promise<T>({ [weak self] (completion) in
+      self?.streamingController.didChange.then { (streamingController) in
+        if let streamingController = streamingController {
+          callback(streamingController).then {
+            completion($0)
+          }
+        }
+      }
+      }, multiCall: true)
+  }
+  
   func createViewController(feed: Feed) -> FeedViewController {
     switch feed {
     case .UserTimeline:
-      let signal = Promise({ [weak self] (completion, _) in
-        self?.streamingController.didChange.then { (streamingController) in
-          streamingController?.userStream.statusSignal.then { status in
-            completion(status)
-          }
-        }
-      }, multiCall: true)
+      let signal = createSignal { $0.userStream.statusSignal }
       return FeedViewController(feedProvider: FeedProvider<Status>.user(client: client, newStatusSignal: signal))
     case .LocalTimeline:
-      return FeedViewController(feedProvider: FeedProvider<Status>.local(client: client))
+      let signal = createSignal { $0.localStream.statusSignal }
+      return FeedViewController(feedProvider: FeedProvider<Status>.local(client: client, newStatusSignal: signal))
     case .FederatedTimeline:
-      return FeedViewController(feedProvider: FeedProvider<Status>.federated(client: client))
+      let signal = createSignal { $0.federatedStream.statusSignal }
+      return FeedViewController(feedProvider: FeedProvider<Status>.federated(client: client, newStatusSignal: signal))
     case .Notifications:
       let signal = Promise({ [weak self] (completion, _) in
         self?.streamingController.didChange.then { (streamingController) in
