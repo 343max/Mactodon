@@ -44,7 +44,7 @@ class Promise<T> : UntypedPromise {
       try setup(complete)
     }
     
-    self.init(fullSetup)
+    self.init(fullSetup, multiCall: multiCall)
   }
   
   init(_ setup: @escaping (_ complete: @escaping CompletionCallback, _ promise: Promise) throws -> Void, multiCall: Bool = false) {
@@ -66,6 +66,8 @@ class Promise<T> : UntypedPromise {
     guard let result = self.result else {
       return
     }
+    
+    print("\(self) calling \(thenCalls.count) thens")
     
     for thenCall in thenCalls {
       thenCall(result)
