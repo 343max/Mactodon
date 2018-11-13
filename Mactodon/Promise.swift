@@ -67,8 +67,6 @@ class Promise<T> : UntypedPromise {
       return
     }
     
-    print("\(self) calling \(thenCalls.count) thens")
-    
     for thenCall in thenCalls {
       thenCall(result)
     }
