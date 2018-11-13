@@ -104,11 +104,7 @@ class Promise<T> : UntypedPromise {
   
   @discardableResult func then(_ completion: @escaping ThenCall) -> Self {
     thenCalls.append(completion)
-    
-    if (!multiCall) {
-      handleThens()
-    }
-    
+    handleThens()
     return self
   }
   

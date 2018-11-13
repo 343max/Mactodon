@@ -9,37 +9,33 @@ private class InstanceUrls: Codable {
 
 class StreamingController {
   let client: Client
-  let instanceDomain = Promise<String>()
+  let instanceDomain: String
   
-  lazy var userStream: Promise<StreamingClient> = {
+  lazy var userStream: StreamingClient = {
     return streamingClient(timeline: .User)
   }()
   
-  lazy var localStream: Promise<StreamingClient> = {
+  lazy var localStream: StreamingClient = {
     return streamingClient(timeline: .Local)
   }()
   
-  lazy var federatedStream: Promise<StreamingClient> = {
+  lazy var federatedStream: StreamingClient = {
     return streamingClient(timeline: .Federated)
   }()
 
-  init(client: Client) {
+  init(client: Client, instanceDomain: String) {
     assert(client.accessToken != nil)
     self.client = client
-    
-    client.run(Instances.current()).then { [weak self] (instance) in
-      self?.instanceDomain.fulfill(instance.uri)
-    }
+    self.instanceDomain = instanceDomain
   }
   
-  func streamingClient(timeline: StreamingClient.Timeline) -> Promise<StreamingClient> {
-    let promise = Promise<StreamingClient>()
-    instanceDomain.then { [weak self] (instance) in
-      guard let self = self else { return }
-      let client = StreamingClient(instance: instance, timeline: timeline, accessToken: self.client.accessToken!)
-      client.connect()
-      promise.fulfill(client)
-    }
-    return promise
+  static func controller(client: Client) -> Promise<StreamingController> {
+    return client.run(Instances.current()).map { return StreamingController(client: client, instanceDomain: $0.uri) }
+  }
+  
+  func streamingClient(timeline: StreamingClient.Timeline) -> StreamingClient {
+    let client = StreamingClient(instance: instanceDomain, timeline: timeline, accessToken: self.client.accessToken!)
+    client.connect()
+    return client
   }
 }

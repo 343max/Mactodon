@@ -24,7 +24,9 @@ class InstanceViewController: NSViewController {
     
     client.didSet.then { [weak self] (client) in
       if let client = client {
-        self?.streamingController.value = StreamingController(client: client)
+        StreamingController.controller(client: client).then { [weak self] (controller) in
+          self?.streamingController.value = controller
+        }
       } else {
         self?.streamingController.value = nil
       }

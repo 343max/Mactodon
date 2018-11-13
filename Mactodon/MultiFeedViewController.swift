@@ -57,21 +57,28 @@ class MultiFeedViewController: NSViewController {
   func createViewController(feed: Feed) -> FeedViewController {
     switch feed {
     case .UserTimeline:
-      let signal = Promise<Status>(multiCall: true)
-      streamingController.didSet.then { (streamingController) in
-        streamingController?.userStream.then { (userStream) in
-          userStream.statusSignal.then { (status) in
-            signal.fulfill(status)
+      let signal = Promise({ [weak self] (completion, _) in
+        self?.streamingController.didSet.then { (streamingController) in
+          streamingController?.userStream.statusSignal.then { status in
+            completion(status)
           }
         }
-      }
+      }, multiCall: true)
       return FeedViewController(feedProvider: FeedProvider<Status>.user(client: client, newStatusSignal: signal))
     case .LocalTimeline:
       return FeedViewController(feedProvider: FeedProvider<Status>.local(client: client))
     case .FederatedTimeline:
       return FeedViewController(feedProvider: FeedProvider<Status>.federated(client: client))
     case .Notifications:
-      let cellProvider = FeedViewNotificationCellProvider(feedProvider: FeedProvider<MastodonKit.Notification>.notifications(client: client))
+      let signal = Promise({ [weak self] (completion, _) in
+        self?.streamingController.didSet.then { (streamingController) in
+          streamingController?.userStream.notificationSignal.then { notification in
+            completion(notification)
+          }
+        }
+      }, multiCall: true)
+      let feedProvider = FeedProvider<MastodonKit.Notification>.notifications(client: client, newNotificationSignal: signal)
+      let cellProvider = FeedViewNotificationCellProvider(feedProvider: feedProvider)
       return FeedViewController(cellProvider: cellProvider)
     }
   }
