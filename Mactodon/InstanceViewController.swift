@@ -18,11 +18,11 @@ class InstanceViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    client.didSet.then { [weak self] in
+    client.didChange.then { [weak self] in
       self?.update()
     }
     
-    client.didSet.then { [weak self] (client) in
+    client.didChange.then { [weak self] (client) in
       if let client = client {
         StreamingController.controller(client: client).then { [weak self] (controller) in
           self?.streamingController.value = controller
@@ -32,7 +32,7 @@ class InstanceViewController: NSViewController {
       }
     }
     
-    currentUser.didSet.mainQueue.then { [weak self] (currentUser) in
+    currentUser.didChange.mainQueue.then { [weak self] (currentUser) in
       self?.view.window?.title = currentUser?.username ?? "Mactodon"
     }
     

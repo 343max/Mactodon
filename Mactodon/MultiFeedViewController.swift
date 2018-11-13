@@ -58,7 +58,7 @@ class MultiFeedViewController: NSViewController {
     switch feed {
     case .UserTimeline:
       let signal = Promise({ [weak self] (completion, _) in
-        self?.streamingController.didSet.then { (streamingController) in
+        self?.streamingController.didChange.then { (streamingController) in
           streamingController?.userStream.statusSignal.then { status in
             completion(status)
           }
@@ -71,7 +71,7 @@ class MultiFeedViewController: NSViewController {
       return FeedViewController(feedProvider: FeedProvider<Status>.federated(client: client))
     case .Notifications:
       let signal = Promise({ [weak self] (completion, _) in
-        self?.streamingController.didSet.then { (streamingController) in
+        self?.streamingController.didChange.then { (streamingController) in
           streamingController?.userStream.notificationSignal.then { notification in
             completion(notification)
           }

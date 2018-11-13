@@ -5,18 +5,18 @@ import Foundation
 class ValuePromise<T> {
   var value: T {
     willSet(newValue) {
-      willSet.fulfill(newValue)
+      willChange.fulfill(newValue)
     }
     didSet {
-      didSet.fulfill(value)
+      didChange.fulfill(value)
     }
   }
-  let willSet: Promise<T>
-  let didSet: Promise<T>
+  let willChange: Promise<T>
+  let didChange: Promise<T>
   
   init(initialValue: T) {
     self.value = initialValue
-    self.didSet = Promise(multiCall: true)
-    self.willSet = Promise(multiCall: true)
+    self.didChange = Promise(multiCall: true)
+    self.willChange = Promise(multiCall: true)
   }
 }

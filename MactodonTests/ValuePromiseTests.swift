@@ -7,7 +7,7 @@ class ValuePromiseTests: XCTestCase {
   func testDidSetValue() {
     let promise = ValuePromise(initialValue: 0)
     var fired = false
-    promise.didSet.then {
+    promise.didChange.then {
       XCTAssert($0 == 42)
       fired = true
     }
@@ -20,7 +20,7 @@ class ValuePromiseTests: XCTestCase {
   func testDidSetValuesMultiple() {
     let promise = ValuePromise(initialValue: "first")
     var fireCount = 0
-    promise.didSet.then {
+    promise.didChange.then {
       fireCount += 1
     }
     
@@ -33,7 +33,7 @@ class ValuePromiseTests: XCTestCase {
   func testWillSetValue() {
     let promise = ValuePromise(initialValue: 0)
     var fireCount = 0
-    promise.willSet.then {
+    promise.willChange.then {
       fireCount += 1
     }
     
@@ -46,7 +46,7 @@ class ValuePromiseTests: XCTestCase {
   func testDontFireIfValueIsInitial() {
     let promise = ValuePromise(initialValue: 42)
     var wasCalled = false
-    promise.didSet.then {
+    promise.didChange.then {
       wasCalled = true
     }
     XCTAssertFalse(wasCalled)
@@ -59,7 +59,7 @@ class ValuePromiseTests: XCTestCase {
     let promise = ValuePromise(initialValue: 0)
     promise.value = 42
     var wasCalled = false
-    promise.didSet.then {
+    promise.didChange.then {
        wasCalled = true
     }
     XCTAssertTrue(wasCalled)

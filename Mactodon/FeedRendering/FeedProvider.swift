@@ -53,7 +53,7 @@ class FeedProvider<T: Codable>: TypelessFeedProvider {
   public init(client: ValuePromise<Client?>, request: @escaping TimelineRequest, newItemSignal: Promise<T>? = nil) {
     self.client = client
     self.request = request
-    self.client.didSet.then {
+    self.client.didChange.then {
       self.delegate?.feedProviderReady()
     }
     
