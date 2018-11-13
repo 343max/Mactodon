@@ -2,18 +2,21 @@ PODS:
   - Atributika (4.6.7)
   - MastodonKit (2.0.0)
   - Nuke (7.5.1)
+  - ReachabilitySwift (4.3.0)
   - Starscream (3.0.6)
 
 DEPENDENCIES:
   - Atributika
   - MastodonKit (from `https://github.com/MastodonKit/MastodonKit.git`, branch `master`)
   - Nuke
+  - ReachabilitySwift
   - Starscream
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Atributika
     - Nuke
+    - ReachabilitySwift
     - Starscream
 
 EXTERNAL SOURCES:
@@ -30,8 +33,9 @@ SPEC CHECKSUMS:
   Atributika: 01164ef4e8a0103c879f7499a7de8902385d8bf9
   MastodonKit: 3bc591ea7e626dd160711f9a10cd50f192e46ed3
   Nuke: 3814db501e55f17951451839c726ffd91641e9a5
+  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
 
-PODFILE CHECKSUM: 2f0f6353591ebaf3751cab6429a43ca3657827a0
+PODFILE CHECKSUM: 9ded5ca726a4ea9c68ac1312827af6d14be541ca
 
 COCOAPODS: 1.5.3

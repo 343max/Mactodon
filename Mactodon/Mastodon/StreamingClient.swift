@@ -2,10 +2,8 @@
 
 import Foundation
 import MastodonKit
+import Reachability
 import Starscream
-
-// only needed for the timer, should go away
-import Cocoa
 
 protocol StreamingClientDelegate: AnyObject {
   func connected(streamingClient: StreamingClient)
@@ -18,11 +16,14 @@ protocol StreamingClientDelegate: AnyObject {
 
 class StreamingClient {
   let socket: WebSocket
+  let reachability = Reachability()!
   weak var delegate: StreamingClientDelegate?
   
   let statusSignal = Promise<Status>(multiCall: true)
   let notificationSignal = Promise<MastodonKit.Notification>(multiCall: true)
   let deletedSignal = Promise<String>(multiCall: true)
+  
+  var shouldBeConnected: Bool = false
   
   enum Timeline: String {
     case User = "user"
@@ -39,13 +40,31 @@ class StreamingClient {
     }
     self.socket = WebSocket(request: request)
     self.socket.delegate = self
+    
+    reachability.whenReachable = { [weak self] (_) in
+      guard let self = self else {
+        return
+      }
+      
+      if self.shouldBeConnected {
+        self.socket.connect()
+      }
+    }
+    
+    reachability.whenUnreachable = { [weak self] (_) in
+      self?.socket.disconnect()
+    }
+    
+    try? reachability.startNotifier()
   }
   
   func connect() {
+    shouldBeConnected = true
     socket.connect()
   }
   
   func disconnect() {
+    shouldBeConnected = false
     socket.disconnect()
   }
 }

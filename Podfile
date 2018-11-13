@@ -6,6 +6,7 @@ target 'Mactodon' do
   pod 'Atributika'
   pod 'MastodonKit', :git => 'https://github.com/MastodonKit/MastodonKit.git', :branch => 'master'
   pod 'Nuke'
+  pod 'ReachabilitySwift'
   pod 'Starscream'
   
   target 'MactodonTests' do
