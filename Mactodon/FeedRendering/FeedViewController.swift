@@ -217,6 +217,11 @@ extension FeedViewController: FeedProviderDelegate {
     collectionView.insertItems(at: indexPaths)
   }
   
+  func didDelete(index: Int) {
+    let index = IndexPath(item: index, section: 0)
+    collectionView.deleteItems(at: Set([index]))
+  }
+  
   func feedProviderReady() {
     cellProvider.feedProvider.reload()
   }

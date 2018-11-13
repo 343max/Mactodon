@@ -8,6 +8,7 @@ protocol FeedProviderDelegate: AnyObject {
   func didSet(itemCount: Int)
   func didPrepend(itemCount: Int)
   func didAppend(itemCount: Int)
+  func didDelete(index: Int)
 }
 
 protocol TypelessFeedProvider: AnyObject {
@@ -67,22 +68,22 @@ class FeedProvider<T: Codable>: TypelessFeedProvider {
     }
   }
   
-  static func user(client: ValuePromise<Client?>, newStatusSignal: Promise<Status>? = nil) -> FeedProvider<Status> {
-    return FeedProvider<Status>(client: client, request: { (range) -> Request<[Status]> in
+  static func user(client: ValuePromise<Client?>, newStatusSignal: Promise<Status>, deleteStatusSignal: Promise<String>) -> FeedProvider<Status> {
+    return StatusFeedProvider(client: client, request: { (range) -> Request<[Status]> in
       return Timelines.home(range: range)
-    }, newItemSignal: newStatusSignal)
+    }, statusSignal: newStatusSignal, deleteSignal: deleteStatusSignal)
   }
   
-  static func local(client: ValuePromise<Client?>, newStatusSignal: Promise<Status>? = nil) -> FeedProvider<Status> {
-    return FeedProvider<Status>(client: client, request: { (range) -> Request<[Status]> in
+  static func local(client: ValuePromise<Client?>, newStatusSignal: Promise<Status>, deleteStatusSignal: Promise<String>) -> FeedProvider<Status> {
+    return StatusFeedProvider(client: client, request: { (range) -> Request<[Status]> in
       return Timelines.public(local: true, range: range)
-    }, newItemSignal: newStatusSignal)
+    }, statusSignal: newStatusSignal, deleteSignal: deleteStatusSignal)
   }
   
-  static func federated(client: ValuePromise<Client?>, newStatusSignal: Promise<Status>? = nil) -> FeedProvider<Status> {
-    return FeedProvider<Status>(client: client, request: { (range) -> Request<[Status]> in
+  static func federated(client: ValuePromise<Client?>, newStatusSignal: Promise<Status>, deleteStatusSignal: Promise<String>) -> FeedProvider<Status> {
+    return StatusFeedProvider(client: client, request: { (range) -> Request<[Status]> in
       return Timelines.public(local: false, range: range)
-    }, newItemSignal: newStatusSignal)
+    }, statusSignal: newStatusSignal, deleteSignal: deleteStatusSignal)
   }
   
   static func notifications(client: ValuePromise<Client?>, newNotificationSignal: Promise<MastodonKit.Notification>? = nil) -> FeedProvider<MastodonKit.Notification> {
@@ -130,5 +131,23 @@ class FeedProvider<T: Codable>: TypelessFeedProvider {
     }.fail({ [weak self] (_) in
       self?._isLoading = false
     })
+  }
+}
+
+class StatusFeedProvider: FeedProvider<Status> {
+  init(client: ValuePromise<Client?>, request: @escaping TimelineRequest, statusSignal: Promise<Status>, deleteSignal: Promise<String>) {
+    super.init(client: client, request: request, newItemSignal: statusSignal)
+    
+    deleteSignal.then { [weak self] (statusID) in
+      guard let self = self else {
+        return
+      }
+      
+      let index = self.items.firstIndex(where: { $0.id == statusID })
+      if let index = index {
+        self.items.remove(at: index)
+        self.delegate?.didDelete(index: index)
+      }
+    }
   }
 }

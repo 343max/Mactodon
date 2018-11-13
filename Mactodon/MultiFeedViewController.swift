@@ -63,20 +63,23 @@ class MultiFeedViewController: NSViewController {
           }
         }
       }
-      }, multiCall: true)
+    }, multiCall: true)
   }
   
   func createViewController(feed: Feed) -> FeedViewController {
     switch feed {
     case .UserTimeline:
       let signal = createSignal { $0.userStream.statusSignal }
-      return FeedViewController(feedProvider: FeedProvider<Status>.user(client: client, newStatusSignal: signal))
+      let deleteSignal = createSignal { $0.userStream.deletedSignal }
+      return FeedViewController(feedProvider: FeedProvider<Status>.user(client: client, newStatusSignal: signal, deleteStatusSignal: deleteSignal))
     case .LocalTimeline:
       let signal = createSignal { $0.localStream.statusSignal }
-      return FeedViewController(feedProvider: FeedProvider<Status>.local(client: client, newStatusSignal: signal))
+      let deleteSignal = createSignal { $0.localStream.deletedSignal }
+      return FeedViewController(feedProvider: FeedProvider<Status>.local(client: client, newStatusSignal: signal, deleteStatusSignal: deleteSignal))
     case .FederatedTimeline:
       let signal = createSignal { $0.federatedStream.statusSignal }
-      return FeedViewController(feedProvider: FeedProvider<Status>.federated(client: client, newStatusSignal: signal))
+      let deleteSignal = createSignal { $0.federatedStream.deletedSignal }
+      return FeedViewController(feedProvider: FeedProvider<Status>.federated(client: client, newStatusSignal: signal, deleteStatusSignal: deleteSignal))
     case .Notifications:
       let signal = Promise({ [weak self] (completion, _) in
         self?.streamingController.didChange.then { (streamingController) in
