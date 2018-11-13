@@ -203,7 +203,7 @@ extension FeedViewController: FeedProviderDelegate {
     let indexPaths = Set((0..<itemCount).map({ (item) -> IndexPath in
       return indexPath(item: item)
     }))
-    collectionView.insertItems(at: indexPaths)
+    collectionView.animator().insertItems(at: indexPaths)
   }
   
   func didAppend(itemCount: Int) {
@@ -214,11 +214,11 @@ extension FeedViewController: FeedProviderDelegate {
     })
     
     self.pullToRefreshCell?.refreshing = false
-    collectionView.insertItems(at: indexPaths)
+    collectionView.animator().insertItems(at: indexPaths)
   }
   
   func didDelete(index: Int) {
-    collectionView.deleteItems(at: Set([indexPath(item: index)]))
+    collectionView.animator().deleteItems(at: Set([indexPath(item: index)]))
   }
   
   func feedProviderReady() {
