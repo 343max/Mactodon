@@ -381,22 +381,22 @@
                                         <menuItem isSeparatorItem="YES" id="nDP-sc-gHP"/>
                                         <menuItem title="User Timeline" keyEquivalent="1" id="Vhs-gZ-KSA">
                                             <connections>
-                                                <action selector="switchToUserTimeline:" target="Ady-hI-5gd" id="goP-Bs-ncq"/>
+                                                <action selector="switchToFeed:" target="Ady-hI-5gd" id="D4s-6I-Qvf"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Local Timeline" keyEquivalent="2" id="YoR-Lp-QXp">
                                             <connections>
-                                                <action selector="switchToLocalTimeline:" target="Ady-hI-5gd" id="gJe-c7-mXp"/>
+                                                <action selector="switchToFeed:" target="Ady-hI-5gd" id="13G-Si-Vh0"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Federated Timeline" keyEquivalent="3" id="cMm-dB-3rx">
                                             <connections>
-                                                <action selector="switchToFededratedTimeline:" target="Ady-hI-5gd" id="tLr-Kh-j9E"/>
+                                                <action selector="switchToFeed:" target="Ady-hI-5gd" id="Z8V-8s-UKN"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Notifications" keyEquivalent="4" id="Yw8-VX-pFI">
                                             <connections>
-                                                <action selector="switchToNotifcations:" target="Ady-hI-5gd" id="6uh-P5-LsT"/>
+                                                <action selector="switchToFeed:" target="Ady-hI-5gd" id="fcU-ya-Bu7"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -445,7 +445,14 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Mactodon" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Mactodon" customModuleProvider="target">
+                    <connections>
+                        <outlet property="switchToFederatedTimeline" destination="cMm-dB-3rx" id="Hfh-RM-zx0"/>
+                        <outlet property="switchToLocalTimeline" destination="YoR-Lp-QXp" id="O74-BE-Cma"/>
+                        <outlet property="switchToNotifications" destination="Yw8-VX-pFI" id="Eh2-KY-ZBr"/>
+                        <outlet property="switchToUserTimeline" destination="Vhs-gZ-KSA" id="eJO-n1-H4N"/>
+                    </connections>
+                </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

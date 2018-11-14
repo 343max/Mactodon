@@ -37,6 +37,7 @@ class InstanceViewController: NSViewController {
     }
     
     let multiFeedViewController = MultiFeedViewController(client: client, streamingController: streamingController)
+    check(selectedFeed: multiFeedViewController.selectedFeed)
     multiFeedViewController.view.autoresizingMask = [.width, .height]
     multiFeedViewController.view.frame = view.bounds
     addChild(multiFeedViewController)
@@ -85,20 +86,28 @@ class InstanceViewController: NSViewController {
     multiFeedViewController.refresh()
   }
   
-  @IBAction func switchToUserTimeline(_ sender: AnyObject) {
-    multiFeedViewController.selectedFeed = .UserTimeline
+  lazy var switchMenuItems: [MultiFeedViewController.Feed: NSMenuItem] = {
+    let appDelegate = AppDelegate.Shared()
+    return [
+      .UserTimeline: appDelegate.switchToUserTimeline,
+      .LocalTimeline: appDelegate.switchToLocalTimeline,
+      .FederatedTimeline: appDelegate.switchToFederatedTimeline,
+      .Notifications: appDelegate.switchToNotifications
+    ]
+  }()
+  
+  func check(selectedFeed: MultiFeedViewController.Feed) {
+    switchMenuItems.forEach { (element) in
+      element.value.state = element.key == selectedFeed ? .on : .off
+    }
   }
   
-  @IBAction func switchToLocalTimeline(_ sender: AnyObject) {
-    multiFeedViewController.selectedFeed = .LocalTimeline
-  }
-  
-  @IBAction func switchToFededratedTimeline(_ sender: AnyObject) {
-    multiFeedViewController.selectedFeed = .FederatedTimeline
-  }
-  
-  @IBAction func switchToNotifcations(_ sender: AnyObject) {
-    multiFeedViewController.selectedFeed = .Notifications
+  @IBAction func switchToFeed(_ sender: NSMenuItem) {
+    let feed = switchMenuItems.first { (_, value) -> Bool in
+      return value == sender
+    }!.key
+    multiFeedViewController.selectedFeed = feed
+    check(selectedFeed: feed)
   }
 }
 

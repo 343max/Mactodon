@@ -239,11 +239,11 @@
 				BB88F883218287F300B2F662 /* FeedProvider.swift */,
 				BB88F8792181166600B2F662 /* FeedViewController.swift */,
 				BBE007182187BEED00A5BE75 /* FeedViewCell.swift */,
+				BB718386219661AA0006AE5A /* FlippedView.swift */,
 				BB88F881218253CB00B2F662 /* TootItem.swift */,
 				BBE007442188015400A5BE75 /* PullToRefreshCell.swift */,
 				BB71838221962F850006AE5A /* FollowingItem.swift */,
 				BB71838421965D510006AE5A /* NSTextView+Label.swift */,
-				BB718386219661AA0006AE5A /* FlippedView.swift */,
 			);
 			path = FeedRendering;
 			sourceTree = "<group>";
