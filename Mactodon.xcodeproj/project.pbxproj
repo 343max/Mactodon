@@ -13,6 +13,7 @@
 		50A7ABD0219B4C8300573609 /* RelativeDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A7ABCF219B4C8300573609 /* RelativeDate.swift */; };
 		50A7ABD4219B4EF700573609 /* RelativeDateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A7ABD3219B4EF700573609 /* RelativeDateTests.swift */; };
 		50A7ABD6219BB9E700573609 /* RelativeDateTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A7ABD5219BB9E700573609 /* RelativeDateTextView.swift */; };
+		50A7ABD9219CA85500573609 /* NSView+BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A7ABD8219CA85500573609 /* NSView+BackgroundColor.swift */; };
 		50E74BED2198BEDB00CD0559 /* LayoutHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */; };
 		890553B037E04B6046F2C434 /* Pods_MactodonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFC16C8188156D2EDA484A6E /* Pods_MactodonTests.framework */; };
 		AFF1EFFF418F9F793C2A2C5E /* Pods_Mactodon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97F4E829C779078BD9C8F94 /* Pods_Mactodon.framework */; };
@@ -64,6 +65,7 @@
 		50A7ABCF219B4C8300573609 /* RelativeDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeDate.swift; sourceTree = "<group>"; };
 		50A7ABD3219B4EF700573609 /* RelativeDateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeDateTests.swift; sourceTree = "<group>"; };
 		50A7ABD5219BB9E700573609 /* RelativeDateTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeDateTextView.swift; sourceTree = "<group>"; };
+		50A7ABD8219CA85500573609 /* NSView+BackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+BackgroundColor.swift"; sourceTree = "<group>"; };
 		50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutHelpers.swift; sourceTree = "<group>"; };
 		803D02693F008DC4C454A224 /* Pods-MactodonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MactodonTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MactodonTests/Pods-MactodonTests.release.xcconfig"; sourceTree = "<group>"; };
 		A97F4E829C779078BD9C8F94 /* Pods_Mactodon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mactodon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +154,15 @@
 			path = "Relative Date";
 			sourceTree = "<group>";
 		};
+		50A7ABD7219CA84300573609 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */,
+				50A7ABD8219CA85500573609 /* NSView+BackgroundColor.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		BB1747E5212769970015E3A8 = {
 			isa = PBXGroup;
 			children = (
@@ -195,7 +206,7 @@
 				BB88F88021824E4D00B2F662 /* FeedRendering */,
 				BBCD39BB216008BC007675E3 /* Mastodon */,
 				BB88F7F9217F913C00B2F662 /* Promise */,
-				50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */,
+				50A7ABD7219CA84300573609 /* Helpers */,
 				50A7ABCC219B406C00573609 /* PushNotificationController.swift */,
 			);
 			path = Mactodon;
@@ -417,6 +428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB9C8DEF217E7B0000669E31 /* URLComponents+Helper.swift in Sources */,
+				50A7ABD9219CA85500573609 /* NSView+BackgroundColor.swift in Sources */,
 				BB71838321962F850006AE5A /* FollowingItem.swift in Sources */,
 				5087654A21990A2C00156A73 /* StreamingClient.swift in Sources */,
 				BB17481021278B3F0015E3A8 /* LoginViewController.swift in Sources */,

@@ -193,10 +193,10 @@ class TootItem: NSCollectionViewItem, FeedViewCell {
     let imageFrame = CGRect(origin: CGPoint(x: margin.left, y: textColumn.minY), size: avatarSize)
     creatorAvatar.frame = imageFrame
 
-    let usernameFrame = CGRect(origin: textColumn.origin, size: creatorName.sizeFor(width: textColumn.width))
+    let dateWidth = CGFloat(40)
+    let usernameFrame = CGRect(origin: textColumn.origin, size: creatorName.sizeFor(width: textColumn.width - dateWidth - CGFloat(5)))
     creatorName.frame = usernameFrame
     
-    let dateWidth = CGFloat(40)
     let dateFrame = CGRect(x: textColumn.maxX - dateWidth, y: textColumn.minY, width: dateWidth, height: usernameFrame.height)
     dateTextView.frame = dateFrame
     

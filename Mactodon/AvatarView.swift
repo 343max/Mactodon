@@ -21,9 +21,9 @@ class AvatarView: NSImageView {
   
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
-    self.wantsLayer = true
-    self.layer!.masksToBounds = true
-    self.layer!.backgroundColor = NSColor.textColor.withAlphaComponent(0.1).cgColor
+    wantsLayer = true
+    layer!.masksToBounds = true
+    backgroundColor = NSColor.textColor.withAlphaComponent(0.1)
   }
   
   required init?(coder: NSCoder) {
