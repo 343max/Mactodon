@@ -14,6 +14,8 @@
 		50A7ABD4219B4EF700573609 /* RelativeDateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A7ABD3219B4EF700573609 /* RelativeDateTests.swift */; };
 		50A7ABD6219BB9E700573609 /* RelativeDateTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A7ABD5219BB9E700573609 /* RelativeDateTextView.swift */; };
 		50A7ABD9219CA85500573609 /* NSView+BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A7ABD8219CA85500573609 /* NSView+BackgroundColor.swift */; };
+		50A7ABDB219CB0F200573609 /* ProgressIndicatorItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A7ABDA219CB0F200573609 /* ProgressIndicatorItem.swift */; };
+		50A7ABDD219CB28A00573609 /* CGRectHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A7ABDC219CB28A00573609 /* CGRectHelpers.swift */; };
 		50E74BED2198BEDB00CD0559 /* LayoutHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */; };
 		890553B037E04B6046F2C434 /* Pods_MactodonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFC16C8188156D2EDA484A6E /* Pods_MactodonTests.framework */; };
 		AFF1EFFF418F9F793C2A2C5E /* Pods_Mactodon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97F4E829C779078BD9C8F94 /* Pods_Mactodon.framework */; };
@@ -66,6 +68,8 @@
 		50A7ABD3219B4EF700573609 /* RelativeDateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeDateTests.swift; sourceTree = "<group>"; };
 		50A7ABD5219BB9E700573609 /* RelativeDateTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeDateTextView.swift; sourceTree = "<group>"; };
 		50A7ABD8219CA85500573609 /* NSView+BackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+BackgroundColor.swift"; sourceTree = "<group>"; };
+		50A7ABDA219CB0F200573609 /* ProgressIndicatorItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorItem.swift; sourceTree = "<group>"; };
+		50A7ABDC219CB28A00573609 /* CGRectHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectHelpers.swift; sourceTree = "<group>"; };
 		50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutHelpers.swift; sourceTree = "<group>"; };
 		803D02693F008DC4C454A224 /* Pods-MactodonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MactodonTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MactodonTests/Pods-MactodonTests.release.xcconfig"; sourceTree = "<group>"; };
 		A97F4E829C779078BD9C8F94 /* Pods_Mactodon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mactodon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +163,7 @@
 			children = (
 				50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */,
 				50A7ABD8219CA85500573609 /* NSView+BackgroundColor.swift */,
+				50A7ABDC219CB28A00573609 /* CGRectHelpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -244,6 +249,7 @@
 				BBE007442188015400A5BE75 /* PullToRefreshCell.swift */,
 				BB71838221962F850006AE5A /* FollowingItem.swift */,
 				BB71838421965D510006AE5A /* NSTextView+Label.swift */,
+				50A7ABDA219CB0F200573609 /* ProgressIndicatorItem.swift */,
 			);
 			path = FeedRendering;
 			sourceTree = "<group>";
@@ -433,6 +439,7 @@
 				5087654A21990A2C00156A73 /* StreamingClient.swift in Sources */,
 				BB17481021278B3F0015E3A8 /* LoginViewController.swift in Sources */,
 				BB9C8DE9217E53E800669E31 /* Keychain+MastodonKit.swift in Sources */,
+				50A7ABDB219CB0F200573609 /* ProgressIndicatorItem.swift in Sources */,
 				50A7ABCD219B406C00573609 /* PushNotificationController.swift in Sources */,
 				BBCD39BF21603528007675E3 /* Client.swift in Sources */,
 				BB88F7FB217F93A900B2F662 /* ValuePromise.swift in Sources */,
@@ -451,6 +458,7 @@
 				BB88F884218287F300B2F662 /* FeedProvider.swift in Sources */,
 				BB88F805217FDFD800B2F662 /* Settings.swift in Sources */,
 				BBE007192187BEED00A5BE75 /* FeedViewCell.swift in Sources */,
+				50A7ABDD219CB28A00573609 /* CGRectHelpers.swift in Sources */,
 				BB88F87A2181166600B2F662 /* FeedViewController.swift in Sources */,
 				BB718387219661AB0006AE5A /* FlippedView.swift in Sources */,
 				50A7ABD6219BB9E700573609 /* RelativeDateTextView.swift in Sources */,

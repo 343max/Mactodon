@@ -131,6 +131,7 @@ class FeedViewController: NSViewController {
     collectionView.dataSource = self
     
     collectionView.register(PullToRefreshCell.self, forItemWithIdentifier: PullToRefreshCell.identifier)
+    collectionView.register(ProgressIndicatorItem.self, forItemWithIdentifier: ProgressIndicatorItem.identifier)
     cellProvider.prepare(collectionView: collectionView)
     
     self.collectionView = collectionView
@@ -235,10 +236,14 @@ extension FeedViewController: PullToRefreshCellDelegate {
 extension FeedViewController {
   enum CellContent {
     case pullToRefresh
+    case loadingProgressIndicator
     case feedItem(index: Int)
   }
   
   func contentFor(indexPath: IndexPath) -> CellContent {
+    if shouldShowSpinner {
+      return .loadingProgressIndicator
+    }
     switch indexPath.item {
     case 0:
       return .pullToRefresh
@@ -271,8 +276,18 @@ extension FeedViewController: NSCollectionViewDelegate {
 }
 
 extension FeedViewController: NSCollectionViewDataSource {
+  var shouldShowSpinner: Bool {
+    get {
+      return cellProvider.feedProvider.isLoading && cellProvider.itemCount == 0
+    }
+  }
+  
   func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-    return cellProvider.itemCount
+    if shouldShowSpinner {
+      return 1
+    } else {
+      return cellProvider.itemCount + 1
+    }
   }
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
@@ -282,6 +297,8 @@ extension FeedViewController: NSCollectionViewDataSource {
       view.delegate = self
       self.pullToRefreshCell = view
       return view
+    case .loadingProgressIndicator:
+      return collectionView.makeItem(withIdentifier: ProgressIndicatorItem.identifier, for: indexPath)
     case .feedItem(let index):
       return cellProvider.item(collectionView: collectionView, indexPath: indexPath, index: index)
     }
@@ -294,6 +311,8 @@ extension FeedViewController: NSCollectionViewDelegateFlowLayout {
     switch contentFor(indexPath: indexPath) {
     case .pullToRefresh:
       return PullToRefreshCell.size(width: width, isReloading: cellProvider.feedProvider.isLoading)
+    case .loadingProgressIndicator:
+      return ProgressIndicatorItem.size(width: width)
     case .feedItem(let index):
       return cellProvider.itemSize(collectionView: collectionView, indexPath: indexPath, index: index)
     }
