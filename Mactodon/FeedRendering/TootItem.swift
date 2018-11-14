@@ -83,6 +83,7 @@ extension TootItemModel {
 class TootItem: NSCollectionViewItem, FeedViewCell {
   static let identifier = NSUserInterfaceItemIdentifier("TootItem")
   
+  private var dateTextView: RelativeDateTextView!
   private var tootTextView: NSTextView!
   private var creatorName: NSTextView!
   private var creatorAvatar: AvatarView!
@@ -104,6 +105,7 @@ class TootItem: NSCollectionViewItem, FeedViewCell {
         (creator.displayName != "" ? "<displayName>\(creator.displayName)</displayName> " : "") +
         "<username><a href=\"\(creator.url)\"><at>@</at>\(creator.username)</a></username>"
       
+      dateTextView.date = model.status.createdAt
       creatorName.set(html: usernameHtml)
       tootTextView.set(html: model.status.content)
       
@@ -117,6 +119,11 @@ class TootItem: NSCollectionViewItem, FeedViewCell {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    dateTextView = RelativeDateTextView(frame: .zero)
+    dateTextView.prepareAsLabel()
+    dateTextView.alphaValue = 0.7
+    view.addSubview(dateTextView)
     
     tootTextView = NSTextView(frame: .zero)
     tootTextView.prepareAsLabel()
@@ -157,10 +164,13 @@ class TootItem: NSCollectionViewItem, FeedViewCell {
       Nuke.loadImage(with: URL(string: actor.avatar)!, into: actorAvatar)
       actorAvatar.clickURL = URL(string: actor.url)
     }
+    
+    dateTextView.shouldUpdate = true
   }
   
   func didEndDisplaying() {
     Nuke.cancelRequest(for: creatorAvatar)
+    dateTextView.shouldUpdate = false
   }
   
   override func viewDidLayout() {
@@ -185,6 +195,10 @@ class TootItem: NSCollectionViewItem, FeedViewCell {
 
     let usernameFrame = CGRect(origin: textColumn.origin, size: creatorName.sizeFor(width: textColumn.width))
     creatorName.frame = usernameFrame
+    
+    let dateWidth = CGFloat(40)
+    let dateFrame = CGRect(x: textColumn.maxX - dateWidth, y: textColumn.minY, width: dateWidth, height: usernameFrame.height)
+    dateTextView.frame = dateFrame
     
     let tootFrame = CGRect(origin: CGPoint(x: textColumn.minX, y: usernameFrame.maxY + CellLayout.textViewYOffset), size: tootTextView.sizeFor(width: textColumn.width))
     tootTextView.frame = tootFrame

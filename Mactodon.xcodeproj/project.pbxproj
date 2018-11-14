@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		500F02862199EAE200F5740F /* StreamingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500F02852199EAE200F5740F /* StreamingController.swift */; };
 		5087654A21990A2C00156A73 /* StreamingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087654921990A2C00156A73 /* StreamingClient.swift */; };
+		50A7ABCD219B406C00573609 /* PushNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A7ABCC219B406C00573609 /* PushNotificationController.swift */; };
+		50A7ABD0219B4C8300573609 /* RelativeDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A7ABCF219B4C8300573609 /* RelativeDate.swift */; };
+		50A7ABD4219B4EF700573609 /* RelativeDateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A7ABD3219B4EF700573609 /* RelativeDateTests.swift */; };
+		50A7ABD6219BB9E700573609 /* RelativeDateTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A7ABD5219BB9E700573609 /* RelativeDateTextView.swift */; };
 		50E74BED2198BEDB00CD0559 /* LayoutHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */; };
 		890553B037E04B6046F2C434 /* Pods_MactodonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFC16C8188156D2EDA484A6E /* Pods_MactodonTests.framework */; };
 		AFF1EFFF418F9F793C2A2C5E /* Pods_Mactodon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97F4E829C779078BD9C8F94 /* Pods_Mactodon.framework */; };
@@ -56,6 +60,10 @@
 		4D7167C4FE7089E037D1CCB0 /* Pods-Mactodon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mactodon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon.release.xcconfig"; sourceTree = "<group>"; };
 		500F02852199EAE200F5740F /* StreamingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingController.swift; sourceTree = "<group>"; };
 		5087654921990A2C00156A73 /* StreamingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingClient.swift; sourceTree = "<group>"; };
+		50A7ABCC219B406C00573609 /* PushNotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationController.swift; sourceTree = "<group>"; };
+		50A7ABCF219B4C8300573609 /* RelativeDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeDate.swift; sourceTree = "<group>"; };
+		50A7ABD3219B4EF700573609 /* RelativeDateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeDateTests.swift; sourceTree = "<group>"; };
+		50A7ABD5219BB9E700573609 /* RelativeDateTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeDateTextView.swift; sourceTree = "<group>"; };
 		50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutHelpers.swift; sourceTree = "<group>"; };
 		803D02693F008DC4C454A224 /* Pods-MactodonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MactodonTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MactodonTests/Pods-MactodonTests.release.xcconfig"; sourceTree = "<group>"; };
 		A97F4E829C779078BD9C8F94 /* Pods_Mactodon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mactodon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +143,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		50A7ABCE219B4C3900573609 /* Relative Date */ = {
+			isa = PBXGroup;
+			children = (
+				50A7ABCF219B4C8300573609 /* RelativeDate.swift */,
+				50A7ABD5219BB9E700573609 /* RelativeDateTextView.swift */,
+			);
+			path = "Relative Date";
+			sourceTree = "<group>";
+		};
 		BB1747E5212769970015E3A8 = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +177,7 @@
 		BB1747F0212769970015E3A8 /* Mactodon */ = {
 			isa = PBXGroup;
 			children = (
+				50A7ABCE219B4C3900573609 /* Relative Date */,
 				BB1747FB212769990015E3A8 /* Mactodon.entitlements */,
 				BB1747FA212769990015E3A8 /* Info.plist */,
 				BB1747F7212769990015E3A8 /* Main.storyboard */,
@@ -178,6 +196,7 @@
 				BBCD39BB216008BC007675E3 /* Mastodon */,
 				BB88F7F9217F913C00B2F662 /* Promise */,
 				50E74BEC2198BEDB00CD0559 /* LayoutHelpers.swift */,
+				50A7ABCC219B406C00573609 /* PushNotificationController.swift */,
 			);
 			path = Mactodon;
 			sourceTree = "<group>";
@@ -188,6 +207,7 @@
 				BB88F7FC217F93BD00B2F662 /* PromiseTests.swift */,
 				BB174806212769990015E3A8 /* Info.plist */,
 				BB88F7FE217F950800B2F662 /* ValuePromiseTests.swift */,
+				50A7ABD3219B4EF700573609 /* RelativeDateTests.swift */,
 			);
 			path = MactodonTests;
 			sourceTree = "<group>";
@@ -401,11 +421,13 @@
 				5087654A21990A2C00156A73 /* StreamingClient.swift in Sources */,
 				BB17481021278B3F0015E3A8 /* LoginViewController.swift in Sources */,
 				BB9C8DE9217E53E800669E31 /* Keychain+MastodonKit.swift in Sources */,
+				50A7ABCD219B406C00573609 /* PushNotificationController.swift in Sources */,
 				BBCD39BF21603528007675E3 /* Client.swift in Sources */,
 				BB88F7FB217F93A900B2F662 /* ValuePromise.swift in Sources */,
 				BB88F7F8217ED8EE00B2F662 /* Promise.swift in Sources */,
 				50E74BED2198BEDB00CD0559 /* LayoutHelpers.swift in Sources */,
 				BB8F87782190EAE700CDEAC6 /* MultiFeedViewController.swift in Sources */,
+				50A7ABD0219B4C8300573609 /* RelativeDate.swift in Sources */,
 				BB88F87C2181265200B2F662 /* Promise+Helpers.swift in Sources */,
 				BB88F803217FA6E000B2F662 /* TokenController.swift in Sources */,
 				BB9C8DED217E6E7600669E31 /* Keychain.swift in Sources */,
@@ -419,6 +441,7 @@
 				BBE007192187BEED00A5BE75 /* FeedViewCell.swift in Sources */,
 				BB88F87A2181166600B2F662 /* FeedViewController.swift in Sources */,
 				BB718387219661AB0006AE5A /* FlippedView.swift in Sources */,
+				50A7ABD6219BB9E700573609 /* RelativeDateTextView.swift in Sources */,
 				BBC6C9272183840C004A9F2E /* AvatarView.swift in Sources */,
 				500F02862199EAE200F5740F /* StreamingController.swift in Sources */,
 				BB1747F2212769970015E3A8 /* AppDelegate.swift in Sources */,
@@ -431,6 +454,7 @@
 			files = (
 				BB88F7FD217F93BD00B2F662 /* PromiseTests.swift in Sources */,
 				BB88F7FF217F950800B2F662 /* ValuePromiseTests.swift in Sources */,
+				50A7ABD4219B4EF700573609 /* RelativeDateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
