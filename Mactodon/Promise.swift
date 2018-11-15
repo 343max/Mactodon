@@ -54,58 +54,50 @@ class Promise<T> : UntypedPromise {
       try setup({ (result) in
         self.result = result
         
-        self.handleThens()
+        self.handle(thens: self.thenCalls)
       }, self)
     } catch {
       self.error = error
       
-      self.handleFails()
+      self.handle(fails: self.errorCalls)
     }
   }
   
-  private func handleThens() {
+  private func handle(thens: [ThenCall]) {
     guard let result = self.result else {
       return
     }
     
-    for thenCall in thenCalls {
+    for thenCall in thens {
       thenCall(result)
-    }
-    
-    if !multiCall {
-      thenCalls = []
     }
   }
   
-  private func handleFails() {
+  private func handle(fails: [ErrorCall]) {
     guard let error = self.error else {
       return
     }
     
-    for errorCall in errorCalls {
+    for errorCall in fails {
       errorCall(error)
-    }
-    
-    if !multiCall {
-      errorCalls = []
     }
   }
   
   func `throw`(error: Error) {
     self.error = error
     
-    handleFails()
+    handle(fails: errorCalls)
   }
   
   func fulfill(_ result: T) {
-    assert(!self.fulfilled || self.multiCall, "promise already fulfilled")
+    assert(!fulfilled || multiCall, "promise already fulfilled")
     self.result = result
-    self.handleThens()
+    handle(thens: thenCalls)
   }
   
   @discardableResult func then(_ completion: @escaping ThenCall) -> Self {
     thenCalls.append(completion)
-    handleThens()
+    handle(thens: [completion])
     return self
   }
   
@@ -119,11 +111,7 @@ class Promise<T> : UntypedPromise {
   
   @discardableResult func fail(_ failedCompletion: @escaping ErrorCall) -> Self {
     errorCalls.append(failedCompletion)
-    
-    if (!multiCall) {
-      handleFails()
-    }
-    
+    handle(fails: [failedCompletion])
     return self
   }
   

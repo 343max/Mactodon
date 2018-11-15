@@ -267,4 +267,20 @@ class PromiseTests: XCTestCase {
     XCTAssertTrue(innerPromise?.fulfilled ?? false)
     XCTAssertTrue(outerPromise.fulfilled)
   }
+  
+  func testMultiCallSingleFire() {
+    let promise = Promise<Int>(multiCall: true)
+    var countA = 0
+    var countB = 0
+    promise.then {
+      countA += 1
+    }
+    promise.fulfill(42)
+    promise.then {
+      countB += 1
+    }
+    
+    XCTAssertEqual(countA, 1)
+    XCTAssertEqual(countB, 1)
+  }
 }
