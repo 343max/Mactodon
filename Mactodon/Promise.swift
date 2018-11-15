@@ -12,6 +12,7 @@ protocol UntypedPromise {
 }
 
 class Promise<T> : UntypedPromise {
+  typealias ReturnType = T
   typealias CompletionCallback = (_ result: T) -> Void
   typealias ThenCall = (_ result: T) -> Void
   
@@ -134,6 +135,24 @@ class Promise<T> : UntypedPromise {
     })
   }
 }
+
+extension Promise {
+  // combines cascading promises into one single promise that fires when the last promise fires
+  func combine<T>(_ callback: @escaping (_ result: ReturnType) -> (Promise<T>)) -> Promise<T> {
+    return Promise<T>({ [weak self] (finalCallback: @escaping (_: T) -> Void) in
+      guard let self = self else {
+        return
+      }
+      
+      self.then { (result) in
+        callback(result).then {
+          finalCallback($0)
+        }
+      }
+    })
+  }
+}
+
 
 func allDone<T>(_ promiseContainer: T) -> Promise<T> {
   return Promise<T>({ (completion, allDonePromise) in

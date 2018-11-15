@@ -237,4 +237,34 @@ class PromiseTests: XCTestCase {
     }
     XCTAssertTrue(finalThenCalled)
   }
+  
+  func testCombinig() {
+    /*
+     Combine two dependend promisses into one combined promisses that fires when both dependent promise have fired.
+     Even when the inner promise was only created when the outer promise fired
+     */
+    let outerPromise = Promise<Int>()
+    var innerPromise: Promise<String>? = nil
+    
+    let combinedPromise: Promise<String> = outerPromise.combine { (number) -> (Promise<String>) in
+      innerPromise = Promise<String>({ (completion) in
+        completion("number: \(number)")
+      })
+      return innerPromise!
+    }
+   
+    combinedPromise.then {
+      XCTAssertEqual($0, "number: 42")
+    }
+
+    XCTAssertNil(innerPromise)
+    XCTAssertFalse(outerPromise.fulfilled)
+    XCTAssertFalse(combinedPromise.fulfilled)
+    
+    outerPromise.fulfill(42)
+    
+    XCTAssertTrue(combinedPromise.fulfilled)
+    XCTAssertTrue(innerPromise?.fulfilled ?? false)
+    XCTAssertTrue(outerPromise.fulfilled)
+  }
 }
