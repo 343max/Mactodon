@@ -89,7 +89,7 @@ class MultiFeedViewController: NSViewController {
         }
       }, multiCall: true)
       let feedProvider = FeedProvider<MastodonKit.Notification>.notifications(client: client, newNotificationSignal: signal)
-      let cellProvider = FeedViewNotificationCellProvider(feedProvider: feedProvider)
+      let cellProvider = FeedViewNotificationCellProvider(feedProvider: feedProvider, client: client)
       return FeedViewController(cellProvider: cellProvider)
     }
   }

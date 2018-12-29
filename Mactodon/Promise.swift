@@ -122,6 +122,14 @@ class Promise<T> : UntypedPromise {
       })
     })
   }
+  
+  func map<U>(_ mapping: @escaping (_ result: T, _ completion: @escaping (U) -> ()) -> ()) -> Promise<U> {
+    return Promise<U>({ (completion) in
+      self.then { (result) in
+        mapping(result, completion)
+      }
+    })
+  }
 }
 
 extension Promise {

@@ -4,15 +4,23 @@ import Cocoa
 import MastodonKit
 import Nuke
 
-protocol FeedViewCellProvider {
+protocol FeedViewCellProvider: AnyObject {
   var feedProvider: TypelessFeedProvider { get }
+  var delegate: FeedViewCellProviderDelegate? { get set }
+  
   func prepare(collectionView: NSCollectionView)
   var itemCount: Int { get }
   func item(collectionView: NSCollectionView, indexPath: IndexPath, index: Int) -> NSCollectionViewItem
   func itemSize(collectionView: NSCollectionView, indexPath: IndexPath, index: Int) -> CGSize
 }
 
+protocol FeedViewCellProviderDelegate: AnyObject {
+  func updateCell(index: Int)
+}
+
 class FeedViewStatusCellProvider: FeedViewCellProvider {
+  weak var delegate: FeedViewCellProviderDelegate?
+  
   var feedProvider: TypelessFeedProvider {
     get {
       return statusFeedProvider
@@ -20,14 +28,6 @@ class FeedViewStatusCellProvider: FeedViewCellProvider {
   }
   
   private let statusFeedProvider: FeedProvider<Status>
-  weak var delegate: FeedProviderDelegate? {
-    get {
-      return statusFeedProvider.delegate
-    }
-    set {
-      statusFeedProvider.delegate = delegate
-    }
-  }
   
   init(feedProvider: FeedProvider<Status>) {
     self.statusFeedProvider = feedProvider
@@ -105,6 +105,7 @@ class FeedViewController: NSViewController {
     self.cellProvider = cellProvider
     super.init(nibName: nil, bundle: nil)
     self.cellProvider.feedProvider.delegate = self
+    self.cellProvider.delegate = self
   }
   
   convenience init(feedProvider: FeedProvider<Status>) {
@@ -177,6 +178,12 @@ extension FeedViewController: FeedProviderDelegate {
   
   func feedProviderReady() {
     cellProvider.feedProvider.reload()
+  }
+}
+
+extension FeedViewController: FeedViewCellProviderDelegate {
+  func updateCell(index: Int) {
+    collectionView.reloadItems(at: Set([indexPath(item: index)]))
   }
 }
 

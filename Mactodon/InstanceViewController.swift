@@ -4,10 +4,7 @@ import Atributika
 import Cocoa
 import MastodonKit
 
-
 class InstanceViewController: NSViewController {
-  static let baseURLKey = "BaseURL"
-
   var clientApplication: ClientApplication?
   let client = ValuePromise<Client?>(initialValue: nil)
   let currentUser = ValuePromise<Account?>(initialValue: nil)

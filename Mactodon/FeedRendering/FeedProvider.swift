@@ -1,6 +1,6 @@
 // Copyright Max von Webel. All Rights Reserved.
 
-import Foundation
+import Cocoa
 import MastodonKit
 
 protocol FeedProviderDelegate: AnyObject {
@@ -12,6 +12,7 @@ protocol FeedProviderDelegate: AnyObject {
 }
 
 protocol TypelessFeedProvider: AnyObject {
+  var client: ValuePromise<Client?> { get }
   var delegate: FeedProviderDelegate? { get set }
   var isLoading: Bool { get }
   var ready: Bool { get }
@@ -44,7 +45,7 @@ class FeedProvider<T: Codable>: TypelessFeedProvider {
     }
   }
 
-  private let client: ValuePromise<Client?>
+  let client: ValuePromise<Client?>
   private let streamingClient: ValuePromise<StreamingClient?> = ValuePromise(initialValue: nil)
   private let request: TimelineRequest
   private var _isLoading = false

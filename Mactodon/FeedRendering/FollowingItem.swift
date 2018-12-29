@@ -5,22 +5,51 @@ import MastodonKit
 import Nuke
 
 class FollowingItem: NSCollectionViewItem, FeedViewCell {
+  enum FollowingState {
+    case NotFollowing
+    case FollowRequested
+    case Following
+    case UnfollowRequested
+  }
+  
+  struct Model {
+    let account: Account
+    let followingState: FollowingState
+    let follow: (_ account: Account) -> ()
+    let unfollow: (_ account: Account) -> ()
+  }
+  
   static let identifier = NSUserInterfaceItemIdentifier("FollowingItem")
-  var account: Account?
+  var model: Model?
   
   private var actorAvatar: AvatarView!
   private var descriptionView: NSTextView!
   private var actionButton: NSButton!
   
   func willDisplay() {
-    guard let account = account else {
+    guard let model = model else {
       return
     }
     
-    Nuke.loadImage(with: URL(string: account.avatar)!, into: actorAvatar)
-    actorAvatar.clickURL = URL(string: account.url)
+    Nuke.loadImage(with: URL(string: model.account.avatar)!, into: actorAvatar)
+    actorAvatar.clickURL = URL(string: model.account.url)
     
-    descriptionView.set(html: "\(account.someDisplayName) followed you")
+    descriptionView.set(html: "\(model.account.someDisplayName) followed you")
+    
+    switch model.followingState {
+    case .NotFollowing:
+      actionButton.title = "Follow"
+      actionButton.isEnabled = true
+    case .FollowRequested:
+      actionButton.title = "Follow"
+      actionButton.isEnabled = false
+    case .Following:
+      actionButton.title = "Unfollow"
+      actionButton.isEnabled = true
+    case .UnfollowRequested:
+      actionButton.title = "Unfollow"
+      actionButton.isEnabled = false
+    }
   }
   
   func didEndDisplaying() {
@@ -29,7 +58,7 @@ class FollowingItem: NSCollectionViewItem, FeedViewCell {
   
   override func prepareForReuse() {
     super.prepareForReuse()
-    account = nil
+    model = nil
   }
   
   override func loadView() {
@@ -53,7 +82,18 @@ class FollowingItem: NSCollectionViewItem, FeedViewCell {
   }
   
   @IBAction func clickedFollowButton(_ sender: NSButton) {
-    print("follow!")
+    guard let model = model else {
+      assert(false)
+      return
+    }
+    switch model.followingState {
+    case .Following:
+      model.unfollow(model.account)
+    case .NotFollowing:
+      model.follow(model.account)
+    default:
+      assert(false)
+    }
   }
   
   func layout(width: CGFloat) {
