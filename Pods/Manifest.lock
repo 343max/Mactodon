@@ -1,7 +1,7 @@
 PODS:
-  - Atributika (4.6.7)
+  - Atributika (4.6.8)
   - MastodonKit (2.0.0)
-  - Nuke (7.5.1)
+  - Nuke (7.5.2)
   - ReachabilitySwift (4.3.0)
   - Starscream (3.0.6)
 
@@ -26,13 +26,13 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   MastodonKit:
-    :commit: 6df5dba74344a3abe4b793c15ebf141a4d516e2d
+    :commit: e11d68e75b604cc8da701286581ed8c7a17057b9
     :git: https://github.com/MastodonKit/MastodonKit.git
 
 SPEC CHECKSUMS:
-  Atributika: 01164ef4e8a0103c879f7499a7de8902385d8bf9
+  Atributika: 7510276c8c58194244f1b111f1c9b90350bc37a9
   MastodonKit: 3bc591ea7e626dd160711f9a10cd50f192e46ed3
-  Nuke: 3814db501e55f17951451839c726ffd91641e9a5
+  Nuke: 0350d346a688426e8f2331253ef28dc2fc4f6178
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
 

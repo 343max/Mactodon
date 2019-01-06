@@ -27,6 +27,8 @@ By the way, if you want to get in touch with me, [toot me](https://mastodon.tech
 * [Calv Collins (@calv@mastodon.social)](https://github.com/calvcoll)
 * [Frank Rausch](https://github.com/frankrausch)
 * [Adam Lickel](https://github.com/lickel)
+* [Bei Li (@libei@mastodon.social)](https://github.com/kylinroc)
+* [Tony Arnold](https://github.com/tonyarnold)
 
 # License
 
