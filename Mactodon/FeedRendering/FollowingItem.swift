@@ -6,6 +6,7 @@ import Nuke
 
 class FollowingItem: NSCollectionViewItem, FeedViewCell {
   enum FollowingState {
+    case Unknown
     case NotFollowing
     case FollowRequested
     case Following
@@ -37,16 +38,22 @@ class FollowingItem: NSCollectionViewItem, FeedViewCell {
     descriptionView.set(html: "\(model.account.someDisplayName) followed you")
     
     switch model.followingState {
+    case .Unknown:
+      actionButton.isHidden = true
     case .NotFollowing:
+      actionButton.isHidden = false
       actionButton.title = "Follow"
       actionButton.isEnabled = true
     case .FollowRequested:
+      actionButton.isHidden = false
       actionButton.title = "Follow"
       actionButton.isEnabled = false
     case .Following:
+      actionButton.isHidden = false
       actionButton.title = "Unfollow"
       actionButton.isEnabled = true
     case .UnfollowRequested:
+      actionButton.isHidden = false
       actionButton.title = "Unfollow"
       actionButton.isEnabled = false
     }

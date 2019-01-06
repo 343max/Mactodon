@@ -14,7 +14,6 @@ class FeedViewNotificationCellProvider: FeedViewCellProvider {
       return notificationFeedProvider
     }
   }
-  weak var collectionView: NSCollectionView!
   
   init(feedProvider: FeedProvider<Notification>, client: ValuePromise<Client?>) {
     self.notificationFeedProvider = feedProvider
@@ -22,7 +21,6 @@ class FeedViewNotificationCellProvider: FeedViewCellProvider {
   }
   
   func prepare(collectionView: NSCollectionView) {
-    self.collectionView = collectionView
     collectionView.register(TootItem.self, forItemWithIdentifier: TootItem.identifier)
     collectionView.register(FollowingItem.self, forItemWithIdentifier: FollowingItem.identifier)
   }
@@ -35,7 +33,7 @@ class FeedViewNotificationCellProvider: FeedViewCellProvider {
   
   private var followings: [String: FollowingItem.FollowingState] = [:]
   func following(account: Account) -> FollowingItem.FollowingState {
-    return followings[account.id] ?? .NotFollowing
+    return followings[account.id] ?? .Unknown
   }
   
   func update(following: FollowingItem.FollowingState, account: Account) {
