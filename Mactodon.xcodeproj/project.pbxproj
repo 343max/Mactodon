@@ -151,6 +151,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5000057221FFA04500FB5890 /* NotificationFeed */ = {
+			isa = PBXGroup;
+			children = (
+				50083918219E36F00071255B /* FeedViewNotificationCellProvider.swift */,
+				BB71838221962F850006AE5A /* FollowingItem.swift */,
+			);
+			path = NotificationFeed;
+			sourceTree = "<group>";
+		};
 		50A7ABCE219B4C3900573609 /* Relative Date */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +220,7 @@
 				BB9C8DEE217E7B0000669E31 /* URLComponents+Helper.swift */,
 				BB1747F5212769990015E3A8 /* Assets.xcassets */,
 				BB88F88021824E4D00B2F662 /* FeedRendering */,
+				5000057221FFA04500FB5890 /* NotificationFeed */,
 				BBCD39BB216008BC007675E3 /* Mastodon */,
 				BB88F7F9217F913C00B2F662 /* Promise */,
 				50A7ABD7219CA84300573609 /* Helpers */,
@@ -249,10 +259,8 @@
 				BB718386219661AA0006AE5A /* FlippedView.swift */,
 				BB88F881218253CB00B2F662 /* TootItem.swift */,
 				BBE007442188015400A5BE75 /* PullToRefreshCell.swift */,
-				BB71838221962F850006AE5A /* FollowingItem.swift */,
 				BB71838421965D510006AE5A /* NSTextView+Label.swift */,
 				50A7ABDA219CB0F200573609 /* ProgressIndicatorItem.swift */,
-				50083918219E36F00071255B /* FeedViewNotificationCellProvider.swift */,
 			);
 			path = FeedRendering;
 			sourceTree = "<group>";
