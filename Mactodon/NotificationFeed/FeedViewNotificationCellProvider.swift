@@ -18,6 +18,19 @@ class FeedViewNotificationCellProvider: FeedViewCellProvider {
   init(feedProvider: FeedProvider<Notification>, client: ValuePromise<Client?>) {
     self.notificationFeedProvider = feedProvider
     self.client = client
+    
+    feedProvider.prepare = { [weak self] (items) in
+      guard let self = self else {
+        return
+      }
+      
+      let ids = items.filter({ $0.type == .follow }).map({ $0.account.id })
+      self.client.value!.run(Accounts.relationships(ids: ids)).mainQueue.then { relationships in
+        relationships.forEach({ (relationship) in
+          self.update(following: relationship.following ? .Following : .NotFollowing, accountId: relationship.id)
+        })
+      }
+    }
   }
   
   func prepare(collectionView: NSCollectionView) {
@@ -36,22 +49,26 @@ class FeedViewNotificationCellProvider: FeedViewCellProvider {
     return followings[account.id] ?? .Unknown
   }
   
-  func update(following: FollowingItem.FollowingState, account: Account) {
-    followings[account.id] = following
-    reloadFollowNotificationCell(account: account)
+  func update(following: FollowingItem.FollowingState, accountId: String) {
+    followings[accountId] = following
+    reloadFollowNotificationCell(accountId: accountId)
   }
   
-  func reloadFollowNotificationCell(account: Account) {
-    guard let index = notificationFeedProvider.items.firstIndex(where: { (notification) -> Bool in
-      return (notification.type == .follow) && (notification.account.id == account.id)
-    }) else {
+  private func indexForFollowNotification(followerId: String) -> Int? {
+    return notificationFeedProvider.items.firstIndex(where: { (notification) -> Bool in
+      return (notification.type == .follow) && (notification.account.id == followerId)
+    })
+  }
+  
+  func reloadFollowNotificationCell(accountId: String) {
+    guard let index = indexForFollowNotification(followerId: accountId) else {
       return
     }
     
     delegate?.updateCell(index: index)
   }
   
-  func model(account: Account) -> FollowingItem.Model {
+  func followingModel(account: Account) -> FollowingItem.Model {
     let following = self.following(account: account)
     return FollowingItem.Model(account: account, followingState: following, follow: { [weak self] (account: Account) -> () in
       self?.follow(account: account)
@@ -68,7 +85,7 @@ class FeedViewNotificationCellProvider: FeedViewCellProvider {
       return view
     } else {
       let view = collectionView.makeItem(withIdentifier: FollowingItem.identifier, for: indexPath) as! FollowingItem
-      view.model = model(account: notification.account)
+      view.model = followingModel(account: notification.account)
       return view
     }
   }
@@ -85,22 +102,22 @@ class FeedViewNotificationCellProvider: FeedViewCellProvider {
 
 extension FeedViewNotificationCellProvider {
   func follow(account: Account) {
-    self.update(following: .FollowRequested, account: account)
+    self.update(following: .FollowRequested, accountId: account.id)
     
     client.value!.run(Accounts.follow(id: account.id)).mainQueue.then { [weak self] in
-      self?.update(following: .Following, account: account)
+      self?.update(following: .Following, accountId: account.id)
     }.fail { [weak self] (_) in
-      self?.update(following: .NotFollowing, account: account)
+      self?.update(following: .NotFollowing, accountId: account.id)
     }
   }
   
   func unfollow(account: Account) {
-    self.update(following: .UnfollowRequested, account: account)
+    self.update(following: .UnfollowRequested, accountId: account.id)
     
     client.value!.run(Accounts.follow(id: account.id)).mainQueue.then { [weak self] in
-      self?.update(following: .NotFollowing, account: account)
+      self?.update(following: .NotFollowing, accountId: account.id)
     }.fail { [weak self] (_) in
-      self?.update(following: .Following, account: account)
+      self?.update(following: .Following, accountId: account.id)
     }
   }
 }

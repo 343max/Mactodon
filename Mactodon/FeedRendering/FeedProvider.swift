@@ -39,6 +39,8 @@ class FeedProvider<T: Codable>: TypelessFeedProvider {
     }
   }
   
+  var prepare: ((_ items: [T]) -> ()) = {_ in }
+  
   var ready: Bool {
     get {
       return client.value != nil
@@ -64,6 +66,7 @@ class FeedProvider<T: Codable>: TypelessFeedProvider {
         return
       }
       
+      self.prepare([item])
       self.items = [item] + self.items
       self.delegate?.didPrepend(itemCount: 1)
     }
@@ -105,6 +108,7 @@ class FeedProvider<T: Codable>: TypelessFeedProvider {
       }
       
       self._isLoading = false
+      self.prepare(result.value)
       self.items = result.value
       self.delegate?.didSet(itemCount: result.value.count)
       self.previousPage = result.pagination?.previous
@@ -126,6 +130,7 @@ class FeedProvider<T: Codable>: TypelessFeedProvider {
       }
 
       self._isLoading = false
+      self.prepare(result.value)
       self.items += result.value
       self.delegate?.didSet(itemCount: result.value.count)
       self.nextPage = result.pagination?.next
