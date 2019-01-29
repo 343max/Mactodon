@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5000057621FFB11F00FB5890 /* FeedViewStatusCellProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5000057521FFB11F00FB5890 /* FeedViewStatusCellProvider.swift */; };
 		50083919219E36F00071255B /* FeedViewNotificationCellProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50083918219E36F00071255B /* FeedViewNotificationCellProvider.swift */; };
 		500F02862199EAE200F5740F /* StreamingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500F02852199EAE200F5740F /* StreamingController.swift */; };
 		5087654A21990A2C00156A73 /* StreamingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087654921990A2C00156A73 /* StreamingClient.swift */; };
@@ -62,6 +63,7 @@
 /* Begin PBXFileReference section */
 		30AE5CBE9F8F80CFBBBB87EC /* Pods-Mactodon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mactodon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon.debug.xcconfig"; sourceTree = "<group>"; };
 		4D7167C4FE7089E037D1CCB0 /* Pods-Mactodon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mactodon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mactodon/Pods-Mactodon.release.xcconfig"; sourceTree = "<group>"; };
+		5000057521FFB11F00FB5890 /* FeedViewStatusCellProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewStatusCellProvider.swift; sourceTree = "<group>"; };
 		50083918219E36F00071255B /* FeedViewNotificationCellProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewNotificationCellProvider.swift; sourceTree = "<group>"; };
 		500F02852199EAE200F5740F /* StreamingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingController.swift; sourceTree = "<group>"; };
 		5087654921990A2C00156A73 /* StreamingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingClient.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				BBE007442188015400A5BE75 /* PullToRefreshCell.swift */,
 				BB71838421965D510006AE5A /* NSTextView+Label.swift */,
 				50A7ABDA219CB0F200573609 /* ProgressIndicatorItem.swift */,
+				5000057521FFB11F00FB5890 /* FeedViewStatusCellProvider.swift */,
 			);
 			path = FeedRendering;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 			files = (
 				BB9C8DEF217E7B0000669E31 /* URLComponents+Helper.swift in Sources */,
 				50A7ABD9219CA85500573609 /* NSView+BackgroundColor.swift in Sources */,
+				5000057621FFB11F00FB5890 /* FeedViewStatusCellProvider.swift in Sources */,
 				BB71838321962F850006AE5A /* FollowingItem.swift in Sources */,
 				5087654A21990A2C00156A73 /* StreamingClient.swift in Sources */,
 				50083919219E36F00071255B /* FeedViewNotificationCellProvider.swift in Sources */,
